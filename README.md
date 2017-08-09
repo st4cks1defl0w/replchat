@@ -31,6 +31,7 @@
 <p>To launch the app, go to project root then </p>
 <ul>
 <li>1. Supply a db link as env var <code>(export databaseurl="mysql://localhost:3306/XXXXX?user=XXXXX&password=XXXXX")</code> or uncomment and edit this var in /dev-config.edn</li>
+<li>1.1 Run migrations - see below</li>
 <li>2. 1st terminal: <code>lein run</code> will start the backend server on :3000</li>
 <li>3. 2nd terminal:  <code>lein figwheel</code> will start ClojureScript autocompile and REPL</li>
 </ul>
@@ -42,6 +43,7 @@
 <li>1. <code>lein uberjar</code></li>
 <li>2. Go to /target/uberjar/spachat.jar to find your uberjar</li>
 <li>3. Supply a db link as env var in your shell - <code>databaseurl="mysql://localhost:3306/XXXXX?user=XXXXX&password=XXXXX"</code></li>
+<li>3.1 Run migrations - see below</li>
 <li>4. Start uberjar with <code>java -jar spachat.jar</code> </li>
 </ul>
 
@@ -49,6 +51,21 @@ In both cases the app will be launched at http://127.0.0.1:3000/
 
 
 
+<b>mySQL database structure for migrations</b> (exec these queries to your db when migrating, no migration function is implemented atm):
+
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+text TEXT,
+author TEXT,
+stamp TIMESTAMP);
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+password TEXT,
+cookie TEXT,
+lastseen TIMESTAMP,
+signupdate DATE);
 
 
 
