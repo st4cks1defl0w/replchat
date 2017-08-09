@@ -1,6 +1,8 @@
 <h1>Simple SPA chat with Re-frame+MaterialUI frontend, Ring, Aleph+MySQL backend</h1>
 <p>(interview project)</p>
-<h2>Core stack</h2>
+<p>demo at http://81.177.6.170:3000/</p>
+
+<h2>Core stack</h2> 
 <ul>
 <li>Re-frame</li>
 <li>Aleph</li>
