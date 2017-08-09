@@ -1,1 +1,0 @@
-{"version":3,"file":"\/home\/x\/spachat\/target\/cljsbuild\/public\/js\/out\/spachat\/app.js","sources":["app.cljs?rel=1536503778600"],"lineCount":13,"mappings":";AAAA;;;;;;AAMA,AAAMA,0CAAgBC;AAEtB,AAACC;AAED,AAACC;AAED,AAACC","names":["cljs.spec.alpha\/*explain-out*","expound.alpha\/printer","cljs.core\/enable-console-print!","devtools.core\/install!","spachat.core\/init!"]}

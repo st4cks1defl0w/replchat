@@ -1,15 +1,15 @@
-2018-09-09 15:30:53,656 [main] INFO  spachat.env - 
+2018-09-09 16:55:17,614 [main] INFO  spachat.env - 
 -=[spachat started successfully]=- 
-2018-09-09 15:30:54,382 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 15:30:54,528 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 15:30:54,528 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 15:30:54,528 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 15:30:54,528 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 15:30:54,528 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 15:32:16,935 [Thread-1] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 15:32:16,938 [Thread-1] INFO  spachat.env - 
+2018-09-09 16:55:18,414 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2018-09-09 16:55:18,648 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2018-09-09 16:55:18,648 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2018-09-09 16:55:18,648 [main] INFO  spachat.core - #'spachat.handler/app started 
+2018-09-09 16:55:18,649 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2018-09-09 16:55:18,649 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2018-09-09 16:55:46,007 [Thread-1] INFO  luminus.http-server - HTTP server stopped 
+2018-09-09 16:55:46,012 [Thread-1] INFO  spachat.env - 
 -=[spachat has shut down successfully]=- 
-2018-09-09 15:32:16,972 [Thread-1] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 15:32:16,972 [Thread-1] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 15:32:16,972 [Thread-1] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 15:32:16,972 [Thread-1] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2018-09-09 16:55:46,043 [Thread-1] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2018-09-09 16:55:46,043 [Thread-1] INFO  spachat.core - #'spachat.core/http-server stopped 
+2018-09-09 16:55:46,044 [Thread-1] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2018-09-09 16:55:46,044 [Thread-1] INFO  spachat.core - #'spachat.db.core/*db* stopped 

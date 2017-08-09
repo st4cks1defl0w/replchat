@@ -51,3 +51,6 @@ SELECT id FROM chats ORDER BY id DESC LIMIT 1
 SELECT * FROM people WHERE lastseen >= now() - INTERVAL 1 MINUTE
 
 
+
+
+
