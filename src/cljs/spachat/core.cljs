@@ -1,19 +1,18 @@
 (ns spachat.core
-  (:require [reagent.core :as r]
-            [cljsjs.material-ui]
-            [re-frame.core :as rf]
-            [goog.events :as events]
-            [goog.history.EventType :as HistoryEventType]
-            [markdown.core :refer [md->html]]
-            [ajax.core :refer [GET POST]]
-            [spachat.ajax :as ajax]
-            [spachat.events]
-            [reagent.core :as reagent :refer [atom]]
+  (:require [ajax.core :refer [GET POST]]
             [cljs-react-material-ui.core :refer [create-mui-theme color]]
             [cljs-react-material-ui.reagent :as ui]
             [cljs-react-material-ui.icons :as ic]
+            [cljs-time.format :as tformat]
+            [goog.events :as events]
+            [goog.history.EventType :as HistoryEventType]
+            [markdown.core :refer [md->html]]
+            [re-frame.core :as rf]
+            [reagent.core :as reagent :refer [atom]]
             [secretary.core :as secretary]
-            [cljs-time.format :as tformat])
+            [spachat.ajax :as ajax]
+            [spachat.events]
+            [spachat.subs])
   (:import goog.History))
 
 (def formatterTime (tformat/formatter "yyyyMMdd"))
@@ -43,27 +42,27 @@
        :style {:font-family "monospace"}}
       "Welcome to spachat"]]]])
 
-(def chatBubbleOthers {:text-align "left"
-                       :float "left"
-                       :clear "both"
-                       :padding-top "6px"
-                       :padding-right "15px"
-                       :padding-left "15px"
-                       :font-size "0.8em"
-                       :background-color (color :red :A100)
-                       :border-radius "10px"
-                       :margin-bottom "20px"})
+(def chat-bubble-others {:text-align "left"
+                         :float "left"
+                         :clear "both"
+                         :padding-top "6px"
+                         :padding-right "15px"
+                         :padding-left "15px"
+                         :font-size "0.8em"
+                         :background-color (color :red :A100)
+                         :border-radius "10px"
+                         :margin-bottom "20px"})
 
-(def chatBubbleYours {:text-align "right"
-                      :float "right"
-                      :clear "both"
-                      :padding-top "6px"
-                      :padding-right "15px"
-                      :padding-left "15px"
-                      :font-size "0.8em"
-                      :border (str "1px solid " (color :red :A100))
-                      :border-radius "10px"
-                      :margin-bottom "20px"})
+(def chat-bubble-yours {:text-align "right"
+                        :float "right"
+                        :clear "both"
+                        :padding-top "6px"
+                        :padding-right "15px"
+                        :padding-left "15px"
+                        :font-size "0.8em"
+                        :border (str "1px solid " (color :red :A100))
+                        :border-radius "10px"
+                        :margin-bottom "20px"})
 
 (defn scroll-chats-down!
   "keeps chat container scrolled to the bottom with classic css (noflex) (hacky)"
@@ -76,12 +75,12 @@
   (cond
 
     (= username @(rf/subscribe [:signupUserValue]))
-    [:div {:style chatBubbleYours}
+    [:div {:style chat-bubble-yours}
      text [:p {:style {:font-size "0.8em"}}
            (str "- by You at "   (.toString stamp))]]
 
     :else
-    [:div {:style chatBubbleOthers}
+    [:div {:style chat-bubble-others}
      text [:p {:style {:font-size "0.8em"}}
            (str "- by " username " at "  (.toString stamp))]]))
 
@@ -210,7 +209,7 @@
 
 (defn mount-components []
   (rf/clear-subscription-cache!)
-  (r/render [#'page] (.getElementById js/document "app")))
+  (reagent/render [#'page] (.getElementById js/document "app")))
 
 (defn init! []
   (rf/dispatch-sync [:navigate :home])
