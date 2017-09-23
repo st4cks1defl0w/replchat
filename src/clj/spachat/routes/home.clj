@@ -1,11 +1,11 @@
 (ns spachat.routes.home
-  (:require [spachat.layout :as layout]
-            [spachat.db.core :as db]
-            [digest :as hashlib]
-            [clj-time.core :as t]
+  (:require [clj-time.core :as t]
+            [clojure.java.io :as io]
             [compojure.core :refer [defroutes GET POST]]
+            [digest :as hashlib]
             [ring.util.http-response :as response]
-            [clojure.java.io :as io]))
+            [spachat.db.core :as db]
+            [spachat.layout :as layout]))
 
 (defn rnd-str
   "get str of pseudorandom safe chars"
@@ -31,7 +31,7 @@
           (response/ok {:ok false
                         :errorText "Incorrect password"})
 
-     ;;user exists, pass correct
+     ;;user exists, pass is OK
           (and (= username existing-username)
                (= existing-password (hashlib/md5 password)))
           (let [new-cookie (rnd-str 64)]
