@@ -21,6 +21,11 @@ WHERE cookie = :cookie
 SELECT * FROM people
 WHERE username = :username
 
+-- -- :name get-user-by-creds :? :1
+-- -- :doc retrieves a user record given the id
+-- SELECT * FROM people
+-- WHERE username = :username AND password = :password
+
 -- :name get-user-with-id :? :1
 -- :doc retrieves a user record given the id
 SELECT * FROM people
@@ -49,8 +54,3 @@ SELECT id FROM chats ORDER BY id DESC LIMIT 1
 -- :name get-online-users :? :*
 -- :doc retrieves a user record given the id
 SELECT * FROM people WHERE lastseen >= now() - INTERVAL 1 MINUTE
-
-
-
-
-

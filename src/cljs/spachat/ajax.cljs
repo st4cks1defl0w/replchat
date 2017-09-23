@@ -24,24 +24,24 @@
    :delete ajax/DELETE})
 
 (rf/reg-fx
-  :http
-  (fn [{:keys [method
-               url
-               success-event
-               error-event
-               params
-               ajax-map]
-        :or   {error-event [:common/set-error]
-               ajax-map    {}}}]
-    ((http-methods method)
-      url (merge
-            {:params        params
-             :handler       (fn [response]
-                              (when success-event
-                                (rf/dispatch (conj success-event response))))
-             :error-handler (fn [error]
-                              (rf/dispatch (conj error-event error)))}
-            ajax-map))))
+ :http
+ (fn [{:keys [method
+              url
+              success-event
+              error-event
+              params
+              ajax-map]
+       :or   {error-event [:common/set-error]
+              ajax-map    {}}}]
+   ((http-methods method)
+    url (merge
+         {:params        params
+          :handler       (fn [response]
+                           (when success-event
+                             (rf/dispatch (conj success-event response))))
+          :error-handler (fn [error]
+                           (rf/dispatch (conj error-event error)))}
+         ajax-map))))
 
 
 

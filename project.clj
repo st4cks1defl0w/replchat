@@ -44,14 +44,15 @@
                  [selmer "1.12.0"]]
 
   :min-lein-version "2.0.0"
-  
+
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
   :target-path "target/%s/"
   :main ^:skip-aot spachat.core
-
-  :plugins [[lein-cljsbuild "1.1.7"]]
+  :plugins [[lein-cljsbuild "1.1.7"]
+            [lein-bikeshed "0.5.1"]
+            [lein-cljfmt "0.6.3"]]
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
   :figwheel
@@ -60,7 +61,7 @@
    :css-dirs ["resources/public/css"]
    :nrepl-middleware
    [cider/wrap-cljs-repl cider.piggieback/wrap-cljs-repl]}
-  
+
 
   :profiles
   {:uberjar {:omit-source true
@@ -78,8 +79,8 @@
                  :closure-warnings
                  {:externs-validation :off :non-standard-jsdoc :off}
                  :externs ["react/externs/react.js"]}}}}
-             
-             
+
+
              :aot :all
              :uberjar-name "spachat.jar"
              :source-paths ["env/prod/clj"]
@@ -117,9 +118,9 @@
                       :pretty-print true
                       :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
                       :preloads [day8.re-frame-10x.preload]}}}}
-                  
-                  
-                  
+
+
+
                   :doo {:build "test"}
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
@@ -137,7 +138,7 @@
                       :main "spachat.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}
-                  
+
                   }
    :profiles/dev {}
    :profiles/test {}})

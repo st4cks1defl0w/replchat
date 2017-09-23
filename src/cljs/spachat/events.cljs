@@ -1,34 +1,37 @@
 (ns spachat.events
   (:require [re-frame.core :as rf]
-	    [ajax.core :refer [GET POST]]))
+            [ajax.core :refer [GET POST]]))
 
 
 ;;debug handlers middleware
+
+
 (defn log-ex
   [handler]
   (fn log-ex-handler
     [db v]
     (try
-        (handler db v)        ;; call the handler with a wrapping try
-        (catch :default e     ;; ooops
-          (do
-            (.error js/console e.stack)   ;; print a sane stacktrace
-            (throw e))))))
+      (handler db v)        ;; call the handler with a wrapping try
+      (catch :default e     ;; ooops
+        (do
+          (.error js/console e.stack)   ;; print a sane stacktrace
+          (throw e))))))
 
 
 
 
 ;;dispatchers
 
-(rf/reg-event-db
-  :navigate
-  (fn [db [_ page]]
-    (assoc db :page page)))
 
 (rf/reg-event-db
-  :resetSignInError
-  (fn [db _]
-    (dissoc db :signInError)))
+ :navigate
+ (fn [db [_ page]]
+   (assoc db :page page)))
+
+(rf/reg-event-db
+ :resetSignInError
+ (fn [db _]
+   (dissoc db :signInError)))
 
 (rf/reg-event-db
  :signupUserValue
@@ -38,9 +41,8 @@
 (rf/reg-event-db
  :sendMessage
  (fn [db [_ v]]
-(println "called sendMessage" v)
+   (println "called sendMessage" v)
    (assoc db :sendMessage v)))
-
 
 (rf/reg-event-db
  :signupPasswordValue
@@ -50,191 +52,186 @@
 ;;subscriptions
 
 (rf/reg-sub
-  :page
-  (fn [db _]
+ :page
+ (fn [db _]
 
-    (:page db)))
-
-(rf/reg-sub
-  :signInError
-  (fn [db _]
-    (:signInError db)))
+   (:page db)))
 
 (rf/reg-sub
-  :spaCookie
-  (fn [db _]
-    (:spaCookie db)))
+ :signInError
+ (fn [db _]
+   (:signInError db)))
 
 (rf/reg-sub
-  :chats
-  (fn [db _]
-    (:chats db)))
+ :spaCookie
+ (fn [db _]
+   (:spaCookie db)))
 
 (rf/reg-sub
-  :lastchat
-  (fn [db _]
-    (:lastchat db)))
+ :chats
+ (fn [db _]
+   (:chats db)))
 
 (rf/reg-sub
-  :signupUserValue
-  (fn [db _]
-    (:signupUserValue db)))
-
-
-(rf/reg-sub
-  :sendMessage
-  (fn [db _]
-    (:sendMessage db)))
+ :lastchat
+ (fn [db _]
+   (:lastchat db)))
 
 (rf/reg-sub
-  :signupPasswordValue
-  (fn [db _]
-    (:signupPasswordValue db)))
+ :signupUserValue
+ (fn [db _]
+   (:signupUserValue db)))
 
 (rf/reg-sub
-  :onlineUsersNow
-  (fn [db _]
-    (:onlineUsersNow db)))
+ :sendMessage
+ (fn [db _]
+   (:sendMessage db)))
+
+(rf/reg-sub
+ :signupPasswordValue
+ (fn [db _]
+   (:signupPasswordValue db)))
+
+(rf/reg-sub
+ :onlineUsersNow
+ (fn [db _]
+   (:onlineUsersNow db)))
 
 
 ;;calls to server ajaxly (dispatcher chains)
 
 ;;POST signin
+
+
 (rf/reg-event-db ;submit signin info, login or if (doesn't exist username) then make a new record
-  :signupGo         
-  (fn
-    [db _]
-    (POST
-      "/API/signupGo"
-      {:params {:username (get db :signupUserValue)
-                  :password    (get db :signupPasswordValue)}
-       :handler       #(rf/dispatch [:signupGotResponse %1])   
-       :error-handler #(rf/dispatch [:signupGotResponseBad %1])}) ;;reserve for server failure   
-      db))   
+ :signupGo
+ (fn
+   [db _]
+   (POST
+     "/API/signupGo"
+     {:params {:username (get db :signupUserValue)
+               :password    (get db :signupPasswordValue)}
+      :handler       #(rf/dispatch [:signupGotResponse %1])
+      :error-handler #(rf/dispatch [:signupGotResponseBad %1])}) ;;reserve for server failure   
+   db))
 
 
 
 
 ;;process signin response
+
+
 (rf/reg-event-db ;process signin response - if ok, set a cookie and dispatch chat View         
-  :signupGotResponse   
-  (fn
-    [db [_ response]]  
-(println response)
-(if (get response :ok)
+ :signupGotResponse
+ (fn
+   [db [_ response]]
+   (println response)
+   (if (get response :ok)
 ;all ok      
-(-> db        (assoc :lastchat 0 :page :chat :spaCookie (get response :okCookie)))
+     (-> db        (assoc :lastchat 0 :page :chat :spaCookie (get response :okCookie)))
 ;bad user/pass combo  or no username supplied 
-(do
-(-> db  (assoc :signupPasswordValue "")  (assoc :signInError (get response :errorText)))
-)
-) 
-)
-)  
+     (do
+       (-> db  (assoc :signupPasswordValue "")  (assoc :signInError (get response :errorText)))))))
 
 ;;process error signin response
 (rf/reg-event-db ;server-down        
-  :signupGotResponseBad              
-  (fn
-    [db [_ response]]  
-(println "chats server down notice")
-(-> db (assoc :noserver true)
-)))  
+ :signupGotResponseBad
+ (fn
+   [db [_ response]]
+   (println "chats server down notice")
+   (-> db (assoc :noserver true))))
 
 
 
 ;;POST chats request
+
+
 (rf/reg-event-db ;submit signin info, login or if (doesn't exist username) then make a new record
-  :getChats         
-  (fn
-    [db _]
-    (POST
-      "/API/getChat"
-       :handler       #(rf/dispatch [:getChatsGotResponse %1]))    
-     db)) 
+ :getChats
+ (fn
+   [db _]
+   (POST
+     "/API/getChat"
+     :handler       #(rf/dispatch [:getChatsGotResponse %1]))
+   db))
 
   ;;process chats request
-(rf/reg-event-db 
-  :getChatsGotResponse              
-  (fn
-    [db [_ response]]  
-(def chatsSeq (get response :okChats))
- (-> db    (assoc :lastchat (get (last chatsSeq) :id) :chats  chatsSeq))
-))  
+(rf/reg-event-db
+ :getChatsGotResponse
+ (fn
+   [db [_ response]]
+   (def chatsSeq (get response :okChats))
+   (-> db    (assoc :lastchat (get (last chatsSeq) :id) :chats  chatsSeq))))
 
 
 
 ;;POST a new message
+
+
 (rf/reg-event-db ;submit signin info, login or if (doesn't exist username) then make a new record
-  :sendMessageGo         
-  (fn
-    [db _]
-    (POST
-      "/API/putChat"
-      {:params {:message (get db :sendMessage)
-                :username    (get db :signupUserValue)
-		:cookie    (get db :spaCookie)}
-       :handler       #(rf/dispatch [:sendMessageGotResponse %1])   
-       :error-handler #(rf/dispatch [:sendMessageGotResponseBad %1])}) ;;reserve for server failure   
-   (-> db (assoc :sendMessage ""))  ))   
+ :sendMessageGo
+ (fn
+   [db _]
+   (POST
+     "/API/putChat"
+     {:params {:message (get db :sendMessage)
+               :username    (get db :signupUserValue)
+               :cookie    (get db :spaCookie)}
+      :handler       #(rf/dispatch [:sendMessageGotResponse %1])
+      :error-handler #(rf/dispatch [:sendMessageGotResponseBad %1])}) ;;reserve for server failure   
+   (-> db (assoc :sendMessage ""))))
 
 
 
 
 ;;process a new message response
-(rf/reg-event-db         
-  :sendMessageGotResponse   
-  (fn
-    [db [_ response]]  
-(if (get response :ok)
+
+
+(rf/reg-event-db
+ :sendMessageGotResponse
+ (fn
+   [db [_ response]]
+   (if (get response :ok)
 ;all ok
-(do 
-(println "got ok sendmessages response")     
-(rf/dispatch [:getChats])
-db
-)
-(do
+     (do
+       (println "got ok sendmessages response")
+       (rf/dispatch [:getChats])
+       db)
+     (do
 ;bad username/cookie  
-(println "got BAD sendmessages response")     
-db
-)
-) 
-)
-)  
+       (println "got BAD sendmessages response")
+       db))))
 
 ;;process error new message response
 (rf/reg-event-db ;server-down        
-  :sendMessageGotResponseBad              
-  (fn
-    [db [_ response]]  
-(println "chats server down notice")
-(-> db (assoc :noserver true)
-)))  
+ :sendMessageGotResponseBad
+ (fn
+   [db [_ response]]
+   (println "chats server down notice")
+   (-> db (assoc :noserver true))))
 
 
 
 
 ;;ping part 1 - trigger chats update if we're lagging
+
+
 (rf/reg-event-db
-  :pingingChatUser              
+ :pingingChatUser
  (fn [db _]
-(when (get db :spaCookie)
-(println "pinging with cookie " (get db :spaCookie))
-(POST "/API/ping" {:params {:lastchat  (get db :lastchat) :cookie  (get db :spaCookie)} :handler #(rf/dispatch [:pingingGotResponse %1])} )
-)
-db
-)    
-)
+   (when (get db :spaCookie)
+     (println "pinging with cookie " (get db :spaCookie))
+     (POST "/API/ping" {:params {:lastchat  (get db :lastchat) :cookie  (get db :spaCookie)} :handler #(rf/dispatch [:pingingGotResponse %1])}))
+   db))
 
 ;;ping part 2 - dispatch chatsUpdate if lagging detected
 (rf/reg-event-db ;server-down        
-  :pingingGotResponse              
-  (fn
-    [db [_ response]]  
-(when  (get response :updateneeded)
-(rf/dispatch [:getChats])
-)
-(-> db (assoc :onlineUsersNow (get response :onlineUsersNow)))))  
+ :pingingGotResponse
+ (fn
+   [db [_ response]]
+   (when  (get response :updateneeded)
+     (rf/dispatch [:getChats]))
+   (-> db (assoc :onlineUsersNow (get response :onlineUsersNow)))))
 
 
 

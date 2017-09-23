@@ -1,11 +1,11 @@
 (ns spachat.db.core
   (:require
-    [clj-time.jdbc]
-    [clojure.java.jdbc :as jdbc]
-    [clojure.tools.logging :as log]
-    [conman.core :as conman]
-    [spachat.config :refer [env]]
-    [mount.core :refer [defstate]])
+   [clj-time.jdbc]
+   [clojure.java.jdbc :as jdbc]
+   [clojure.tools.logging :as log]
+   [conman.core :as conman]
+   [spachat.config :refer [env]]
+   [mount.core :refer [defstate]])
   (:import [java.sql
             BatchUpdateException
             PreparedStatement]))

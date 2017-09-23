@@ -10,8 +10,8 @@
   :once
   (fn [f]
     (mount/start
-      #'spachat.config/env
-      #'spachat.db.core/*db*)
+     #'spachat.config/env
+     #'spachat.db.core/*db*)
     (migrations/migrate ["migrate"] (select-keys env [:databaseurl]))
     (f)))
 
@@ -19,12 +19,12 @@
   (jdbc/with-db-transaction [t-conn *db*]
     (jdbc/db-set-rollback-only! t-conn)
     (is (= 1 (db/create-user!
-               t-conn
-               {:id         "1"
-                :first_name "Sam"
-                :last_name  "Smith"
-                :email      "sam.smith@example.com"
-                :pass       "pass"})))
+              t-conn
+              {:id         "1"
+               :first_name "Sam"
+               :last_name  "Smith"
+               :email      "sam.smith@example.com"
+               :pass       "pass"})))
     (is (= {:id         "1"
             :first_name "Sam"
             :last_name  "Smith"
