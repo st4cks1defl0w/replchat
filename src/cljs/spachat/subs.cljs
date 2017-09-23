@@ -1,6 +1,5 @@
 (ns spachat.subs
-  (:require [ajax.core :refer [GET POST]]
-            [re-frame.core :as rf]))
+  (:require [re-frame.core :as rf]))
 
 ;;subscriptions
 (rf/reg-sub
