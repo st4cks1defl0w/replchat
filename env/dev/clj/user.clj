@@ -4,6 +4,7 @@
             [expound.alpha :as expound]
             [mount.core :as mount]
             [spachat.figwheel :refer [start-fw stop-fw cljs]]
+            [figwheel-sidecar.repl-api :as fw]
             [spachat.core :refer [start-app]]
             [spachat.db.core]
             [conman.core :as conman]
@@ -39,4 +40,6 @@
 (defn create-migration [name]
   (migrations/create name (select-keys env [:databaseurl])))
 
-
+(defn fw-repl! []
+  (fw/start-figwheel!)
+  (fw/cljs-repl))

@@ -1,5 +1,6 @@
 (ns spachat.events
   (:require [ajax.core :refer [GET POST]]
+            [day8.re-frame.http-fx]
             [re-frame.core :as rf]))
 
 ;;debug handlers middleware
@@ -116,7 +117,6 @@
    (if (get response :ok)
 ;all ok
      (do
-       (println "got ok sendmessages response")
        (rf/dispatch [:getChats])
        db)
      (do
@@ -136,16 +136,15 @@
 (rf/reg-event-db
  :pingingChatUser
  (fn [db _]
-   (when (get db :spaCookie)
-     (println "pinging with cookie " (get db :spaCookie))
+   (when (some? (:spaCookie db))
      (POST "/API/ping" {:params {:lastchat  (get db :lastchat) :cookie  (get db :spaCookie)} :handler #(rf/dispatch [:pingingGotResponse %1])}))
    db))
 
 ;;ping part 2 - dispatch chatsUpdate if lagging detected
-(rf/reg-event-db ;server-down
+(rf/reg-event-db
  :pingingGotResponse
  (fn
    [db [_ response]]
-   (when  (get response :updateneeded)
+   (when  (:updateneeded response)
      (rf/dispatch [:getChats]))
    (-> db (assoc :onlineUsersNow (get response :onlineUsersNow)))))

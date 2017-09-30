@@ -1,374 +1,45 @@
-2018-09-09 08:36:33,567 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 08:36:34,056 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 08:36:34,510 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 08:36:34,620 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 08:36:34,620 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 08:36:34,620 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 08:36:34,620 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 08:36:34,621 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 08:45:03,137 [manifold-pool-2-12] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 08:45:03,140 [manifold-pool-2-12] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 08:46:51,141 [manifold-pool-2-14] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 08:46:51,147 [manifold-pool-2-14] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 08:47:20,100 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 08:47:20,104 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 08:47:20,106 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 08:47:20,130 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 08:47:20,131 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 08:47:20,131 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 08:47:20,131 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 08:48:10,833 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 08:48:11,098 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 08:48:11,281 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 08:48:11,316 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 08:48:11,316 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 08:48:11,316 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 08:48:11,317 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 08:48:11,317 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 08:54:10,344 [manifold-wait-2] ERROR manifold.stream.graph - error in manifold.utils/future-with 
-java.io.IOException: Stream closed
-	at java.util.zip.InflaterInputStream.ensureOpen(InflaterInputStream.java:67)
-	at java.util.zip.InflaterInputStream.read(InflaterInputStream.java:142)
-	at java.io.FilterInputStream.read(FilterInputStream.java:133)
-	at java.nio.channels.Channels$ReadableByteChannelImpl.read(Channels.java:385)
-	at byte_streams$eval40445$fn__40447.invoke(byte_streams.clj:701)
-	at byte_streams.protocols$eval39141$fn__39142$G__39132__39151.invoke(protocols.clj:9)
-	at byte_streams$eval40254$f__40049__auto____40256$fn__40258.invoke(byte_streams.clj:452)
-	at clojure.lang.LazySeq.sval(LazySeq.java:40)
-	at clojure.lang.LazySeq.seq(LazySeq.java:49)
-	at clojure.lang.RT.seq(RT.java:528)
-	at clojure.core$seq__5124.invokeStatic(core.clj:137)
-	at clojure.core$map$fn__5587.invoke(core.clj:2738)
-	at clojure.lang.LazySeq.sval(LazySeq.java:40)
-	at clojure.lang.LazySeq.seq(LazySeq.java:49)
-	at clojure.lang.RT.seq(RT.java:528)
-	at clojure.core$seq__5124.invokeStatic(core.clj:137)
-	at clojure.core$empty_QMARK_.invokeStatic(core.clj:6126)
-	at clojure.core$empty_QMARK_.invoke(core.clj:6126)
-	at manifold.stream.seq.SeqSource.take(seq.clj:41)
-	at manifold.stream.graph$sync_connect$f__35688__auto____37643.invoke(graph.clj:255)
-	at clojure.lang.AFn.run(AFn.java:22)
-	at io.aleph.dirigiste.Executor$3.run(Executor.java:308)
-	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
-	at manifold.executor$thread_factory$reify__35570$f__35571.invoke(executor.clj:44)
-	at clojure.lang.AFn.run(AFn.java:22)
-	at java.lang.Thread.run(Thread.java:748)
-2018-09-09 08:54:10,360 [manifold-wait-3] ERROR manifold.stream.graph - error in manifold.utils/future-with 
-java.io.IOException: Stream closed
-	at java.util.zip.InflaterInputStream.ensureOpen(InflaterInputStream.java:67)
-	at java.util.zip.InflaterInputStream.read(InflaterInputStream.java:142)
-	at java.io.FilterInputStream.read(FilterInputStream.java:133)
-	at java.nio.channels.Channels$ReadableByteChannelImpl.read(Channels.java:385)
-	at byte_streams$eval40445$fn__40447.invoke(byte_streams.clj:701)
-	at byte_streams.protocols$eval39141$fn__39142$G__39132__39151.invoke(protocols.clj:9)
-	at byte_streams$eval40254$f__40049__auto____40256$fn__40258.invoke(byte_streams.clj:452)
-	at clojure.lang.LazySeq.sval(LazySeq.java:40)
-	at clojure.lang.LazySeq.seq(LazySeq.java:49)
-	at clojure.lang.RT.seq(RT.java:528)
-	at clojure.core$seq__5124.invokeStatic(core.clj:137)
-	at clojure.core$map$fn__5587.invoke(core.clj:2738)
-	at clojure.lang.LazySeq.sval(LazySeq.java:40)
-	at clojure.lang.LazySeq.seq(LazySeq.java:49)
-	at clojure.lang.RT.seq(RT.java:528)
-	at clojure.core$seq__5124.invokeStatic(core.clj:137)
-	at clojure.core$empty_QMARK_.invokeStatic(core.clj:6126)
-	at clojure.core$empty_QMARK_.invoke(core.clj:6126)
-	at manifold.stream.seq.SeqSource.take(seq.clj:41)
-	at manifold.stream.graph$sync_connect$f__35688__auto____37643.invoke(graph.clj:255)
-	at clojure.lang.AFn.run(AFn.java:22)
-	at io.aleph.dirigiste.Executor$3.run(Executor.java:308)
-	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
-	at manifold.executor$thread_factory$reify__35570$f__35571.invoke(executor.clj:44)
-	at clojure.lang.AFn.run(AFn.java:22)
-	at java.lang.Thread.run(Thread.java:748)
-2018-09-09 09:17:41,515 [manifold-pool-2-16] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 09:17:41,519 [manifold-pool-2-16] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 09:19:14,053 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 09:19:14,058 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 09:19:14,059 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 09:19:14,089 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 09:19:14,089 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 09:19:14,089 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 09:19:14,090 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 09:20:07,819 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 09:20:08,152 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 09:20:08,424 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 09:20:08,492 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 09:20:08,492 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 09:20:08,492 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 09:20:08,492 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 09:20:08,493 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 10:41:15,204 [manifold-pool-2-81] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:41:15,223 [manifold-pool-2-81] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 10:41:45,144 [manifold-pool-2-81] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:41:45,144 [manifold-pool-2-81] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 10:42:08,059 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 10:42:08,144 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 10:42:08,144 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:42:08,268 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 10:42:08,301 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 10:42:08,301 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 10:42:08,301 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 10:43:12,380 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 10:43:12,611 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 10:43:12,901 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 10:43:12,952 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 10:43:12,953 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 10:43:12,953 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 10:43:12,953 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 10:43:12,953 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 10:48:18,152 [manifold-pool-2-8] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:48:18,161 [manifold-pool-2-8] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 10:50:58,171 [manifold-pool-2-8] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:50:58,172 [manifold-pool-2-8] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 10:54:45,080 [manifold-pool-2-20] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:54:45,103 [manifold-pool-2-20] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 10:55:55,068 [manifold-pool-2-21] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 10:55:55,069 [manifold-pool-2-21] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 11:00:27,635 [manifold-pool-2-28] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 11:00:27,654 [manifold-pool-2-28] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 11:21:51,459 [manifold-pool-2-42] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 11:21:51,475 [manifold-pool-2-42] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 11:46:50,078 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 11:46:50,756 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 11:46:50,772 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 11:46:51,898 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 11:46:51,898 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 11:46:51,899 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 11:46:51,899 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 11:48:53,196 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 11:48:53,786 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 11:48:54,243 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 11:48:54,315 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 11:48:54,316 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 11:48:54,316 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 11:48:54,316 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 11:48:54,316 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 11:49:50,671 [manifold-pool-2-1] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 11:49:50,679 [manifold-pool-2-1] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 12:05:26,656 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 12:05:26,693 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 12:05:26,698 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 12:05:26,739 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 12:05:26,740 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 12:05:26,740 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 12:05:26,740 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 12:07:15,764 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 12:07:16,269 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 12:07:16,796 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 12:07:16,885 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 12:07:16,886 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 12:07:16,886 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 12:07:16,886 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 12:07:16,886 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 12:11:33,308 [manifold-pool-2-13] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 12:11:33,326 [manifold-pool-2-13] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 12:21:36,661 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 12:21:36,676 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 12:21:36,682 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 12:21:36,728 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 12:21:36,728 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 12:21:36,728 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 12:21:36,728 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 12:23:21,863 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 12:23:22,452 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 12:23:22,884 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 12:23:22,955 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 12:23:22,956 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 12:23:22,956 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 12:23:22,956 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 12:23:22,956 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 12:38:16,657 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 12:38:16,662 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 12:38:16,664 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 12:38:16,683 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 12:38:16,683 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 12:38:16,684 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 12:38:16,684 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 14:05:04,249 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 14:05:04,523 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 14:05:04,713 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 14:05:04,751 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 14:05:04,751 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 14:05:04,751 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 14:05:04,752 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 14:05:04,752 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 14:05:27,195 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 14:05:27,202 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 14:05:27,209 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 14:05:27,234 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 14:05:27,234 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 14:05:27,235 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 14:05:27,235 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 14:45:01,358 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 14:45:01,886 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 14:45:02,355 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 14:45:02,434 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 14:45:02,435 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 14:45:02,435 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 14:45:02,435 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 14:45:02,435 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 14:53:34,703 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 14:53:34,710 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 14:53:34,711 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 14:53:34,735 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 14:53:34,735 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 14:53:34,736 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 14:53:34,736 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 14:57:32,073 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 14:57:32,650 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 14:57:33,027 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 14:57:33,127 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 14:57:33,128 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 14:57:33,128 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 14:57:33,129 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 14:57:33,129 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 15:02:25,359 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 15:02:25,366 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 15:02:25,368 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 15:02:25,393 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 15:02:25,394 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 15:02:25,394 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 15:02:25,394 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 15:03:14,801 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 15:03:15,065 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 15:03:15,251 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 15:03:15,294 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 15:03:15,295 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 15:03:15,295 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 15:03:15,295 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 15:03:15,295 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 15:08:04,064 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 15:08:04,068 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 15:08:04,069 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 15:08:04,095 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 15:08:04,095 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 15:08:04,095 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 15:08:04,095 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 15:09:29,425 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 15:09:29,978 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 15:09:30,391 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 15:09:30,467 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 15:09:30,467 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 15:09:30,467 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 15:09:30,468 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 15:09:30,468 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 15:11:49,795 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 15:11:49,802 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 15:11:49,803 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 15:11:49,827 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 15:11:49,827 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 15:11:49,827 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 15:11:49,827 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 15:35:38,778 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 15:35:39,366 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 15:35:39,827 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 15:35:39,930 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 15:35:39,931 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 15:35:39,931 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 15:35:39,931 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 15:35:39,931 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 15:49:05,311 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 15:49:05,332 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 15:49:05,333 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 15:49:05,358 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 15:49:05,359 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 15:49:05,359 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 15:49:05,360 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 16:38:00,473 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2018-09-09 16:38:00,794 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2018-09-09 16:38:00,993 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2018-09-09 16:38:01,040 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2018-09-09 16:38:01,041 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2018-09-09 16:38:01,041 [main] INFO  spachat.core - #'spachat.handler/app started 
-2018-09-09 16:38:01,041 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2018-09-09 16:38:01,041 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2018-09-09 16:40:52,316 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2018-09-09 16:40:52,326 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2018-09-09 16:40:52,328 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2018-09-09 16:40:52,362 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2018-09-09 16:40:52,363 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2018-09-09 16:40:52,366 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2018-09-09 16:40:52,366 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2018-09-09 16:50:46,391 [main] INFO  migratus.core - Starting migrations 
-2018-09-09 16:50:46,405 [main] ERROR migratus.database - Error creating DB connection for  
-java.lang.IllegalArgumentException: db-spec null is missing a required parameter
-	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:409)
-	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
-	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:298)
-	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
-	at migratus.database$connect_STAR_$fn__42477.invoke(database.clj:111)
-	at migratus.database$connect_STAR_.invokeStatic(database.clj:110)
-	at migratus.database$connect_STAR_.invoke(database.clj:108)
-	at migratus.database.Database.connect(database.clj:241)
-	at migratus.core$run.invokeStatic(core.clj:24)
-	at migratus.core$run.invoke(core.clj:21)
-	at migratus.core$migrate.invokeStatic(core.clj:78)
-	at migratus.core$migrate.invoke(core.clj:73)
-	at luminus_migrations.core$fn__42640.invokeStatic(core.clj:44)
-	at luminus_migrations.core$fn__42640.invoke(core.clj:41)
-	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
-	at luminus_migrations.core$migrate.invoke(core.clj:83)
-	at spachat.core$_main.invokeStatic(core.clj:62)
-	at spachat.core$_main.doInvoke(core.clj:49)
-	at clojure.lang.RestFn.invoke(RestFn.java:408)
-	at clojure.lang.Var.invoke(Var.java:381)
-	at user$eval43301.invokeStatic(form-init2307993381383380087.clj:1)
-	at user$eval43301.invoke(form-init2307993381383380087.clj:1)
+2019-01-30 10:02:20,945 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+java.sql.SQLException: Access denied for user 'chat'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at hikari_cp.core$make_datasource.invokeStatic(core.clj:251)
+	at hikari_cp.core$make_datasource.invoke(core.clj:248)
+	at conman.core$connect_BANG_.invokeStatic(core.clj:151)
+	at conman.core$connect_BANG_.invoke(core.clj:147)
+	at spachat.db.core$eval33391$fn__33392.invoke(core.clj:14)
+	at mount.core$record_BANG_.invokeStatic(core.cljc:74)
+	at mount.core$record_BANG_.invoke(core.cljc:73)
+	at mount.core$up$fn__295.invoke(core.cljc:81)
+	at mount.core$up.invokeStatic(core.cljc:80)
+	at mount.core$up.invoke(core.cljc:78)
+	at mount.core$bring.invokeStatic(core.cljc:247)
+	at mount.core$bring.invoke(core.cljc:239)
+	at mount.core$start.invokeStatic(core.cljc:289)
+	at mount.core$start.doInvoke(core.cljc:281)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at mount.core$start_with_args.invokeStatic(core.cljc:389)
+	at mount.core$start_with_args.doInvoke(core.cljc:385)
+	at clojure.lang.RestFn.invoke(RestFn.java:410)
+	at spachat.core$start_app.invokeStatic(core.clj:41)
+	at spachat.core$start_app.invoke(core.clj:40)
+	at spachat.core$_main.invokeStatic(core.clj:64)
+	at spachat.core$_main.doInvoke(core.clj:48)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval45725.invokeStatic(form-init2353127472135522744.clj:1)
+	at user$eval45725.invoke(form-init2353127472135522744.clj:1)
 	at clojure.lang.Compiler.eval(Compiler.java:7062)
 	at clojure.lang.Compiler.eval(Compiler.java:7052)
 	at clojure.lang.Compiler.load(Compiler.java:7514)
@@ -384,86 +55,20 @@ java.lang.IllegalArgumentException: db-spec null is missing a required parameter
 	at clojure.lang.RestFn.applyTo(RestFn.java:137)
 	at clojure.lang.Var.applyTo(Var.java:702)
 	at clojure.main.main(main.java:37)
-2018-09-09 16:50:46,407 [main] INFO  migratus.core - Ending migrations 
-2018-09-09 16:56:52,660 [main] INFO  migratus.core - Starting migrations 
-2018-09-09 16:56:52,681 [main] ERROR migratus.database - Error creating DB connection for  
-java.lang.IllegalArgumentException: db-spec null is missing a required parameter
-	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:409)
-	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
-	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:298)
-	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
-	at migratus.database$connect_STAR_$fn__42477.invoke(database.clj:111)
-	at migratus.database$connect_STAR_.invokeStatic(database.clj:110)
-	at migratus.database$connect_STAR_.invoke(database.clj:108)
-	at migratus.database.Database.connect(database.clj:241)
-	at migratus.core$run.invokeStatic(core.clj:24)
-	at migratus.core$run.invoke(core.clj:21)
-	at migratus.core$migrate.invokeStatic(core.clj:78)
-	at migratus.core$migrate.invoke(core.clj:73)
-	at luminus_migrations.core$fn__42640.invokeStatic(core.clj:44)
-	at luminus_migrations.core$fn__42640.invoke(core.clj:41)
-	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
-	at luminus_migrations.core$migrate.invoke(core.clj:83)
-	at spachat.core$_main.invokeStatic(core.clj:62)
-	at spachat.core$_main.doInvoke(core.clj:49)
-	at clojure.lang.RestFn.invoke(RestFn.java:408)
-	at clojure.lang.Var.invoke(Var.java:381)
-	at user$eval43301.invokeStatic(form-init1890786657863640712.clj:1)
-	at user$eval43301.invoke(form-init1890786657863640712.clj:1)
-	at clojure.lang.Compiler.eval(Compiler.java:7062)
-	at clojure.lang.Compiler.eval(Compiler.java:7052)
-	at clojure.lang.Compiler.load(Compiler.java:7514)
-	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
-	at clojure.main$load_script.invokeStatic(main.clj:278)
-	at clojure.main$init_opt.invokeStatic(main.clj:280)
-	at clojure.main$init_opt.invoke(main.clj:280)
-	at clojure.main$initialize.invokeStatic(main.clj:311)
-	at clojure.main$null_opt.invokeStatic(main.clj:345)
-	at clojure.main$null_opt.invoke(main.clj:342)
-	at clojure.main$main.invokeStatic(main.clj:424)
-	at clojure.main$main.doInvoke(main.clj:387)
-	at clojure.lang.RestFn.applyTo(RestFn.java:137)
-	at clojure.lang.Var.applyTo(Var.java:702)
-	at clojure.main.main(main.java:37)
-2018-09-09 16:56:52,682 [main] INFO  migratus.core - Ending migrations 
-2018-09-09 16:58:34,561 [main] INFO  migratus.core - Starting migrations 
-2018-09-09 16:58:34,574 [main] ERROR migratus.database - Error creating DB connection for  
-java.lang.IllegalArgumentException: db-spec null is missing a required parameter
-	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:409)
-	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
-	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:298)
-	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
-	at migratus.database$connect_STAR_$fn__42477.invoke(database.clj:111)
-	at migratus.database$connect_STAR_.invokeStatic(database.clj:110)
-	at migratus.database$connect_STAR_.invoke(database.clj:108)
-	at migratus.database.Database.connect(database.clj:241)
-	at migratus.core$run.invokeStatic(core.clj:24)
-	at migratus.core$run.invoke(core.clj:21)
-	at migratus.core$migrate.invokeStatic(core.clj:78)
-	at migratus.core$migrate.invoke(core.clj:73)
-	at luminus_migrations.core$fn__42640.invokeStatic(core.clj:44)
-	at luminus_migrations.core$fn__42640.invoke(core.clj:41)
-	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
-	at luminus_migrations.core$migrate.invoke(core.clj:83)
-	at spachat.core$_main.invokeStatic(core.clj:62)
-	at spachat.core$_main.doInvoke(core.clj:49)
-	at clojure.lang.RestFn.invoke(RestFn.java:408)
-	at clojure.lang.Var.invoke(Var.java:381)
-	at user$eval43301.invokeStatic(form-init7975800836284152866.clj:1)
-	at user$eval43301.invoke(form-init7975800836284152866.clj:1)
-	at clojure.lang.Compiler.eval(Compiler.java:7062)
-	at clojure.lang.Compiler.eval(Compiler.java:7052)
-	at clojure.lang.Compiler.load(Compiler.java:7514)
-	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
-	at clojure.main$load_script.invokeStatic(main.clj:278)
-	at clojure.main$init_opt.invokeStatic(main.clj:280)
-	at clojure.main$init_opt.invoke(main.clj:280)
-	at clojure.main$initialize.invokeStatic(main.clj:311)
-	at clojure.main$null_opt.invokeStatic(main.clj:345)
-	at clojure.main$null_opt.invoke(main.clj:342)
-	at clojure.main$main.invokeStatic(main.clj:424)
-	at clojure.main$main.doInvoke(main.clj:387)
-	at clojure.lang.RestFn.applyTo(RestFn.java:137)
-	at clojure.lang.Var.applyTo(Var.java:702)
-	at clojure.main.main(main.java:37)
-2018-09-09 16:58:34,576 [main] INFO  migratus.core - Ending migrations 
+2019-01-30 11:55:21,317 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-01-30 11:55:21,480 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-01-30 11:55:21,667 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
+2019-01-30 11:55:21,688 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-01-30 11:55:21,688 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-01-30 11:55:21,688 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-01-30 11:55:21,688 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-01-30 11:55:21,688 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-01-30 11:56:59,756 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
+2019-01-30 11:56:59,764 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-01-30 11:56:59,765 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-01-30 11:56:59,783 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-01-30 11:56:59,783 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-01-30 11:56:59,783 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-01-30 11:56:59,783 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
