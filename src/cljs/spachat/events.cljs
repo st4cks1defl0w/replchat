@@ -72,29 +72,26 @@
                    :format request-format
                    :response-format response-format
                    :on-success [:signup-submit-success]
-                   :on-failure [:signup-submit-falure]}})))
+                   :on-failure [:signup-submit-failure]}})))
 
 (rf/reg-event-db
  :signup-submit-success
  trim-v
  (fn
-   [db [{:keys [ok okCookie errorText]}]]
-   (if ok
+   [db [{:keys [okCookie]}]]
+   (assoc db
+          :lastchat 0
+          :page :chat
+          :spaCookie okCookie)))
 
-     (assoc db
-            :lastchat 0
-            :page :chat
-            :spaCookie okCookie)
-
-     (assoc db
-            :signupPasswordValue ""
-            :sign-in-error errorText))))
-
-(rf/reg-event-db
- :signup-submit-falure
+(rf/reg-event-fx
+ :signup-submit-failure
+ trim-v
  (fn
-   [db _]
-   (assoc db :noserver true)))
+   [{:keys [db]} [{:keys [response]}]]
+   (let [{:keys [errorText] :or {errorText "Unknown error"}} response]
+     {:db (assoc db :noserver true :signup-password "")
+     :dispatch [:snackbar-home errorText]})))
 
 (rf/reg-fx
  :get-chats-visuals!
