@@ -96,11 +96,19 @@
    [db _]
    (assoc db :noserver true)))
 
+(rf/reg-fx
+ :get-chats-visuals!
+ (fn []
+   (when-let [chat-container (.getElementById js/document "chats-container")]
+     (js/setTimeout #(set! (.-scrollTop chat-container)
+                           (.-scrollHeight chat-container)) 50))))
+
 (rf/reg-event-fx
  :get-chats
  (fn
    [{:keys [db]} _]
    {:db db
+    :get-chats-visuals! nil
     :http-xhrio {:method :post
                  :uri "/API/getChat"
                  :format request-format
@@ -137,15 +145,14 @@
  :api-send-message-success
  trim-v
  (fn
-   [{:keys [db]} [{:keys [ok]}]]
+   [{:keys [db]} _]
    {:db db
-    :dispatch-n (list (when ok [:get-chats]))}))
+    :dispatch-n (list [:snackbar-home "Message sent"] [:get-chats])}))
 
 (rf/reg-event-db
  :api-send-message-failure
  (fn
    [db _]
-   (println "fail :((((((((((((((((((()))))))))))))))))))")
    (assoc db :noserver true)))
 
 (rf/reg-event-fx

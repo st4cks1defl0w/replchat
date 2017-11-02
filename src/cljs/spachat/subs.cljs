@@ -48,6 +48,6 @@
    (:snackbar-home db)))
 
 (rf/reg-sub
- :onlineUsersNow
+ :online-now
  (fn [db _]
    (:onlineUsersNow db)))

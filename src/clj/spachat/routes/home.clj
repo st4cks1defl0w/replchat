@@ -38,7 +38,7 @@
             (db/put-cookie {:cookie new-cookie :username username})
             (response/ok {:ok true
                           :okCookie new-cookie}))
-     ;;a vacant username was entered
+     ;;a vacant username entered
           (empty? existing-username)
           (let [new-cookie (rnd-str 64)]
             (println "creating new user" username)
@@ -66,7 +66,9 @@
         put-message (get params :message)
         cookie-check (db/get-cookie {:cookie put-cookie})]
     (if (= put-user (get cookie-check :username))
-      (do (db/put-chat {:text put-message :author (get cookie-check :id) :stamp (t/now)})
+      (do (db/put-chat {:text put-message
+                        :author (get cookie-check :id)
+                        :stamp (t/now)})
           (response/ok {:ok true}))
       (response/ok {:ok false}))))
 

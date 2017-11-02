@@ -1,6 +1,7 @@
 (ns spachat.core
   (:require [ajax.core :refer [GET POST]]
-            [cljs-time.format :as tformat]
+            [cljs-time.coerce :as time.coerce]
+            [cljs-time.format :as time.format]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
             [markdown.core :refer [md->html]]
@@ -15,7 +16,7 @@
             goog.History)
   (:import goog.History))
 
-(def formatterTime (tformat/formatter "yyyyMMdd"))
+(def time-format (time.format/formatters :mysql))
 
 (defonce app-state (atom {:text "spachat"}))
 
@@ -27,36 +28,39 @@
     [mui/typography {:variant "h6"}
      [icon/chat {:style {:margin-right "10px"}}] "SPACHAT"]]])
 
-(defn scroll-chats-down!
-  "Keeps chat container scrolled to the bottom with classic css (noflex) (hacky)"
-  []
-  (when-let [chat-container (.getElementById js/document "chats-container")]
-    (set! (.-scrollTop chat-container) 10000000)))
 
-(def ^:private message-view-yours-styles {:justify :flex-end
-                                          :style {:padding "0.5em"}})
+(defn message-view-styles [own-message?]
+  (let [justify (if own-message?
+                  :flex-end
+                  :flex-start)
+        background (if own-message?
+                     :inherit
+                     (mui/color :grey 300))]
+    {:container-style {:container true
+                       :justify justify
+                       :style {:padding "0.5em"}}
+     :message-box-style {:style {:padding "0.5em"
+                                 :background-color background}}}))
 
-(def ^:private message-view-others-styles {:justify :flex-start
-                                           :style {:padding "0.5em"}})
+
+(defn- timestamp->formatted-time [stamp]
+  (time.format/unparse time-format (time.coerce/from-long stamp)))
 
 (defn message-view [{:keys [username text stamp]} msg-component]
-  (if (= username @(rf/subscribe [:signup-user]))
-    [mui/grid (merge {:container true} message-view-yours-styles)
-     [mui/grid {:container true}
-      [mui/typography {:variant :h6} text]]
-     [mui/grid {:container true}
-      [mui/typography {:variant :caption :style {:font-size "0.8em"}}
-       (str "- by You at "   (.toString stamp))]]]
-
-    [mui/grid (merge {:container true} message-view-others-styles)
-     [mui/grid {:container true}
-      [mui/typography {:variant :h6} text]]
-     [mui/grid {:container true}
-      [mui/typography {:variant :caption :style {:font-size "0.8em"}}
-       (str "- by " username " at "  (.toString stamp))]]]))
+  (let [own-message? (= username @(rf/subscribe [:signup-user]))
+        {:keys [container-style message-box-style]} (message-view-styles own-message?)]
+    [mui/grid container-style
+     [mui/paper message-box-style
+      [mui/grid {:container true}
+       [mui/typography {:variant :body2} text]]
+      [mui/grid {:container true}
+       [mui/typography {:variant :caption
+                        :style {:font-size "0.8em"
+                                :opacity 0.5}}
+        (str "- by " (if own-message? "You" username) " at ")
+        [:b (timestamp->formatted-time stamp)]]]]]))
 
 (defn chats [msgs]
-  (js/setTimeout scroll-chats-down! 50)
   [mui/grid {:container true}
    (for [message msgs]
      ^{:key message}
@@ -73,7 +77,7 @@
        [mui/typography
         {:variant "body1" :style {:font-family "monospace"}}
         [icon/account-circle {:style {:margin-right "10px"}}]
-        "hi, " @(rf/subscribe [:signup-user])]]
+        "hi, " @(rf/subscribe [:signup-user]) "!"]]
       [mui/card {:id "chats-container"
                  :elevation 1
                  :style {:overflow-y "scroll"
@@ -97,11 +101,16 @@
                      :style {:float "right"
                              :width "50px"
                              :margin-left "auto"}} "Send"]]]]
-     [:div {:style {:padding-top "10px"}}
-      "Users online now: "
-      (for [online-user @(rf/subscribe [:onlineUsersNow])]
+     [mui/grid {:container true
+                :style {:padding-top "1em"}}
+      [mui/typography {:variant :subtitle1
+                       :paragraph true
+                       :style {:padding-right "0.5em"}}
+       "Users online now: "]
+      (for [online-user @(rf/subscribe [:online-now])]
         ^{:key online-user}
-        [mui/chip {:label (:username online-user)}])]]))
+        [mui/chip {:label (:username online-user)
+                   :style {:opacity 0.6}}])]]))
 
 (defn home-page []
   [mui/grid {:justify :center :container true :style {:padding "2em"}}
@@ -140,26 +149,25 @@
   "MaterialUI theme"
   (mui/create-mui-theme
    (clj->js
-    {:palette {#_:type #_:dark
-               :primary {:main (mui/color :red 200)}
+    {:palette {:primary {:main (mui/color :red 200)}
                :secondary {:main (mui/color :red 200)}}
      :typography {:useNextVariants true}})))
 
-(defn page
-  "app template"
-  []
-  [mui/mui-theme-provider {:theme material-theme}
-   (let [snackbar-message @(rf/subscribe [:snackbar-home])]
-     [mui/snackbar {:open (some? snackbar-message)
+(defn snackbar-view []
+  (let [snackbar-message @(rf/subscribe [:snackbar-home])]
+    [mui/snackbar {:open (some? snackbar-message)
                    :message snackbar-message
                    :anchorOrigin {:vertical "bottom"
                                   :horizontal "left"}
                    :autoHideDuration 3000
-                   :onClose #(rf/dispatch [:snackbar-home nil])}])
+                   :onClose #(rf/dispatch [:snackbar-home nil])}]))
+(defn page
+  "app template"
+  []
+  [mui/mui-theme-provider {:theme material-theme}
+   [snackbar-view]
    [navbar]
    [(pages @(rf/subscribe [:page]))]])
-
-(some? @(rf/subscribe [:snackbar-home]))
 
 ;;routes section
 (secretary/set-config! :prefix "#")
