@@ -270,3 +270,62 @@ java.io.IOException: Stream closed
 2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.handler/app started 
 2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.core/http-server started 
 2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-02 20:15:55,429 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
+2019-02-02 20:15:55,434 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-02 20:15:55,436 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-02 20:15:55,443 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-02 20:15:55,444 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-02 20:15:55,444 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-02 20:15:55,444 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-02 20:18:31,372 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-02 20:18:31,495 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-02 20:18:31,615 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
+2019-02-02 20:18:31,635 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-02 21:06:57,347 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
+2019-02-02 21:06:57,350 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-02 21:06:57,351 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-02 21:07:27,925 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-02 21:07:28,063 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-02 21:07:28,179 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
+2019-02-02 21:07:28,199 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-02 21:07:28,199 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-02 21:07:28,199 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-02 21:07:28,200 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-02 21:07:28,200 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-02 21:08:31,717 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
+2019-02-02 21:08:31,723 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-02 21:08:31,725 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-02 21:09:39,629 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-02 21:09:39,824 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-02 21:09:40,015 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
+2019-02-02 21:09:40,040 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-02 21:09:40,040 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-02 21:09:40,041 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-02 21:09:40,041 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-02 21:09:40,041 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-02 21:15:57,313 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
+2019-02-02 21:15:57,317 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-02 21:15:57,318 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-02 21:15:57,334 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-02 21:15:57,334 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-02 21:15:57,334 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-02 21:15:57,335 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 

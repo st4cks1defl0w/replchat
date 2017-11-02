@@ -1,7 +1,7 @@
-(ns spachat.icon
-  (:require [reagent.core :as r]
+(ns spachat.icons
+  (:require material-ui-icons
             [oops.core :as oops]
-            material-ui-icons))
+            [reagent.core :as r]))
 
 (def account-circle (r/adapt-react-class (oops/oget+ js/MaterialUIIcons "AccountCircle")))
 

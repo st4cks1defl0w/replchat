@@ -53,20 +53,20 @@
   :resource-paths ["resources" "target/cljsbuild"]
   :target-path "target/%s/"
   :main ^:skip-aot spachat.core
-  :plugins [[lein-cljsbuild "1.1.7"]
-            [lein-bikeshed "0.5.1"]
-            [lein-cljfmt "0.6.3"]]
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
   :figwheel
   {:http-server-root "public"
    :nrepl-port 7002
    :css-dirs ["resources/public/css"]
-   :nrepl-middleware
-   [cider/wrap-cljs-repl cider.piggieback/wrap-cljs-repl]}
-
-
-  :profiles
+   :nrepl-middleware [cider/wrap-cljs-repl cider.piggieback/wrap-cljs-repl]}
+  :aliases {"check-all"
+            ["do"
+             ["clean-m2"]
+             ["bikeshed" "check"]
+             ["eastwood"]
+             ["cljfmt" "check"]]}
+:profiles
   {:uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
              :cljsbuild
@@ -77,13 +77,9 @@
                 {:output-dir "target/cljsbuild/public/js"
                  :output-to "target/cljsbuild/public/js/app.js"
                  :source-map "target/cljsbuild/public/js/app.js.map"
-                 :optimizations :whitespace
-                 :pretty-print false
-                 :closure-warnings
-                 {:externs-validation :off :non-standard-jsdoc :off}
-                 :externs ["react/externs/react.js"]}}}}
-
-
+                 :optimizations :advanced
+                 :infer-externs true
+                 :pretty-print false}}}}
              :aot :all
              :uberjar-name "spachat.jar"
              :source-paths ["env/prod/clj"]
@@ -103,7 +99,13 @@
                                  [prone "1.6.1"]
                                  [ring/ring-devel "1.7.1"]
                                  [ring/ring-mock "0.3.2"]]
-                  :plugins      [[com.jakemccrary/lein-test-refresh "0.23.0"]
+                  :plugins      [[lein-cljsbuild "1.1.7"]
+                                 [lein-clean-m2 "0.1.2"]
+                                 [com.jakemccrary/lein-test-refresh "0.23.0"]
+                                 [lein-bikeshed "0.5.1"]
+                                 [lein-cljfmt "0.6.4"]
+                                 [lein-eftest "0.5.4"]
+                                 [jonase/eastwood "0.3.5"]
                                  [lein-doo "0.1.10"]
                                  [lein-figwheel "0.5.18"]]
                   :cljsbuild

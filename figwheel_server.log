@@ -41644,3 +41644,73 @@ notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/eve
 Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
 [32mSuccessfully compiled build :app to "target/cljsbuild/public/js/app.js" in 1.451 seconds.[0m
 notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/events.js
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[31mFailed to compile build :app from ["src/cljs" "src/cljc" "env/dev/cljs"] in 0.892 seconds.[0m
+[36m----  Could not Analyze  src/cljs/spachat/core.cljs  ----[0m
+
+  [1mNo such namespace: spachat.ajax, could not locate spachat/ajax.cljs, spachat/ajax.cljc, or JavaScript source providing "spachat.ajax" [0m
+
+[36m----  Analysis Error : Please see src/cljs/spachat/core.cljs  ----[0m
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[32mSuccessfully compiled build :app to "target/cljsbuild/public/js/app.js" in 2.787 seconds.[0m
+notifying browser that file changed:  target/cljsbuild/public/js/out/goog/deps.js
+notifying browser that file changed:  target/cljsbuild/public/js/out/cljs_deps.js
+notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/core.js
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[31mFailed to compile build :app from ["src/cljs" "src/cljc" "env/dev/cljs"] in 1.152 seconds.[0m
+[36m----  Exception    ----[0m
+
+  [1mAssert failed: file:/home/v/github/spachat/src/cljs/spachat/ajax.cljs does not provide a namespace
+(first provides)[0m
+
+[36m----  Exception Stack Trace  ----[0m
+
+
+                                                         [0mjava.lang.Thread.run[0m  [36m             Thread.java:  748[0m
+                           [0mjava.util.concurrent.ThreadPoolExecutor$Worker.run[0m  [36m ThreadPoolExecutor.java:  624[0m
+                            [0mjava.util.concurrent.ThreadPoolExecutor.runWorker[0m  [36m ThreadPoolExecutor.java: 1149[0m
+                                                                          [0m...[0m  [36m                              [0m
+                                          [0mclojure.core/binding-conveyor-fn/[34mfn[0m  [36m                core.clj: 2025[0m
+                                          [0mfigwheel-sidecar.utils/sync-exec/[34mfn[0m  [36m               utils.clj:   12[0m
+                                       [0mfigwheel-sidecar.utils/sync-exec/fn/[34mfn[0m  [36m               utils.clj:   13[0m
+                  [0mfigwheel-sidecar.components.cljs-autobuild/execute-build/[34mfn[0m  [36m      cljs_autobuild.clj:  234[0m
+                   [0mfigwheel-sidecar.components.cljs-autobuild/color-output/[34mfn[0m  [36m      cljs_autobuild.clj:   80[0m
+               [0mfigwheel-sidecar.build-middleware.javascript-reloading/hook/[34mfn[0m  [36mjavascript_reloading.clj:   48[0m
+                      [0mfigwheel-sidecar.build-middleware.clj-reloading/hook/[34mfn[0m  [36m       clj_reloading.clj:  111[0m
+                      [0mfigwheel-sidecar.build-middleware.notifications/hook/[34mfn[0m  [36m       notifications.clj:  179[0m
+[0mfigwheel-sidecar.components.cljs-autobuild/figwheel-start-and-end-messages/[34mfn[0m  [36m      cljs_autobuild.clj:   48[0m
+            [0mfigwheel-sidecar.components.cljs-autobuild/notify-command-hook/[34mfn[0m  [36m      cljs_autobuild.clj:   69[0m
+                          [0mfigwheel-sidecar.build-middleware.injection/hook/[34mfn[0m  [36m           injection.clj:   94[0m
+                        [0mfigwheel-sidecar.components.cljs-autobuild/[34mcljs-build[0m  [36m      cljs_autobuild.clj:   28[0m
+                                                         [0mcljs.build.api/[34mbuild[0m  [36m                 api.clj:  208[0m
+                                                           [0mcljs.closure/[34mbuild[0m  [36m             closure.clj: 2817[0m
+                                                 [0mcljs.closure/[34mcompile-sources[0m  [36m             closure.clj: 1007[0m
+                                                           [0mclojure.core/[34mdoall[0m  [36m                core.clj: 3140[0m
+                                                           [0mclojure.core/[34mdorun[0m  [36m                core.clj: 3134[0m
+                                                            [0mclojure.core/[34mnext[0m  [36m                core.clj:   64[0m
+                                                                          [0m...[0m  [36m                              [0m
+                                         [0mcljs.closure/compile-sources/iter/[34mfn[0m  [36m             closure.clj: 1011[0m
+                                                            [0mcljs.closure/fn/[34mG[0m  [36m             closure.clj:  521[0m
+                                                              [0mcljs.closure/[34mfn[0m  [36m             closure.clj:  653[0m
+                                                    [0mcljs.closure/[34mcompile-file[0m  [36m             closure.clj:  573[0m
+                                                   [0mcljs.closure/[34mcompiled-file[0m  [36m             closure.clj:  547[0m
+                                            [0mcljs.closure/[34mmap->javascript-file[0m  [36m             closure.clj:  480[0m
+                                                 [0mcljs.closure/[34mjavascript-file[0m  [36m             closure.clj:  475[0m
+[31mjava.lang.AssertionError[0m: [0mAssert failed: file:/home/v/github/spachat/src/cljs/spachat/ajax.cljs does not provide a namespace
+                          (first provides)[0m
+
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[32mSuccessfully compiled build :app to "target/cljsbuild/public/js/app.js" in 2.554 seconds.[0m
+notifying browser that file changed:  target/cljsbuild/public/js/out/goog/deps.js
+notifying browser that file changed:  target/cljsbuild/public/js/out/cljs_deps.js
+notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/ajax.js
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[32mSuccessfully compiled build :app to "target/cljsbuild/public/js/app.js" in 3.752 seconds.[0m
+notifying browser that file changed:  target/cljsbuild/public/js/out/cljs_deps.js
+notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/core.js
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[32mSuccessfully compiled build :app to "target/cljsbuild/public/js/app.js" in 2.02 seconds.[0m
+notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/core.js
+Compiling build :app to "target/cljsbuild/public/js/app.js" from ["src/cljs" "src/cljc" "env/dev/cljs"]...
+[32mSuccessfully compiled build :app to "target/cljsbuild/public/js/app.js" in 1.907 seconds.[0m
+notifying browser that file changed:  target/cljsbuild/public/js/out/spachat/ajax.js

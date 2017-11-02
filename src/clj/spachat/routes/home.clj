@@ -28,29 +28,29 @@
         existing-password (:password full-info)]
     (cond
       (or (empty? username)
-              (and (not (empty? existing-username))
-                   (not= existing-password (hashlib/md5 password))))
-          (response/bad-request {:errorText "Incorrect password for existing user"})
+          (and (not (empty? existing-username))
+               (not= existing-password (hashlib/md5 password))))
+      (response/bad-request {:errorText "Incorrect password for existing user"})
     ;;double-check specced pass
-          (not (s/valid? :spachat.spec/password password))
-          (response/bad-request {:errorText (str "Congrats! You sneaked past our "
-                                                 "cljs.spec, but not clj.spec though!")})
+      (not (s/valid? :spachat.spec/password password))
+      (response/bad-request {:errorText (str "Congrats! You sneaked past our "
+                                             "cljs.spec, but not clj.spec though!")})
      ;;user exists, pass is OK
-          (and (= username existing-username)
-               (= existing-password (hashlib/md5 password)))
-          (let [new-cookie (rnd-str 64)]
-            (println "successfull login form" existing-username)
-            (db/put-cookie {:cookie new-cookie :username username})
-            (response/ok {:okCookie new-cookie}))
+      (and (= username existing-username)
+           (= existing-password (hashlib/md5 password)))
+      (let [new-cookie (rnd-str 64)]
+        (println "successfull login form" existing-username)
+        (db/put-cookie {:cookie new-cookie :username username})
+        (response/ok {:okCookie new-cookie}))
      ;;a vacant username entered
-          (empty? existing-username)
-          (let [new-cookie (rnd-str 64)]
-            (println "creating new user" username)
-            (db/put-cookie-and-user {:username username
-                                     :password (hashlib/md5 password)
-                                     :cookie new-cookie
-                                     :signupdate (t/now)})
-            (response/ok {:okCookie new-cookie})))))
+      (empty? existing-username)
+      (let [new-cookie (rnd-str 64)]
+        (println "creating new user" username)
+        (db/put-cookie-and-user {:username username
+                                 :password (hashlib/md5 password)
+                                 :cookie new-cookie
+                                 :signupdate (t/now)})
+        (response/ok {:okCookie new-cookie})))))
 
 (defn- get-msgs-author-data
   "supplementary fn to get-chat to assoc author data"

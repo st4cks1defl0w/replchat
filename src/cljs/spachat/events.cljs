@@ -1,7 +1,7 @@
 (ns spachat.events
   (:require [ajax.core :as ajax]
-            [day8.re-frame.http-fx]
             [cljs.spec.alpha :as s]
+            [day8.re-frame.http-fx]
             spachat.spec
             [re-frame.core :as rf :refer [trim-v]]))
 
@@ -91,7 +91,7 @@
    [{:keys [db]} [{:keys [response]}]]
    (let [{:keys [errorText] :or {errorText "Unknown error"}} response]
      {:db (assoc db :noserver true :signup-password "")
-     :dispatch [:snackbar-home errorText]})))
+      :dispatch [:snackbar-home errorText]})))
 
 (rf/reg-fx
  :get-chats-visuals!

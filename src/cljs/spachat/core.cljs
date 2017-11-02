@@ -1,24 +1,21 @@
 (ns spachat.core
-  (:require [ajax.core :refer [GET POST]]
-            [cljs-time.coerce :as time.coerce]
+  (:require [cljs-time.coerce :as time.coerce]
             [cljs-time.format :as time.format]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
-            [markdown.core :refer [md->html]]
             [re-frame.core :as rf]
             [reagent.core :as reagent :refer [atom]]
             [secretary.core :as secretary]
             [spachat.ajax :as ajax]
+            [spachat.icons :as icons]
             [spachat.mui :as mui]
-            [spachat.icon :as icon]
-            [spachat.events]
-            [spachat.subs]
-            goog.History)
+            spachat.events
+            spachat.subs)
   (:import goog.History))
 
 (def time-format (time.format/formatters :mysql))
 
-(defonce app-state (atom {:text "spachat"}))
+(defonce app-state (atom {:text "SPACHAT"}))
 
 (defn navbar
   "Appwide navbar"
@@ -26,8 +23,7 @@
   [mui/app-bar {:position "static"}
    [mui/toolbar
     [mui/typography {:variant "h6"}
-     [icon/chat {:style {:margin-right "10px"}}] "SPACHAT"]]])
-
+     [icons/chat {:style {:margin-right "10px"}}] "SPACHAT"]]])
 
 (defn message-view-styles [own-message?]
   (let [justify (if own-message?
@@ -41,7 +37,6 @@
                        :style {:padding "0.5em"}}
      :message-box-style {:style {:padding "0.5em"
                                  :background-color background}}}))
-
 
 (defn- timestamp->formatted-time [stamp]
   (time.format/unparse time-format (time.coerce/from-long stamp)))
@@ -76,7 +71,7 @@
       [mui/grid {:style {:padding "1em"}}
        [mui/typography
         {:variant "body1" :style {:font-family "monospace"}}
-        [icon/account-circle {:style {:margin-right "10px"}}]
+        [icons/account-circle {:style {:margin-right "10px"}}]
         "hi, " @(rf/subscribe [:signup-user]) "!"]]
       [mui/card {:id "chats-container"
                  :elevation 1
@@ -125,12 +120,14 @@
      [mui/form-control {:required true :fullWidth true :margin :normal}
       [mui/input-label {:htmlFor "signup-user"} "Username"]
       [mui/input {:value @(rf/subscribe [:signup-user])
-                  :on-change #(rf/dispatch [:signup-user (-> % .-target .-value)])
+                  :on-change #(rf/dispatch [:signup-user
+                                            (-> % .-target .-value)])
                   :id "signup-user"}]]
      [mui/form-control {:fullWidth true :required true :margin :normal}
       [mui/input-label {:htmlFor "signup-password"} "Password"]
       [mui/input {:value  @(rf/subscribe [:signup-password])
-                  :on-change #(rf/dispatch [:signup-password (-> % .-target .-value)])
+                  :on-change #(rf/dispatch [:signup-password
+                                            (-> % .-target .-value)])
                   :fullWidth true
                   :type "password"
                   :id "signup-password"}]]
@@ -190,7 +187,7 @@
 (defn ping-with-interval! []
   (let [cookie @(rf/subscribe [:spaCookie])]
     (js/setInterval #(when (some? cookie)
-                      (rf/dispatch [:pinging-chat-user])) 10000)))
+                       (rf/dispatch [:pinging-chat-user])) 10000)))
 
 (defn mount-components []
   (rf/clear-subscription-cache!)

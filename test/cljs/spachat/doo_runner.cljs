@@ -3,4 +3,3 @@
             [spachat.core-test]))
 
 (doo-tests 'spachat.core-test)
-
