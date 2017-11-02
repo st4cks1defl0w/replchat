@@ -24,112 +24,113 @@
   []
   [mui/app-bar {:position "static"}
    [mui/toolbar
-    [mui/typography {:variant "h6" :style {:font-family "monospace"}}
+    [mui/typography {:variant "h6"}
      [icon/chat {:style {:margin-right "10px"}}] "SPACHAT"]]])
 
 (defn scroll-chats-down!
-  "keeps chat container scrolled to the bottom with classic css (noflex) (hacky)"
+  "Keeps chat container scrolled to the bottom with classic css (noflex) (hacky)"
   []
-  (let [chat-container (.getElementById js/document "chatsContainer")]
-    (when (not (nil? chat-container))
-      (set! (.-scrollTop chat-container) 10000000))))
+  (when-let [chat-container (.getElementById js/document "chats-container")]
+    (set! (.-scrollTop chat-container) 10000000)))
 
-(defn msgs-elements [{:keys [username text stamp]} msg-component]
-  (cond
-    (= username @(rf/subscribe [:signup-user]))
-    [:div #_{:style chat-bubble-yours}
-     text [:p {:style {:font-size "0.8em"}}
-           (str "- by You at "   (.toString stamp))]]
+(def ^:private message-view-yours-styles {:justify :flex-end
+                                          :style {:padding "0.5em"}})
 
-    :else
-    [:div #_{:style chat-bubble-others}
-     text [:p {:style {:font-size "0.8em"}}
-           (str "- by " username " at "  (.toString stamp))]]))
+(def ^:private message-view-others-styles {:justify :flex-start
+                                           :style {:padding "0.5em"}})
 
-(defn chat-element [msgs]
+(defn message-view [{:keys [username text stamp]} msg-component]
+  (if (= username @(rf/subscribe [:signup-user]))
+    [mui/grid (merge {:container true} message-view-yours-styles)
+     [mui/grid {:container true}
+      [mui/typography {:variant :h6} text]]
+     [mui/grid {:container true}
+      [mui/typography {:variant :caption :style {:font-size "0.8em"}}
+       (str "- by You at "   (.toString stamp))]]]
+
+    [mui/grid (merge {:container true} message-view-others-styles)
+     [mui/grid {:container true}
+      [mui/typography {:variant :h6} text]]
+     [mui/grid {:container true}
+      [mui/typography {:variant :caption :style {:font-size "0.8em"}}
+       (str "- by " username " at "  (.toString stamp))]]]))
+
+(defn chats [msgs]
   (js/setTimeout scroll-chats-down! 50)
-  (into [:ul] (map msgs-elements msgs)))
+  [mui/grid {:container true}
+   (for [message msgs]
+     ^{:key message}
+     [message-view message])])
 
 (defn chat-page []
-  (let [_on-load! (rf/dispatch [:pingingChatUser])]
+  (let [_on-load! (rf/dispatch [:pinging-chat-user])]
     [:div {:style {:padding-top "40px"
                    :width "50%"
                    :max-width "500px"
                    :margin "0 auto"}}
      [mui/paper {:elevation 1 :style {}}
-      [mui/app-bar {:style {:position "static" :padding "10px"}}
+      [mui/grid {:style {:padding "1em"}}
        [mui/typography
-        {:variant "h5"}
-        #_[mui/icon
-           #_{:color "inherit"
-            :style {:margin-left "0px"
-                    :margin-right "5px"
-                    :vertical-align "0.1em"}}
-           "Delete"] "Hi, " @(rf/subscribe [:signup-user])]]
-      [mui/card {:id "chatsContainer"
+        {:variant "body1" :style {:font-family "monospace"}}
+        [icon/account-circle {:style {:margin-right "10px"}}]
+        "hi, " @(rf/subscribe [:signup-user])]]
+      [mui/card {:id "chats-container"
                  :elevation 1
                  :style {:overflow-y "scroll"
                          :padding "5px"
                          :height "40vh"}}
-       [chat-element @(rf/subscribe [:chats])]]
+       [chats @(rf/subscribe [:chats])]]
       [mui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
        [mui/form-control {:style {:width "60%"}}
-        [mui/input-label {:htmlFor "sendMessage"} "Send Message"]
-        [mui/input {:value @(rf/subscribe [:sendMessage])
-                    :id "sendMessage"
+        [mui/input-label {:htmlFor "send-message"} "Send Message"]
+        [mui/input {:value @(rf/subscribe [:send-message])
+                    :id "send-message"
                     :multiline true
                     :rows 3
                     :on-change
-                    #(rf/dispatch [:sendMessage (-> % .-target .-value)])}]]
+                    #(rf/dispatch [:send-message (-> % .-target .-value)])}]]
        [mui/form-control {:style {:width "40%"}}
-        [mui/button {:on-click  #(rf/dispatch [:sendMessageGo])
+        [mui/button {:on-click  #(rf/dispatch [:send-message-go])
                      :variant "contained"
                      :color "primary"
-                     :id "sendMessageGo"
+                     :id "send-message-go"
                      :style {:float "right"
                              :width "50px"
                              :margin-left "auto"}} "Send"]]]]
      [:div {:style {:padding-top "10px"}}
       "Users online now: "
-      (map #(vector mui/chip {:label (:username %)})
-           @(rf/subscribe [:onlineUsersNow]))]]))
+      (for [online-user @(rf/subscribe [:onlineUsersNow])]
+        ^{:key online-user}
+        [mui/chip {:label (:username online-user)}])]]))
 
 (defn home-page []
   [mui/grid {:justify :center :container true :style {:padding "2em"}}
-   [mui/grid {:xs 6 :sm 3}
-    (let [sign-in-error @(rf/subscribe [:sign-in-error])]
-      (when (some? sign-in-error)
-        (js/setTimeout  #(rf/dispatch [:reset-sign-in-error]) 3000)
-        [mui/snackbar {:open true
-                       :message "Wrong Password"
-                       :anchorOrigin {:vertical "bottom"
-                                      :horizontal "left"}
-                       :autoHideDuration 2}])
-      [mui/paper {:elevation 1 :style {:padding "20px"}}
-       [mui/typography
-        {:variant "h5"}
-        "Sign In / Sign Up"]
-       [mui/typography
-        {:variant "body1"}
-        "If you don't have a username, you'll be signed up"]
-       [mui/form-control {:required true :fullWidth true :margin :normal}
-        [mui/input-label {:htmlFor "signup-user"} "Username"]
-        [mui/input {:value @(rf/subscribe [:signup-user])
-                    :on-change #(rf/dispatch [:signup-user (-> % .-target .-value)])
-                    :id "signup-user"}]]
-       [mui/form-control {:fullWidth true :required true :margin :normal}
-        [mui/input-label {:htmlFor "signup-password"} "Password"]
-        [mui/input {:value  @(rf/subscribe [:signup-password])
-                    :on-change #(rf/dispatch [:signup-password (-> % .-target .-value)])
-                    :fullWidth true
-                    :type "password"
-                    :id "signup-password"}]]
-       [mui/form-control {:margin :normal}
-        [mui/button {:on-click #(rf/dispatch [:signup-submit])
-                     :variant "contained"
-                     :color "primary"
-                     :id "signup-submit"}
-         "Go"]]])]])
+   [mui/grid {:xs 6 :md 3 :item true}
+    [mui/paper {:elevation 1 :style {:padding "20px"}}
+     [mui/typography
+      {:variant "h5"}
+      "Sign In / Sign Up"]
+     [mui/typography
+      {:variant "body1"}
+      "If you don't have a username, you'll be signed up"]
+     [mui/form-control {:required true :fullWidth true :margin :normal}
+      [mui/input-label {:htmlFor "signup-user"} "Username"]
+      [mui/input {:value @(rf/subscribe [:signup-user])
+                  :on-change #(rf/dispatch [:signup-user (-> % .-target .-value)])
+                  :id "signup-user"}]]
+     [mui/form-control {:fullWidth true :required true :margin :normal}
+      [mui/input-label {:htmlFor "signup-password"} "Password"]
+      [mui/input {:value  @(rf/subscribe [:signup-password])
+                  :on-change #(rf/dispatch [:signup-password (-> % .-target .-value)])
+                  :fullWidth true
+                  :type "password"
+                  :id "signup-password"}]]
+     [mui/form-control {:margin :normal}
+      [mui/button {:on-click #(rf/dispatch [:signup-check-pass])
+                   :variant "contained"
+                   :color "primary"
+                   :id "signup-submit"}
+       "Go"]]]]])
 
 (def pages
   {:home #'home-page
@@ -139,7 +140,7 @@
   "MaterialUI theme"
   (mui/create-mui-theme
    (clj->js
-    {:palette {:type :dark
+    {:palette {#_:type #_:dark
                :primary {:main (mui/color :red 200)}
                :secondary {:main (mui/color :red 200)}}
      :typography {:useNextVariants true}})))
@@ -148,8 +149,17 @@
   "app template"
   []
   [mui/mui-theme-provider {:theme material-theme}
+   (let [snackbar-message @(rf/subscribe [:snackbar-home])]
+     [mui/snackbar {:open (some? snackbar-message)
+                   :message snackbar-message
+                   :anchorOrigin {:vertical "bottom"
+                                  :horizontal "left"}
+                   :autoHideDuration 3000
+                   :onClose #(rf/dispatch [:snackbar-home nil])}])
    [navbar]
    [(pages @(rf/subscribe [:page]))]])
+
+(some? @(rf/subscribe [:snackbar-home]))
 
 ;;routes section
 (secretary/set-config! :prefix "#")
@@ -169,8 +179,10 @@
        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
 
-(defn ping-with-interval []
-  (js/setInterval #(rf/dispatch [:pinging-chat-user]) 10000))
+(defn ping-with-interval! []
+  (let [cookie @(rf/subscribe [:spaCookie])]
+    (js/setInterval #(when (some? cookie)
+                      (rf/dispatch [:pinging-chat-user])) 10000)))
 
 (defn mount-components []
   (rf/clear-subscription-cache!)
@@ -181,4 +193,4 @@
   (ajax/load-interceptors!)
   (hook-browser-navigation!)
   (mount-components)
-  (ping-with-interval))
+  (ping-with-interval!))

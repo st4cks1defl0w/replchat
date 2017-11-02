@@ -30,17 +30,22 @@
 (rf/reg-sub
  :signup-user
  (fn [db _]
-   (:signup-user db)))
+   (or (:signup-user db) "")))
 
 (rf/reg-sub
  :signup-password
  (fn [db _]
-   (:signup-password db)))
+   (or (:signup-password db) "")))
 
 (rf/reg-sub
- :sendMessage
+ :send-message
  (fn [db _]
-   (:sendMessage db)))
+   (or (:send-message db) "")))
+
+(rf/reg-sub
+ :snackbar-home
+ (fn [db _]
+   (:snackbar-home db)))
 
 (rf/reg-sub
  :onlineUsersNow
