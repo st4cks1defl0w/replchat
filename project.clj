@@ -4,7 +4,9 @@
   :url "http://example.com/FIXME"
 
   :dependencies [[baking-soda "0.2.0" :exclusions [cljsjs/react-bootstrap]]
+                 [binaryage/oops "0.6.4"]
                  [ch.qos.logback/logback-classic "1.2.3"]
+                 [camel-snake-kebab "0.4.0"]
                  [clj-time "0.15.1"]
                  [cljs-ajax "0.8.0"]
                  [cljsjs/react-popper "0.10.4-0"]
@@ -39,12 +41,11 @@
                  [ring/ring-core "1.7.1"]
                  [ring/ring-defaults "0.3.2"]
                  [secretary "1.2.3"]
-[cljsjs/material-ui "3.9.1-0"]
-[org.clojars.melodylane/cljs-react-material-ui "1.4.0-0.1"]
-[digest "1.4.8"]
-[com.andrewmcveigh/cljs-time "0.5.2"]
+                 [cljsjs/material-ui "3.9.1-0"]
+                 [cljsjs/material-ui-icons "3.0.1-0"]
+                 [digest "1.4.8"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]]
-
   :min-lein-version "2.0.0"
 
   :source-paths ["src/clj" "src/cljs" "src/cljc"]

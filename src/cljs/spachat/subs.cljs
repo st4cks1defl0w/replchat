@@ -8,9 +8,9 @@
    (:page db)))
 
 (rf/reg-sub
- :signInError
+ :sign-in-error
  (fn [db _]
-   (:signInError db)))
+   (:sign-in-error db)))
 
 (rf/reg-sub
  :spaCookie
@@ -28,19 +28,19 @@
    (:lastchat db)))
 
 (rf/reg-sub
- :signupUserValue
+ :signup-user
  (fn [db _]
-   (:signupUserValue db)))
+   (:signup-user db)))
+
+(rf/reg-sub
+ :signup-password
+ (fn [db _]
+   (:signup-password db)))
 
 (rf/reg-sub
  :sendMessage
  (fn [db _]
    (:sendMessage db)))
-
-(rf/reg-sub
- :signupPasswordValue
- (fn [db _]
-   (:signupPasswordValue db)))
 
 (rf/reg-sub
  :onlineUsersNow

@@ -22,30 +22,29 @@
    (assoc db :page page)))
 
 (rf/reg-event-db
- :resetSignInError
+ :reset-sign-in-error
  (fn [db _]
-   (dissoc db :signInError)))
-
-(rf/reg-event-db
- :signupUserValue
- (fn [db [_ v]]
-   (assoc db :signupUserValue v)))
+   (dissoc db :sign-in-error)))
 
 (rf/reg-event-db
  :sendMessage
  (fn [db [_ v]]
-   (println "called sendMessage" v)
    (assoc db :sendMessage v)))
 
 (rf/reg-event-db
- :signupPasswordValue
+ :signup-user
  (fn [db [_ v]]
-   (assoc db :signupPasswordValue v)))
+   (assoc db :signup-user v)))
+
+(rf/reg-event-db
+ :signup-password
+ (fn [db [_ v]]
+   (assoc db :signup-password v)))
 
 ;;ajax calls
 ;;POST signin
 (rf/reg-event-db ;submit signin info, login or if (doesn't exist username) then make a new record
- :signupGo
+ :signup-submit
  (fn
    [db _]
    (POST
@@ -67,7 +66,8 @@
      (-> db        (assoc :lastchat 0 :page :chat :spaCookie (get response :okCookie)))
 ;bad user/pass combo  or no username supplied
      (do
-       (-> db  (assoc :signupPasswordValue "")  (assoc :signInError (get response :errorText)))))))
+       (-> db  (assoc :signupPasswordValue "")  (assoc :sign-in-error
+                                                       (:errorText response)))))))
 
 ;;process error signin response
 (rf/reg-event-db ;server-down
@@ -106,7 +106,7 @@
                :username    (get db :signupUserValue)
                :cookie    (get db :spaCookie)}
       :handler       #(rf/dispatch [:sendMessageGotResponse %1])
-      :error-handler #(rf/dispatch [:sendMessageGotResponseBad %1])}) ;;reserve for server failure
+      :error-handler #(rf/dispatch [:response-unavailable %])}) ;;reserve for server failure
    (-> db (assoc :sendMessage ""))))
 
 ;;process a new message response
@@ -126,25 +126,33 @@
 
 ;;process error new message response
 (rf/reg-event-db ;server-down
- :sendMessageGotResponseBad
+ :response-unavailable
  (fn
-   [db [_ response]]
+   [db _]
    (println "chats server down notice")
    (-> db (assoc :noserver true))))
 
+(reg-event-fx              ;; -fx registration, not -db registration
+ :my-event
+ (fn [cofx [_ a]]        ;; 1st argument is coeffects, instead of db
+   {:db       (assoc (:db cofx) :flag  a)
+    :dispatch [:do-something-else 3]}))   ;; return effects
 ;;ping part 1 - trigger chats update if we're lagging
-(rf/reg-event-db
- :pingingChatUser
- (fn [db _]
-   (when (some? (:spaCookie db))
-     (POST "/API/ping" {:params {:lastchat  (get db :lastchat) :cookie  (get db :spaCookie)} :handler #(rf/dispatch [:pingingGotResponse %1])}))
+(rf/reg-event-fx
+ :pinging-chat-user
+ (fn [{:keys [db]} _]
+   (let [{:keys [spaCookie lastchat]} db]
+     (when (some? spaCookie)
+      (POST "/API/ping" {:params {:lastchat lastchat
+                                  :cookie spaCookie}
+                         :handler #(rf/dispatch [:pingingGotResponse %])})))
    db))
 
-;;ping part 2 - dispatch chatsUpdate if lagging detected
+;;ping part 2 - dispatch chats update if lagging detected
 (rf/reg-event-db
  :pingingGotResponse
  (fn
-   [db [_ response]]
-   (when  (:updateneeded response)
+   [db [_ {:keys [updateneeded onlineUsersNow]}]]
+   (when updateneeded
      (rf/dispatch [:getChats]))
-   (-> db (assoc :onlineUsersNow (get response :onlineUsersNow)))))
+   (-> db (assoc :onlineUsersNow onlineUsersNow))))

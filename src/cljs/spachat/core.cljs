@@ -1,8 +1,5 @@
 (ns spachat.core
   (:require [ajax.core :refer [GET POST]]
-            [cljs-react-material-ui.core :refer [create-mui-theme color]]
-            [cljs-react-material-ui.reagent :as ui]
-            [cljs-react-material-ui.icons :as ic]
             [cljs-time.format :as tformat]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
@@ -11,58 +8,24 @@
             [reagent.core :as reagent :refer [atom]]
             [secretary.core :as secretary]
             [spachat.ajax :as ajax]
+            [spachat.mui :as mui]
+            [spachat.icon :as icon]
             [spachat.events]
-            [spachat.subs])
+            [spachat.subs]
+            goog.History)
   (:import goog.History))
 
 (def formatterTime (tformat/formatter "yyyyMMdd"))
 
 (defonce app-state (atom {:text "spachat"}))
 
-(def base-theme
-  "materialUI theme"
-  (create-mui-theme
-   {:palette {:primary {:main (color :red :A100)}
-              :secondary {:main (color :pink :A100)}
-              :text-color (color :common :white)}}))
-
 (defn navbar
-  "appwide navbar" []
-  [ui/mui-theme-provider
-   {:theme base-theme}
-   [ui/app-bar     {:position "static"}
-    [ui/toolbar
-     [:div  [ui/icon
-             {:color "inherit"
-              :style {:margin-left "-10px"
-                      :margin-right "10px"}}
-             [ic/chat]]]
-     [ui/typography
-      {:variant "title"
-       :style {:font-family "monospace"}}
-      "Welcome to spachat"]]]])
-
-(def chat-bubble-others {:text-align "left"
-                         :float "left"
-                         :clear "both"
-                         :padding-top "6px"
-                         :padding-right "15px"
-                         :padding-left "15px"
-                         :font-size "0.8em"
-                         :background-color (color :red :A100)
-                         :border-radius "10px"
-                         :margin-bottom "20px"})
-
-(def chat-bubble-yours {:text-align "right"
-                        :float "right"
-                        :clear "both"
-                        :padding-top "6px"
-                        :padding-right "15px"
-                        :padding-left "15px"
-                        :font-size "0.8em"
-                        :border (str "1px solid " (color :red :A100))
-                        :border-radius "10px"
-                        :margin-bottom "20px"})
+  "Appwide navbar"
+  []
+  [mui/app-bar {:position "static"}
+   [mui/toolbar
+    [mui/typography {:variant "h6" :style {:font-family "monospace"}}
+     [icon/chat {:style {:margin-right "10px"}}] "SPACHAT"]]])
 
 (defn scroll-chats-down!
   "keeps chat container scrolled to the bottom with classic css (noflex) (hacky)"
@@ -73,14 +36,13 @@
 
 (defn msgs-elements [{:keys [username text stamp]} msg-component]
   (cond
-
-    (= username @(rf/subscribe [:signupUserValue]))
-    [:div {:style chat-bubble-yours}
+    (= username @(rf/subscribe [:signup-user]))
+    [:div #_{:style chat-bubble-yours}
      text [:p {:style {:font-size "0.8em"}}
            (str "- by You at "   (.toString stamp))]]
 
     :else
-    [:div {:style chat-bubble-others}
+    [:div #_{:style chat-bubble-others}
      text [:p {:style {:font-size "0.8em"}}
            (str "- by " username " at "  (.toString stamp))]]))
 
@@ -90,99 +52,102 @@
 
 (defn chat-page []
   (let [_on-load! (rf/dispatch [:pingingChatUser])]
-    [ui/mui-theme-provider
-     {:theme base-theme}
-     [:div {:style {:padding-top "40px"
-                    :width "50%"
-                    :max-width "500px"
-                    :margin "0 auto"}}
-      [ui/paper {:elevation 1 :style {}}
-       [ui/app-bar {:style {:position "static" :padding "10px"}}
-        [ui/typography
-         {:variant "headline" :component "h4"}
-         [ui/icon
-          {:color "inherit"
-           :style {:margin-left "0px"
-                   :margin-right "5px"
-                   :vertical-align "0.1em"}}
-          [ic/account-circle]] "Hi, " @(rf/subscribe [:signupUserValue])]]
-       [ui/card {:id "chatsContainer"
+    [:div {:style {:padding-top "40px"
+                   :width "50%"
+                   :max-width "500px"
+                   :margin "0 auto"}}
+     [mui/paper {:elevation 1 :style {}}
+      [mui/app-bar {:style {:position "static" :padding "10px"}}
+       [mui/typography
+        {:variant "h5"}
+        #_[mui/icon
+           #_{:color "inherit"
+            :style {:margin-left "0px"
+                    :margin-right "5px"
+                    :vertical-align "0.1em"}}
+           "Delete"] "Hi, " @(rf/subscribe [:signup-user])]]
+      [mui/card {:id "chatsContainer"
                  :elevation 1
                  :style {:overflow-y "scroll"
                          :padding "5px"
                          :height "40vh"}}
-        [chat-element @(rf/subscribe [:chats])]]
-       [ui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
-        [ui/form-control {:style {:width "60%"}}
-         [ui/input-label {:htmlFor "sendMessage"} "Send Message"]
-         [ui/input {:value @(rf/subscribe [:sendMessage])
+       [chat-element @(rf/subscribe [:chats])]]
+      [mui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
+       [mui/form-control {:style {:width "60%"}}
+        [mui/input-label {:htmlFor "sendMessage"} "Send Message"]
+        [mui/input {:value @(rf/subscribe [:sendMessage])
                     :id "sendMessage"
                     :multiline true
                     :rows 3
                     :on-change
                     #(rf/dispatch [:sendMessage (-> % .-target .-value)])}]]
-        [ui/form-control {:style {:width "40%"}}
-         [ui/button {:on-click  #(rf/dispatch [:sendMessageGo])
+       [mui/form-control {:style {:width "40%"}}
+        [mui/button {:on-click  #(rf/dispatch [:sendMessageGo])
                      :variant "contained"
                      :color "primary"
                      :id "sendMessageGo"
                      :style {:float "right"
                              :width "50px"
                              :margin-left "auto"}} "Send"]]]]
-      [:div {:style {:padding-top "10px"}}
-       "Users online now: "
-       (map #(vector ui/chip {:label (:username %)})
-            @(rf/subscribe [:onlineUsersNow]))]]]))
+     [:div {:style {:padding-top "10px"}}
+      "Users online now: "
+      (map #(vector mui/chip {:label (:username %)})
+           @(rf/subscribe [:onlineUsersNow]))]]))
 
 (defn home-page []
-  [ui/mui-theme-provider
-   {:theme base-theme}
-   (when @(rf/subscribe [:signInError])
-     (js/setTimeout  #(rf/dispatch [:resetSignInError]) 3000)
-     [ui/snackbar {:open true
-                   :message "Wrong Password"
-                   :anchorOrigin {:vertical "bottom"
-                                  :horizontal "left"}
-                   :autoHideDuration 2}])
-   [:div {:style {:padding-top "40px"
-                  :width "50%"
-                  :max-width "300px"
-                  :margin "0 auto"}}
-    [ui/paper {:elevation 1 :style {:padding "20px"}}
-     [ui/typography
-      {:variant "headline" :component "h3"}
-      "Sign In / Sign Up"]
-     [ui/typography
-      {:variant "body1" :component "p"}
-      "If you don't have a username, you'll be signed up"]
-     [ui/form-control
-      [ui/input-label {:htmlFor "signupUser"} "Username"]
-      [ui/input {:id "signupUserValue"
-                 :on-change #(rf/dispatch [:signupUserValue (-> % .-target .-value)])}]]
-     [ui/form-control {:style {:margin-top "15px"}}
-      [ui/input-label {:htmlFor "signupPasswordValue"} "Password"]
-      [ui/input {:value  @(rf/subscribe [:signupPasswordValue])
-                 :type "password"
-                 :id "signupPasswordValue"
-                 :on-change #(rf/dispatch
-                              [:signupPasswordValue (-> % .-target .-value)])}]]
-     [:div {:style {:padding-top "25px"}}
-      [ui/form-control
-       [ui/button {:on-click #(rf/dispatch [:signupGo])
-                   :variant "contained"
-                   :color "primary"
-                   :id "signupGo"
-                   :style {:float "right"}}
-        "Go"]]]]]])
+  [mui/grid {:justify :center :container true :style {:padding "2em"}}
+   [mui/grid {:xs 6 :sm 3}
+    (let [sign-in-error @(rf/subscribe [:sign-in-error])]
+      (when (some? sign-in-error)
+        (js/setTimeout  #(rf/dispatch [:reset-sign-in-error]) 3000)
+        [mui/snackbar {:open true
+                       :message "Wrong Password"
+                       :anchorOrigin {:vertical "bottom"
+                                      :horizontal "left"}
+                       :autoHideDuration 2}])
+      [mui/paper {:elevation 1 :style {:padding "20px"}}
+       [mui/typography
+        {:variant "h5"}
+        "Sign In / Sign Up"]
+       [mui/typography
+        {:variant "body1"}
+        "If you don't have a username, you'll be signed up"]
+       [mui/form-control {:required true :fullWidth true :margin :normal}
+        [mui/input-label {:htmlFor "signup-user"} "Username"]
+        [mui/input {:value @(rf/subscribe [:signup-user])
+                    :on-change #(rf/dispatch [:signup-user (-> % .-target .-value)])
+                    :id "signup-user"}]]
+       [mui/form-control {:fullWidth true :required true :margin :normal}
+        [mui/input-label {:htmlFor "signup-password"} "Password"]
+        [mui/input {:value  @(rf/subscribe [:signup-password])
+                    :on-change #(rf/dispatch [:signup-password (-> % .-target .-value)])
+                    :fullWidth true
+                    :type "password"
+                    :id "signup-password"}]]
+       [mui/form-control {:margin :normal}
+        [mui/button {:on-click #(rf/dispatch [:signup-submit])
+                     :variant "contained"
+                     :color "primary"
+                     :id "signup-submit"}
+         "Go"]]])]])
 
 (def pages
   {:home #'home-page
    :chat #'chat-page})
 
+(def material-theme
+  "MaterialUI theme"
+  (mui/create-mui-theme
+   (clj->js
+    {:palette {:type :dark
+               :primary {:main (mui/color :red 200)}
+               :secondary {:main (mui/color :red 200)}}
+     :typography {:useNextVariants true}})))
+
 (defn page
   "app template"
   []
-  [:div
+  [mui/mui-theme-provider {:theme material-theme}
    [navbar]
    [(pages @(rf/subscribe [:page]))]])
 
@@ -204,8 +169,8 @@
        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
 
-(defonce pingWithInterval
-  (js/setInterval #(rf/dispatch [:pingingChatUser]) 10000))
+(defn ping-with-interval []
+  (js/setInterval #(rf/dispatch [:pinging-chat-user]) 10000))
 
 (defn mount-components []
   (rf/clear-subscription-cache!)
@@ -214,7 +179,6 @@
 (defn init! []
   (rf/dispatch-sync [:navigate :home])
   (ajax/load-interceptors!)
-  (rf/dispatch [:fetch-docs])
   (hook-browser-navigation!)
   (mount-components)
-  (pingWithInterval))
+  (ping-with-interval))

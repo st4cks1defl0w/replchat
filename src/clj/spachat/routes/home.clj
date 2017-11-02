@@ -24,13 +24,12 @@
   (let [{:keys [username password]} params
         full-info (db/get-user {:username username})
         existing-username (:username full-info)
-        existing-password (:password  full-info)]
+        existing-password (:password full-info)]
 
     (cond (or (empty? username) (and (not (empty? existing-username))
                                      (not= existing-password (hashlib/md5 password))))
           (response/ok {:ok false
                         :errorText "Incorrect password"})
-
      ;;user exists, pass is OK
           (and (= username existing-username)
                (= existing-password (hashlib/md5 password)))
@@ -39,7 +38,6 @@
             (db/put-cookie {:cookie new-cookie :username username})
             (response/ok {:ok true
                           :okCookie new-cookie}))
-
      ;;a vacant username was entered
           (empty? existing-username)
           (let [new-cookie (rnd-str 64)]
@@ -58,7 +56,8 @@
 
 (defn get-chat [_]
   (let [msgs-with-authors (map get-msgs-author-data (db/get-chat))]
-    (response/ok {:ok true :okChats msgs-with-authors})))
+    (response/ok {:ok true
+                  :okChats msgs-with-authors})))
 
 (defn put-chat [{:keys [params]}]
   (println "put-chat received params:" params)
@@ -75,13 +74,12 @@
   "receives UDP-styled ping, returns whether user is up-to-date"
   [{:keys [params]}]
   (let [{:keys [cookie lastchat]} params
-        now-stamp t/now
-        ;; put-cookie (get params :cookie)
-        ;; idOfLastChat (get params :lastchat)
+        now-stamp (t/now)
         users-online (db/get-online-users)]
     (db/put-ping {:cookie cookie :lastseen now-stamp})
     (println (> (get (db/get-last-chat) :id) lastchat))
-    (if (> (get (db/get-last-chat) :id) lastchat)
+    (if (> (:id (db/get-last-chat))
+           lastchat)
       (response/ok {:updateneeded true :onlineUsersNow users-online})
       (response/ok {:updateneeded false :onlineUsersNow users-online}))))
 
