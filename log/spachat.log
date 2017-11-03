@@ -1,331 +1,113 @@
-2019-02-02 07:43:50,585 [main] INFO  spachat.env - 
+2019-02-03 12:27:58,754 [nREPL-worker-2] INFO  spachat.env - 
 -=[spachat started successfully using the development profile]=- 
-2019-02-02 07:43:50,839 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 07:43:51,181 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 07:43:51,205 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 07:43:51,205 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 07:43:51,209 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 07:43:51,210 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 07:43:51,210 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 09:59:49,676 [manifold-wait-31] ERROR manifold.stream.graph - error in manifold.utils/future-with 
-java.io.IOException: Stream closed
-	at java.util.zip.InflaterInputStream.ensureOpen(InflaterInputStream.java:67)
-	at java.util.zip.InflaterInputStream.read(InflaterInputStream.java:142)
-	at java.io.FilterInputStream.read(FilterInputStream.java:133)
-	at java.nio.channels.Channels$ReadableByteChannelImpl.read(Channels.java:385)
-	at byte_streams$eval39655$fn__39657.invoke(byte_streams.clj:701)
-	at byte_streams.protocols$eval38351$fn__38352$G__38342__38361.invoke(protocols.clj:9)
-	at byte_streams$eval39464$f__39259__auto____39466$fn__39468.invoke(byte_streams.clj:452)
-	at clojure.lang.LazySeq.sval(LazySeq.java:40)
-	at clojure.lang.LazySeq.seq(LazySeq.java:49)
-	at clojure.lang.RT.seq(RT.java:528)
-	at clojure.core$seq__5124.invokeStatic(core.clj:137)
-	at clojure.core$map$fn__5587.invoke(core.clj:2738)
-	at clojure.lang.LazySeq.sval(LazySeq.java:40)
-	at clojure.lang.LazySeq.seq(LazySeq.java:49)
-	at clojure.lang.RT.seq(RT.java:528)
-	at clojure.core$seq__5124.invokeStatic(core.clj:137)
-	at clojure.core$empty_QMARK_.invokeStatic(core.clj:6126)
-	at clojure.core$empty_QMARK_.invoke(core.clj:6126)
-	at manifold.stream.seq.SeqSource.take(seq.clj:41)
-	at manifold.stream.graph$sync_connect$f__34892__auto____36859.invoke(graph.clj:255)
-	at clojure.lang.AFn.run(AFn.java:22)
-	at io.aleph.dirigiste.Executor$3.run(Executor.java:308)
-	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
-	at manifold.executor$thread_factory$reify__34774$f__34775.invoke(executor.clj:44)
-	at clojure.lang.AFn.run(AFn.java:22)
+2019-02-03 12:27:58,927 [nREPL-worker-2] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-03 14:23:59,484 [clojure-agent-send-off-pool-1] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code (do (do (do (clojure.core/println (clojure.core/str "REPL-y " "0.3.7" ", nREPL " (:version-string clojure.tools.nrepl/version))) (clojure.core/println "Clojure" (clojure.core/clojure-version)) (clojure.core/println (java.lang.System/getProperty "java.vm.name") (java.lang.System/getProperty "java.runtime.version")) (clojure.core/use (quote [clojure.repl :only [source apropos dir]])) (clojure.core/when (clojure.core/ns-resolve (quote clojure.repl) (quote pst)) (clojure.core/refer (quote clojure.repl) :only (quote [pst doc find-doc]))) (clojure.core/use (quote [clojure.java.javadoc :only [javadoc]])) (clojure.core/use (quote [clojure.pprint :only [pp pprint]])) (clojure.core/create-ns (quote reply.exports)) (intern (quote reply.exports) (quote original-ns) *ns*) (clojure.core/in-ns (quote reply.exports)) (clojure.core/refer (quote clojure.core)) (defn intern-with-meta [ns sym value-var] (intern ns (with-meta sym (meta value-var)) (clojure.core/deref value-var))) (clojure.core/defn help [] (println "    Docs: (doc function-name-here)\n          (find-doc \"part-of-name-here\")\n  Source: (source function-name-here)\n Javadoc: (javadoc java-object-or-class-here)\n    Exit: Control+D or (exit) or (quit)\n Results: Stored in vars *1, *2, *3, an exception in *e\n")) (intern-with-meta (quote user) (quote help) (var help)) (defn unresolve "Given a var, return a sequence of all symbols that resolve to the\n  var from the current namespace *ns*." [var] (when-not (instance? clojure.lang.Var var) (throw (Exception. (format "unresolve: first arg must be Var")))) (let [home-ns (.ns var) sym-name-str (second (re-find #"/(.*)$" (str var)))] (sort-by (fn* [p1__8212#] (count (str p1__8212#))) (concat (->> (ns-map *ns*) (filter (fn [[k v]] (= var v))) (map first)) (list (symbol (str home-ns) sym-name-str)) (->> (ns-aliases *ns*) (filter (fn [[ns-alias ns]] (= ns home-ns))) (map first) (map (fn [ns-alias-symbol] (symbol (str ns-alias-symbol) sym-name-str)))))))) (defn apropos-better "Similar to clojure.repl/apropos, but provides enough context (in the form of\n  namespaces where the vars live, when necessary) to actually use the results\n  in a REPL.\n\n  Given a regular expression or stringable thing, calculate a\n  sequence of all symbols in all currently-loaded namespaces such that\n  it matches the str-or-pattern, with at most one such symbol per Var.\n  The sequence returned contains symbols that map to those Vars, and are\n  the shortest symbols that map to the Var, when qualified with the\n  namespace name or alias, if that qualification is necessary to name\n  the Var.  Note that it is possible the symbol returned does not match\n  the str-or-pattern itself, e.g. if the symbol-to-var mapping was\n  created with :rename.\n\n  Searches through all non-Java symbols in the current namespace, but\n  only public symbols of other namespaces." [str-or-pattern] (let [matches? (if (instance? java.util.regex.Pattern str-or-pattern) (fn* [p1__8216#] (re-find str-or-pattern (str p1__8216#))) (fn* [p1__8217#] (.contains (str p1__8217#) (str str-or-pattern))))] (sort (map (fn* [p1__8218#] (first ((ns-resolve (quote reply.exports) (quote unresolve)) p1__8218#))) (set (mapcat (fn [ns] (map second (filter (fn [[s v]] (matches? s)) (if (= ns *ns*) (concat (ns-interns ns) (ns-refers ns)) (ns-publics ns))))) (all-ns))))))) (intern-with-meta (quote user) (quote apropos-better) (var apropos-better)) (intern-with-meta (quote user) (quote find-name) (var apropos-better)) (def clojuredocs-available? (delay (try (println "Loading clojuredocs-client...") (require (quote [cd-client.core])) true (catch Exception e# (println "Warning: Could not load the ClojureDocs client, so" "`clojuredocs` will be unavailable") (println "  Details:" e# "\n") false)))) (defn call-with-ns-and-name [f v] (let [m (meta v) ns (str (.name (:ns m))) name (str (:name m))] (f ns name))) (defmacro handle-fns-etc [name fn] (if (special-symbol? name) (clojure.core/seq (clojure.core/concat (clojure.core/list fn) (clojure.core/list "clojure.core") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/str)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name))))))))) (let [nspace (find-ns name)] (if nspace (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/println)) (clojure.core/list "No usage examples for namespaces as a whole like") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name)))) (clojure.core/list "\nTry a particular symbol in a namespace,") (clojure.core/list "e.g. clojure.string/join"))) (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/call-with-ns-and-name)) (clojure.core/list fn) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote var)) (clojure.core/list name)))))))))) (defmacro lazy-clojuredocs "Lazily checks if the clojuredocs client is available, and uses it to\n  retrieve examples if it is." ([v] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/handle-fns-etc)) (clojure.core/list v) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))))))))) ([ns-str var-str] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))) (clojure.core/list ns-str) (clojure.core/list var-str)))))))) (intern-with-meta (quote user) (quote clojuredocs) (var lazy-clojuredocs)) (intern-with-meta (quote user) (quote cdoc) (var lazy-clojuredocs)) (try (clojure.core/require (quote [complete.core])) (def resolve-class (fn [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e)))))) (reply.exports/intern-with-meta (quote complete.core) (quote resolve-class) (var resolve-class)) (catch java.lang.Exception e__7583__auto__ (try (clojure.core/eval (quote (do (ns complete.core (:require [clojure.main]) (:import [java.util.jar JarFile] [java.io File] [java.lang.reflect Member] [java.util.jar JarEntry])) (defn namespaces "Returns a list of potential namespace completions for a given namespace" [ns] (map name (concat (map ns-name (all-ns)) (keys (ns-aliases ns))))) (defn ns-public-vars "Returns a list of potential public var name completions for a given namespace" [ns] (map name (keys (ns-publics ns)))) (defn ns-vars "Returns a list of all potential var name completions for a given namespace" [ns] (for [[sym val] (ns-map ns) :when (var? val)] (name sym))) (defn ns-classes "Returns a list of potential class name completions for a given namespace" [ns] (map name (keys (ns-imports ns)))) (def special-forms (map name (quote [def if do let quote var fn loop recur throw try monitor-enter monitor-exit dot new set!]))) (defn- static? [member] (java.lang.reflect.Modifier/isStatic (.getModifiers member))) (defn ns-java-methods "Returns a list of potential java method name completions for a given namespace" [ns] (for [class (vals (ns-imports ns)) method (.getMethods class) :when (static? method)] (str "." (.getName method)))) (defn static-members "Returns a list of potential static members for a given class" [class] (for [member (concat (.getMethods class) (.getDeclaredFields class)) :when (static? member)] (.getName member))) (defn path-files [path] (cond (.endsWith path "/*") (for [jar (.listFiles (File. path)) :when (.endsWith (.getName jar) ".jar") file (path-files (.getPath jar))] file) (.endsWith path ".jar") (try (for [entry (enumeration-seq (.entries (JarFile. path)))] (.getName entry)) (catch Exception e)) :else (for [file (file-seq (File. path))] (.replace (.getPath file) path "")))) (def classfiles (for [prop ["sun.boot.class.path" "java.ext.dirs" "java.class.path"] path (.split (System/getProperty prop) File/pathSeparator) file (path-files path) :when (and (.endsWith file ".class") (not (.contains file "__")))] file)) (defn- classname [file] (.. file (replace ".class" "") (replace File/separator "."))) (def top-level-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+\.class" file)] (classname file))))) (def nested-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+(\$[^\d]\w*)+\.class" file)] (classname file))))) (defn resolve-class [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e))))) (defmulti potential-completions (fn [prefix ns] (cond (.contains prefix "/") :scoped (.contains prefix ".") :class :else :var))) (defmethod potential-completions :scoped [prefix ns] (when-let [prefix-scope (first (.split prefix "/"))] (let [scope (symbol prefix-scope)] (map (fn* [p1__8219#] (str scope "/" p1__8219#)) (if-let [class (resolve-class scope)] (static-members class) (when-let [ns (or (find-ns scope) (scope (ns-aliases ns)))] (ns-public-vars ns))))))) (defmethod potential-completions :class [prefix ns] (concat (namespaces ns) (if (.contains prefix "$") (clojure.core/deref nested-classes) (clojure.core/deref top-level-classes)))) (defmethod potential-completions :var [_ ns] (concat special-forms (namespaces ns) (ns-vars ns) (ns-classes ns) (ns-java-methods ns))) (defn completions "Return a sequence of matching completions given a prefix string and an optional current namespace." ([prefix] (completions prefix *ns*)) ([prefix ns] (sort (for [completion (potential-completions prefix ns) :when (.startsWith completion prefix)] completion))))))) (catch java.lang.Exception f__7584__auto__ (clojure.core/intern (clojure.core/create-ns (quote complete.core)) (quote completions) (clojure.core/fn [prefix__7585__auto__ ns__7586__auto__] [])) (clojure.core/println "Unable to initialize completions."))))) (clojure.core/in-ns (clojure.core/ns-name reply.exports/original-ns)) (user/help) nil) nil nil nil)), :id 4784c730-a6a5-47f2-933b-1cdab2cf6799, :op eval, :renderer whidbey.repl/render-str, :session 38ca2218-0616-4787-b3a4-3699c7bcd053} 
+java.lang.RuntimeException: No dispatch macro for: "
+	at clojure.lang.Util.runtimeException(Util.java:221)
+	at clojure.lang.EdnReader$DispatchReader.invoke(EdnReader.java:552)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$VectorReader.invoke(EdnReader.java:672)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.read(EdnReader.java:145)
+	at clojure.lang.EdnReader.read(EdnReader.java:111)
+	at clojure.lang.EdnReader.readString(EdnReader.java:67)
+	at clojure.edn$read_string.invokeStatic(edn.clj:46)
+	at clojure.edn$read_string.invokeStatic(edn.clj:37)
+	at clojure.edn$read_string.invoke(edn.clj:37)
+	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:15)
+	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:14)
+	at spachat.nrepl_protected$eval_apply_protected_only$fn__34599.invoke(nrepl_protected.clj:22)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-2019-02-02 10:04:44,949 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 10:04:44,952 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 10:04:44,953 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 10:04:45,013 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 10:04:45,013 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 10:04:45,014 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 10:04:45,014 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 10:05:17,922 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 10:05:18,075 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 10:05:18,248 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 10:05:18,269 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 10:05:18,270 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 10:05:18,270 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 10:05:18,270 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 10:05:18,270 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 10:20:38,349 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 10:20:38,353 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 10:20:38,354 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 10:20:38,370 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 10:20:38,371 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 10:20:38,371 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 10:20:38,371 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 10:21:10,427 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 10:21:10,586 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 10:21:10,716 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 10:21:10,734 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 10:21:10,735 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 10:21:10,735 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 10:21:10,735 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 10:21:10,735 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 10:34:49,930 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 10:34:49,936 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 10:34:49,937 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 10:34:49,958 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 10:34:49,959 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 10:34:49,959 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 10:34:49,959 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 10:35:39,282 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 10:35:39,564 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 10:35:39,829 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 10:35:39,857 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 10:35:39,857 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 10:35:39,857 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 10:35:39,857 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 10:35:39,858 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 18:51:43,576 [manifold-pool-2-270] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 18:51:43,580 [manifold-pool-2-270] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:00:43,278 [manifold-pool-2-271] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:00:43,279 [manifold-pool-2-271] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:01:43,659 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:01:43,741 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:01:43,750 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:01:43,833 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:01:43,833 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:01:43,833 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:01:43,834 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:02:33,485 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:02:33,652 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:02:33,883 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:02:33,906 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:02:33,906 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:02:33,906 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:02:33,907 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:02:33,907 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:07:25,828 [manifold-pool-2-6] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:07:25,830 [manifold-pool-2-6] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:08:21,332 [manifold-pool-2-7] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:08:21,333 [manifold-pool-2-7] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:13:12,966 [manifold-pool-2-8] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:13:12,967 [manifold-pool-2-8] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:14:44,681 [manifold-pool-2-9] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:14:44,682 [manifold-pool-2-9] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:15:29,849 [manifold-pool-2-10] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:15:29,849 [manifold-pool-2-10] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:17:27,758 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:17:27,761 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:17:27,762 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:17:27,777 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:17:27,777 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:17:27,777 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:17:27,777 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:18:00,653 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:18:00,809 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:18:00,931 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:18:00,944 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:18:00,945 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:18:00,945 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:18:00,945 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:18:00,945 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:19:51,798 [manifold-pool-2-2] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:19:51,799 [manifold-pool-2-2] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:20:30,330 [manifold-pool-2-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:20:30,331 [manifold-pool-2-3] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:23:48,763 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:23:48,768 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:23:48,769 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:23:48,780 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:23:48,780 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:23:48,780 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:23:48,781 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:24:21,581 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:24:21,737 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:24:21,865 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:24:21,888 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:24:21,888 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:24:21,889 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:24:21,889 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:24:21,889 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:26:05,472 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:26:05,477 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:26:05,478 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:26:05,490 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:26:05,490 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:26:05,490 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:26:05,490 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:26:37,238 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:26:37,415 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:26:37,545 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:26:37,567 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:26:37,567 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:26:37,567 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:26:37,567 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:26:37,567 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:27:44,671 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:27:44,675 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:27:44,676 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:27:44,695 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:27:44,695 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:27:44,696 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:27:44,696 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:28:16,911 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:28:17,086 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:28:17,219 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:28:17,244 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:28:17,244 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:28:17,245 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:28:17,245 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:28:17,245 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:29:14,305 [manifold-pool-2-2] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:29:14,307 [manifold-pool-2-2] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:29:33,145 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:29:33,153 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:29:33,154 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:29:33,169 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:29:33,169 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:29:33,169 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:29:33,169 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:30:04,732 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:30:04,899 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:30:05,054 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:30:05,077 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:30:05,078 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:30:05,080 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:30:05,083 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:30:05,084 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:31:01,209 [manifold-pool-2-9] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:31:01,211 [manifold-pool-2-9] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:31:18,640 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:31:18,643 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:31:18,645 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:31:18,661 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:31:18,661 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:31:18,661 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:31:18,661 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:31:51,261 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:31:51,439 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:31:51,567 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:31:51,584 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:31:51,584 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:31:51,584 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:31:51,584 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:31:51,585 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 19:41:12,774 [manifold-pool-2-35] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:41:13,078 [manifold-pool-2-35] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:41:30,510 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 19:41:30,513 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 19:41:30,514 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 19:41:30,523 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 19:41:30,523 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 19:41:30,523 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 19:41:30,523 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 19:42:05,718 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 19:42:05,886 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 19:42:05,992 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 19:42:06,009 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 19:42:06,010 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 20:15:55,429 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 20:15:55,434 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 20:15:55,436 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 20:15:55,443 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 20:15:55,444 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 20:15:55,444 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 20:15:55,444 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 20:18:31,372 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 20:18:31,495 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 20:18:31,615 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 20:18:31,635 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 20:18:31,636 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 21:06:57,347 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 21:06:57,350 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 21:06:57,351 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 21:06:57,374 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 21:07:27,925 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 21:07:28,063 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 21:07:28,179 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 21:07:28,199 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 21:07:28,199 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 21:07:28,199 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 21:07:28,200 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 21:07:28,200 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 21:08:31,717 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 21:08:31,723 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 21:08:31,725 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 21:08:31,744 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
-2019-02-02 21:09:39,629 [main] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-02 21:09:39,824 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-02 21:09:40,015 [main] INFO  spachat.nrepl - starting nREPL server on port 7000 
-2019-02-02 21:09:40,040 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
-2019-02-02 21:09:40,040 [main] INFO  spachat.core - #'spachat.handler/init-app started 
-2019-02-02 21:09:40,041 [main] INFO  spachat.core - #'spachat.handler/app started 
-2019-02-02 21:09:40,041 [main] INFO  spachat.core - #'spachat.core/http-server started 
-2019-02-02 21:09:40,041 [main] INFO  spachat.core - #'spachat.core/repl-server started 
-2019-02-02 21:15:57,313 [Thread-3] INFO  spachat.nrepl - nREPL server stopped 
-2019-02-02 21:15:57,317 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
-2019-02-02 21:15:57,318 [Thread-3] INFO  spachat.env - 
--=[spachat has shut down successfully]=- 
-2019-02-02 21:15:57,334 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
-2019-02-02 21:15:57,334 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
-2019-02-02 21:15:57,334 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
-2019-02-02 21:15:57,335 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-03 17:18:13,672 [clojure-agent-send-off-pool-1] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code (do (do (do (clojure.core/println (clojure.core/str "REPL-y " "0.3.7" ", nREPL " (:version-string clojure.tools.nrepl/version))) (clojure.core/println "Clojure" (clojure.core/clojure-version)) (clojure.core/println (java.lang.System/getProperty "java.vm.name") (java.lang.System/getProperty "java.runtime.version")) (clojure.core/use (quote [clojure.repl :only [source apropos dir]])) (clojure.core/when (clojure.core/ns-resolve (quote clojure.repl) (quote pst)) (clojure.core/refer (quote clojure.repl) :only (quote [pst doc find-doc]))) (clojure.core/use (quote [clojure.java.javadoc :only [javadoc]])) (clojure.core/use (quote [clojure.pprint :only [pp pprint]])) (clojure.core/create-ns (quote reply.exports)) (intern (quote reply.exports) (quote original-ns) *ns*) (clojure.core/in-ns (quote reply.exports)) (clojure.core/refer (quote clojure.core)) (defn intern-with-meta [ns sym value-var] (intern ns (with-meta sym (meta value-var)) (clojure.core/deref value-var))) (clojure.core/defn help [] (println "    Docs: (doc function-name-here)\n          (find-doc \"part-of-name-here\")\n  Source: (source function-name-here)\n Javadoc: (javadoc java-object-or-class-here)\n    Exit: Control+D or (exit) or (quit)\n Results: Stored in vars *1, *2, *3, an exception in *e\n")) (intern-with-meta (quote user) (quote help) (var help)) (defn unresolve "Given a var, return a sequence of all symbols that resolve to the\n  var from the current namespace *ns*." [var] (when-not (instance? clojure.lang.Var var) (throw (Exception. (format "unresolve: first arg must be Var")))) (let [home-ns (.ns var) sym-name-str (second (re-find #"/(.*)$" (str var)))] (sort-by (fn* [p1__8212#] (count (str p1__8212#))) (concat (->> (ns-map *ns*) (filter (fn [[k v]] (= var v))) (map first)) (list (symbol (str home-ns) sym-name-str)) (->> (ns-aliases *ns*) (filter (fn [[ns-alias ns]] (= ns home-ns))) (map first) (map (fn [ns-alias-symbol] (symbol (str ns-alias-symbol) sym-name-str)))))))) (defn apropos-better "Similar to clojure.repl/apropos, but provides enough context (in the form of\n  namespaces where the vars live, when necessary) to actually use the results\n  in a REPL.\n\n  Given a regular expression or stringable thing, calculate a\n  sequence of all symbols in all currently-loaded namespaces such that\n  it matches the str-or-pattern, with at most one such symbol per Var.\n  The sequence returned contains symbols that map to those Vars, and are\n  the shortest symbols that map to the Var, when qualified with the\n  namespace name or alias, if that qualification is necessary to name\n  the Var.  Note that it is possible the symbol returned does not match\n  the str-or-pattern itself, e.g. if the symbol-to-var mapping was\n  created with :rename.\n\n  Searches through all non-Java symbols in the current namespace, but\n  only public symbols of other namespaces." [str-or-pattern] (let [matches? (if (instance? java.util.regex.Pattern str-or-pattern) (fn* [p1__8216#] (re-find str-or-pattern (str p1__8216#))) (fn* [p1__8217#] (.contains (str p1__8217#) (str str-or-pattern))))] (sort (map (fn* [p1__8218#] (first ((ns-resolve (quote reply.exports) (quote unresolve)) p1__8218#))) (set (mapcat (fn [ns] (map second (filter (fn [[s v]] (matches? s)) (if (= ns *ns*) (concat (ns-interns ns) (ns-refers ns)) (ns-publics ns))))) (all-ns))))))) (intern-with-meta (quote user) (quote apropos-better) (var apropos-better)) (intern-with-meta (quote user) (quote find-name) (var apropos-better)) (def clojuredocs-available? (delay (try (println "Loading clojuredocs-client...") (require (quote [cd-client.core])) true (catch Exception e# (println "Warning: Could not load the ClojureDocs client, so" "`clojuredocs` will be unavailable") (println "  Details:" e# "\n") false)))) (defn call-with-ns-and-name [f v] (let [m (meta v) ns (str (.name (:ns m))) name (str (:name m))] (f ns name))) (defmacro handle-fns-etc [name fn] (if (special-symbol? name) (clojure.core/seq (clojure.core/concat (clojure.core/list fn) (clojure.core/list "clojure.core") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/str)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name))))))))) (let [nspace (find-ns name)] (if nspace (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/println)) (clojure.core/list "No usage examples for namespaces as a whole like") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name)))) (clojure.core/list "\nTry a particular symbol in a namespace,") (clojure.core/list "e.g. clojure.string/join"))) (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/call-with-ns-and-name)) (clojure.core/list fn) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote var)) (clojure.core/list name)))))))))) (defmacro lazy-clojuredocs "Lazily checks if the clojuredocs client is available, and uses it to\n  retrieve examples if it is." ([v] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/handle-fns-etc)) (clojure.core/list v) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))))))))) ([ns-str var-str] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))) (clojure.core/list ns-str) (clojure.core/list var-str)))))))) (intern-with-meta (quote user) (quote clojuredocs) (var lazy-clojuredocs)) (intern-with-meta (quote user) (quote cdoc) (var lazy-clojuredocs)) (try (clojure.core/require (quote [complete.core])) (def resolve-class (fn [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e)))))) (reply.exports/intern-with-meta (quote complete.core) (quote resolve-class) (var resolve-class)) (catch java.lang.Exception e__7583__auto__ (try (clojure.core/eval (quote (do (ns complete.core (:require [clojure.main]) (:import [java.util.jar JarFile] [java.io File] [java.lang.reflect Member] [java.util.jar JarEntry])) (defn namespaces "Returns a list of potential namespace completions for a given namespace" [ns] (map name (concat (map ns-name (all-ns)) (keys (ns-aliases ns))))) (defn ns-public-vars "Returns a list of potential public var name completions for a given namespace" [ns] (map name (keys (ns-publics ns)))) (defn ns-vars "Returns a list of all potential var name completions for a given namespace" [ns] (for [[sym val] (ns-map ns) :when (var? val)] (name sym))) (defn ns-classes "Returns a list of potential class name completions for a given namespace" [ns] (map name (keys (ns-imports ns)))) (def special-forms (map name (quote [def if do let quote var fn loop recur throw try monitor-enter monitor-exit dot new set!]))) (defn- static? [member] (java.lang.reflect.Modifier/isStatic (.getModifiers member))) (defn ns-java-methods "Returns a list of potential java method name completions for a given namespace" [ns] (for [class (vals (ns-imports ns)) method (.getMethods class) :when (static? method)] (str "." (.getName method)))) (defn static-members "Returns a list of potential static members for a given class" [class] (for [member (concat (.getMethods class) (.getDeclaredFields class)) :when (static? member)] (.getName member))) (defn path-files [path] (cond (.endsWith path "/*") (for [jar (.listFiles (File. path)) :when (.endsWith (.getName jar) ".jar") file (path-files (.getPath jar))] file) (.endsWith path ".jar") (try (for [entry (enumeration-seq (.entries (JarFile. path)))] (.getName entry)) (catch Exception e)) :else (for [file (file-seq (File. path))] (.replace (.getPath file) path "")))) (def classfiles (for [prop ["sun.boot.class.path" "java.ext.dirs" "java.class.path"] path (.split (System/getProperty prop) File/pathSeparator) file (path-files path) :when (and (.endsWith file ".class") (not (.contains file "__")))] file)) (defn- classname [file] (.. file (replace ".class" "") (replace File/separator "."))) (def top-level-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+\.class" file)] (classname file))))) (def nested-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+(\$[^\d]\w*)+\.class" file)] (classname file))))) (defn resolve-class [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e))))) (defmulti potential-completions (fn [prefix ns] (cond (.contains prefix "/") :scoped (.contains prefix ".") :class :else :var))) (defmethod potential-completions :scoped [prefix ns] (when-let [prefix-scope (first (.split prefix "/"))] (let [scope (symbol prefix-scope)] (map (fn* [p1__8219#] (str scope "/" p1__8219#)) (if-let [class (resolve-class scope)] (static-members class) (when-let [ns (or (find-ns scope) (scope (ns-aliases ns)))] (ns-public-vars ns))))))) (defmethod potential-completions :class [prefix ns] (concat (namespaces ns) (if (.contains prefix "$") (clojure.core/deref nested-classes) (clojure.core/deref top-level-classes)))) (defmethod potential-completions :var [_ ns] (concat special-forms (namespaces ns) (ns-vars ns) (ns-classes ns) (ns-java-methods ns))) (defn completions "Return a sequence of matching completions given a prefix string and an optional current namespace." ([prefix] (completions prefix *ns*)) ([prefix ns] (sort (for [completion (potential-completions prefix ns) :when (.startsWith completion prefix)] completion))))))) (catch java.lang.Exception f__7584__auto__ (clojure.core/intern (clojure.core/create-ns (quote complete.core)) (quote completions) (clojure.core/fn [prefix__7585__auto__ ns__7586__auto__] [])) (clojure.core/println "Unable to initialize completions."))))) (clojure.core/in-ns (clojure.core/ns-name reply.exports/original-ns)) (user/help) nil) nil nil nil)), :id 3bcb160c-3328-4d46-8e01-ba9c879903a5, :op eval, :renderer whidbey.repl/render-str, :session ed5904f1-b10d-429e-b288-ffba667db3da} 
+java.lang.RuntimeException: No dispatch macro for: "
+	at clojure.lang.Util.runtimeException(Util.java:221)
+	at clojure.lang.EdnReader$DispatchReader.invoke(EdnReader.java:552)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$VectorReader.invoke(EdnReader.java:672)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
+	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
+	at clojure.lang.EdnReader.read(EdnReader.java:145)
+	at clojure.lang.EdnReader.read(EdnReader.java:111)
+	at clojure.lang.EdnReader.readString(EdnReader.java:67)
+	at clojure.edn$read_string.invokeStatic(edn.clj:46)
+	at clojure.edn$read_string.invokeStatic(edn.clj:37)
+	at clojure.edn$read_string.invoke(edn.clj:37)
+	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:17)
+	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:16)
+	at spachat.nrepl_protected$eval_apply_protected_only$fn__34604.invoke(nrepl_protected.clj:49)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-03 17:46:15,074 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code , :id adf4f29d-dfeb-45cb-9718-990f7c116ed6, :op eval, :renderer whidbey.repl/render-str, :session 19b17dab-6764-436b-a6a9-5785c6a0c2b8} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:17)
+	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:16)
+	at spachat.nrepl_protected$eval_apply_protected_only$fn__34604.invoke(nrepl_protected.clj:51)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-03 18:05:33,760 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code , :id 556697d4-7bd5-4627-8a50-ac96e4eecd01, :op eval, :renderer whidbey.repl/render-str, :session 68c86d16-7f24-4e2d-a6aa-fd98c211eff3} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:17)
+	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:16)
+	at spachat.nrepl_protected$eval_apply_protected_only$fn__34604.invoke(nrepl_protected.clj:49)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)

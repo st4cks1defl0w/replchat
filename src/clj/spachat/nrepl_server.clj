@@ -1,12 +1,8 @@
-(ns spachat.nrepl
-  (:require [nrepl.server :as nrepl]
+(ns spachat.nrepl-server
+  (:require [clojure.tools.nrepl.server :as nrepl]
             [clojure.tools.logging :as log]))
 
 (defn start
-  "Start a network repl for debugging on specified port followed by
-  an optional parameters map. The :bind, :transport-fn, :handler,
-  :ack-port and :greeting-fn will be forwarded to
-  clojure.tools.nrepl.server/start-server as they are."
   [{:keys [port bind transport-fn handler ack-port greeting-fn]}]
   (try
     (log/info "starting nREPL server on port" port)

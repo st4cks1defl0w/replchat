@@ -1,13 +1,12 @@
 <h1>Simple SPA chat with Re-frame+MaterialUI frontend, Ring, Aleph+MySQL backend</h1>
 <p>(interview project)</p>
-<p>demo at http://81.177.6.170:3000/</p>
+<p>One instance running at https://spachat.stacksideflow.host</p>
 
-<h2>Core stack</h2> 
+<h2>Core stack</h2>
 <ul>
-<li>Re-frame</li>
+<li>Re-frame + Reagent</li>
 <li>Aleph</li>
 <li>MaterialUI</li>
-<li>Reagent</li>
 <li>MySQL</li>
 <li>Luminus template</li>
 <li>Leiningen</li>
@@ -15,27 +14,30 @@
 <h2>Development plugins used</h2>
 <ul>
 <li>Figwheel</li>
+<li>Re-frame 10x</li>
 </ul>
 <h2>Features/design</h2>
 <ul>
 <li>Simple merged sign in/sign up, passwords saved/compared in md5, basic cookie is issued for submitting chats and udping user online status to the server</li>
-<li>Basic chat functionality with timestamp</li>
-<li>Core cljs functions are in /src/cljs/spachat/core.cljs: reagent templates, init functions, some custom js functionality </li>
-<li>Re-frame dispatchers and subscribers are in /src/cljs/spachat/events.cljs: ajax requests to the backend are divided into [ajax request dispatcher-ajax OK response dispatcher-ajax error handler response dispatcher]</li>
-<li>Backend listens on 4 <code>API/</code> endpoints, defined in /src/clj/spachat/routes/home.clj</li> 
+<li>Basic chat functionality</li>
+<li>Cljc pass speccing for ClojureScript and Clojure based on common spec def</li>
+<li>Core cljs functions(components) are found in <code>/src/cljs/spachat/core.cljs:</code> reagent templates, init + routing and what not</li>
+<li>Re-frame dispatchers and subscribers are found in <code>events.cljs</code> and <code>subs.cljs:</code> ajax requests to the backend are divided into [ajax request dispatcher-ajax OK response dispatcher-ajax error handler response dispatcher]</li>
+<li>Backend listens on 4 <code>API/</code> endpoints, defined in /src/clj/spachat/routes/home.clj</li>
 <li>10s interval pinging for new messages and submitting last_seen stamp to the server for authorised user</li>
-<li>XSS are by default filtered with reagent</li>
-<li>Validation not implemented</li>
 </ul>
 <h2>Start app - development</h2>
 <p>Tested with Debian, OpenJDK8 (Leiningen 2.8.1 on Java 1.8.0_181 OpenJDK 64-Bit Server VM)</p>
 <p>System dependencies: mysql-server, leiningen</p>
-<p>To launch the app, go to project root then </p>
+<p>To launch the app, go to project root then (assuming Emacs+CIDER setup)</p>
 <ul>
 <li>1. Supply a db link as env var <code>(export databaseurl="mysql://localhost:3306/XXXXX?user=XXXXX&password=XXXXX")</code> or uncomment and edit this var in /dev-config.edn</li>
 <li>1.1 Run migrations - see below</li>
-<li>2. 1st terminal: <code>lein run</code> will start the backend server on :3000</li>
-<li>3. 2nd terminal:  <code>lein figwheel</code> will start ClojureScript autocompile and REPL</li>
+<li>2.* 1st terminal: <code>lein run</code> will start the backend server on :3000</li>
+<li>3. 2nd terminal:  <code>lein repl</code></li>
+<li>4. Emacs: cider-connect (<code>, s c</code>) to connect to the nrepl instance</li>
+<li>5. Emacs: <code>(fw-repl!)</code> in your clj-repl buffer to compile js and convert buffer to cljs-repl</li>
+<li>(optional 6.) *Emacs: <code>cider-connect-sibiling-clj</code> to connect a second repl and (start) to launch the backend</li>
 </ul>
 <h2>Start app - uberjar</h2>
 <p>Tested with Debian, OpenJDK8 (Leiningen 2.8.1 on Java 1.8.0_181 OpenJDK 64-Bit Server VM)</p>
@@ -68,6 +70,3 @@ password TEXT,
 cookie TEXT,
 lastseen TIMESTAMP,
 signupdate DATE);
-
-
-

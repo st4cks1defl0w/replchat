@@ -1,6 +1,6 @@
 (ns spachat.core
   (:require [spachat.handler :as handler]
-            [spachat.nrepl :as nrepl]
+            [spachat.nrepl-server :as nrepl]
             [luminus.http-server :as http]
             [luminus-migrations.core :as migrations]
             [spachat.config :refer [env]]
