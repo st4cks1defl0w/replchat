@@ -1,7 +1,950 @@
-2019-02-03 12:27:58,754 [nREPL-worker-2] INFO  spachat.env - 
--=[spachat started successfully using the development profile]=- 
-2019-02-03 12:27:58,927 [nREPL-worker-2] INFO  luminus.http-server - starting HTTP server on port 3000 
-2019-02-03 14:23:59,484 [clojure-agent-send-off-pool-1] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code (do (do (do (clojure.core/println (clojure.core/str "REPL-y " "0.3.7" ", nREPL " (:version-string clojure.tools.nrepl/version))) (clojure.core/println "Clojure" (clojure.core/clojure-version)) (clojure.core/println (java.lang.System/getProperty "java.vm.name") (java.lang.System/getProperty "java.runtime.version")) (clojure.core/use (quote [clojure.repl :only [source apropos dir]])) (clojure.core/when (clojure.core/ns-resolve (quote clojure.repl) (quote pst)) (clojure.core/refer (quote clojure.repl) :only (quote [pst doc find-doc]))) (clojure.core/use (quote [clojure.java.javadoc :only [javadoc]])) (clojure.core/use (quote [clojure.pprint :only [pp pprint]])) (clojure.core/create-ns (quote reply.exports)) (intern (quote reply.exports) (quote original-ns) *ns*) (clojure.core/in-ns (quote reply.exports)) (clojure.core/refer (quote clojure.core)) (defn intern-with-meta [ns sym value-var] (intern ns (with-meta sym (meta value-var)) (clojure.core/deref value-var))) (clojure.core/defn help [] (println "    Docs: (doc function-name-here)\n          (find-doc \"part-of-name-here\")\n  Source: (source function-name-here)\n Javadoc: (javadoc java-object-or-class-here)\n    Exit: Control+D or (exit) or (quit)\n Results: Stored in vars *1, *2, *3, an exception in *e\n")) (intern-with-meta (quote user) (quote help) (var help)) (defn unresolve "Given a var, return a sequence of all symbols that resolve to the\n  var from the current namespace *ns*." [var] (when-not (instance? clojure.lang.Var var) (throw (Exception. (format "unresolve: first arg must be Var")))) (let [home-ns (.ns var) sym-name-str (second (re-find #"/(.*)$" (str var)))] (sort-by (fn* [p1__8212#] (count (str p1__8212#))) (concat (->> (ns-map *ns*) (filter (fn [[k v]] (= var v))) (map first)) (list (symbol (str home-ns) sym-name-str)) (->> (ns-aliases *ns*) (filter (fn [[ns-alias ns]] (= ns home-ns))) (map first) (map (fn [ns-alias-symbol] (symbol (str ns-alias-symbol) sym-name-str)))))))) (defn apropos-better "Similar to clojure.repl/apropos, but provides enough context (in the form of\n  namespaces where the vars live, when necessary) to actually use the results\n  in a REPL.\n\n  Given a regular expression or stringable thing, calculate a\n  sequence of all symbols in all currently-loaded namespaces such that\n  it matches the str-or-pattern, with at most one such symbol per Var.\n  The sequence returned contains symbols that map to those Vars, and are\n  the shortest symbols that map to the Var, when qualified with the\n  namespace name or alias, if that qualification is necessary to name\n  the Var.  Note that it is possible the symbol returned does not match\n  the str-or-pattern itself, e.g. if the symbol-to-var mapping was\n  created with :rename.\n\n  Searches through all non-Java symbols in the current namespace, but\n  only public symbols of other namespaces." [str-or-pattern] (let [matches? (if (instance? java.util.regex.Pattern str-or-pattern) (fn* [p1__8216#] (re-find str-or-pattern (str p1__8216#))) (fn* [p1__8217#] (.contains (str p1__8217#) (str str-or-pattern))))] (sort (map (fn* [p1__8218#] (first ((ns-resolve (quote reply.exports) (quote unresolve)) p1__8218#))) (set (mapcat (fn [ns] (map second (filter (fn [[s v]] (matches? s)) (if (= ns *ns*) (concat (ns-interns ns) (ns-refers ns)) (ns-publics ns))))) (all-ns))))))) (intern-with-meta (quote user) (quote apropos-better) (var apropos-better)) (intern-with-meta (quote user) (quote find-name) (var apropos-better)) (def clojuredocs-available? (delay (try (println "Loading clojuredocs-client...") (require (quote [cd-client.core])) true (catch Exception e# (println "Warning: Could not load the ClojureDocs client, so" "`clojuredocs` will be unavailable") (println "  Details:" e# "\n") false)))) (defn call-with-ns-and-name [f v] (let [m (meta v) ns (str (.name (:ns m))) name (str (:name m))] (f ns name))) (defmacro handle-fns-etc [name fn] (if (special-symbol? name) (clojure.core/seq (clojure.core/concat (clojure.core/list fn) (clojure.core/list "clojure.core") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/str)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name))))))))) (let [nspace (find-ns name)] (if nspace (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/println)) (clojure.core/list "No usage examples for namespaces as a whole like") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name)))) (clojure.core/list "\nTry a particular symbol in a namespace,") (clojure.core/list "e.g. clojure.string/join"))) (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/call-with-ns-and-name)) (clojure.core/list fn) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote var)) (clojure.core/list name)))))))))) (defmacro lazy-clojuredocs "Lazily checks if the clojuredocs client is available, and uses it to\n  retrieve examples if it is." ([v] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/handle-fns-etc)) (clojure.core/list v) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))))))))) ([ns-str var-str] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))) (clojure.core/list ns-str) (clojure.core/list var-str)))))))) (intern-with-meta (quote user) (quote clojuredocs) (var lazy-clojuredocs)) (intern-with-meta (quote user) (quote cdoc) (var lazy-clojuredocs)) (try (clojure.core/require (quote [complete.core])) (def resolve-class (fn [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e)))))) (reply.exports/intern-with-meta (quote complete.core) (quote resolve-class) (var resolve-class)) (catch java.lang.Exception e__7583__auto__ (try (clojure.core/eval (quote (do (ns complete.core (:require [clojure.main]) (:import [java.util.jar JarFile] [java.io File] [java.lang.reflect Member] [java.util.jar JarEntry])) (defn namespaces "Returns a list of potential namespace completions for a given namespace" [ns] (map name (concat (map ns-name (all-ns)) (keys (ns-aliases ns))))) (defn ns-public-vars "Returns a list of potential public var name completions for a given namespace" [ns] (map name (keys (ns-publics ns)))) (defn ns-vars "Returns a list of all potential var name completions for a given namespace" [ns] (for [[sym val] (ns-map ns) :when (var? val)] (name sym))) (defn ns-classes "Returns a list of potential class name completions for a given namespace" [ns] (map name (keys (ns-imports ns)))) (def special-forms (map name (quote [def if do let quote var fn loop recur throw try monitor-enter monitor-exit dot new set!]))) (defn- static? [member] (java.lang.reflect.Modifier/isStatic (.getModifiers member))) (defn ns-java-methods "Returns a list of potential java method name completions for a given namespace" [ns] (for [class (vals (ns-imports ns)) method (.getMethods class) :when (static? method)] (str "." (.getName method)))) (defn static-members "Returns a list of potential static members for a given class" [class] (for [member (concat (.getMethods class) (.getDeclaredFields class)) :when (static? member)] (.getName member))) (defn path-files [path] (cond (.endsWith path "/*") (for [jar (.listFiles (File. path)) :when (.endsWith (.getName jar) ".jar") file (path-files (.getPath jar))] file) (.endsWith path ".jar") (try (for [entry (enumeration-seq (.entries (JarFile. path)))] (.getName entry)) (catch Exception e)) :else (for [file (file-seq (File. path))] (.replace (.getPath file) path "")))) (def classfiles (for [prop ["sun.boot.class.path" "java.ext.dirs" "java.class.path"] path (.split (System/getProperty prop) File/pathSeparator) file (path-files path) :when (and (.endsWith file ".class") (not (.contains file "__")))] file)) (defn- classname [file] (.. file (replace ".class" "") (replace File/separator "."))) (def top-level-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+\.class" file)] (classname file))))) (def nested-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+(\$[^\d]\w*)+\.class" file)] (classname file))))) (defn resolve-class [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e))))) (defmulti potential-completions (fn [prefix ns] (cond (.contains prefix "/") :scoped (.contains prefix ".") :class :else :var))) (defmethod potential-completions :scoped [prefix ns] (when-let [prefix-scope (first (.split prefix "/"))] (let [scope (symbol prefix-scope)] (map (fn* [p1__8219#] (str scope "/" p1__8219#)) (if-let [class (resolve-class scope)] (static-members class) (when-let [ns (or (find-ns scope) (scope (ns-aliases ns)))] (ns-public-vars ns))))))) (defmethod potential-completions :class [prefix ns] (concat (namespaces ns) (if (.contains prefix "$") (clojure.core/deref nested-classes) (clojure.core/deref top-level-classes)))) (defmethod potential-completions :var [_ ns] (concat special-forms (namespaces ns) (ns-vars ns) (ns-classes ns) (ns-java-methods ns))) (defn completions "Return a sequence of matching completions given a prefix string and an optional current namespace." ([prefix] (completions prefix *ns*)) ([prefix ns] (sort (for [completion (potential-completions prefix ns) :when (.startsWith completion prefix)] completion))))))) (catch java.lang.Exception f__7584__auto__ (clojure.core/intern (clojure.core/create-ns (quote complete.core)) (quote completions) (clojure.core/fn [prefix__7585__auto__ ns__7586__auto__] [])) (clojure.core/println "Unable to initialize completions."))))) (clojure.core/in-ns (clojure.core/ns-name reply.exports/original-ns)) (user/help) nil) nil nil nil)), :id 4784c730-a6a5-47f2-933b-1cdab2cf6799, :op eval, :renderer whidbey.repl/render-str, :session 38ca2218-0616-4787-b3a4-3699c7bcd053} 
+2019-02-05 00:00:32,853 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op out-subscribe, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 7} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:00:33,201 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op init-debugger, :print-level 10, :print-length 10, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 9} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:01:03,536 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 10} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:01:04,167 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 13} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,173 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 14} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,635 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 15} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,714 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 16} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,715 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 17} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,924 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 18} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,946 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 20} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:04,946 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 19} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:05,156 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 21} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:12,962 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 22} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:12,963 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 23} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:36,897 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.re, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 24} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:38,157 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 27} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:38,200 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.re, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 28} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:38,810 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.p, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 29} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:38,894 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 30} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:38,895 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.p, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 31} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:39,109 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pr, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 32} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:40,316 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 35} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:40,359 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pr, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 36} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:54,977 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 37} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:55,447 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 40} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:55,487 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 41} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:55,730 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 42} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:55,946 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 43} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:55,947 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 44} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:56,433 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 45} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:56,539 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 46} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:56,540 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 47} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:56,754 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 48} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:57,373 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 51} 
+java.lang.NullPointerException: null
+2019-02-05 00:01:57,415 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 52} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:00,851 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-e, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 53} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:00,901 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 54} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:00,901 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-e, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 55} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:01,316 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 56} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:02,062 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 59} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:02,103 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 60} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:02,276 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval/, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 61} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:03,472 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 64} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:03,515 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval/, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 65} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:11,405 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol st, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 67} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:11,421 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol st, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 68} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:11,421 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol st, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 69} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:19,912 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol sp, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 71} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,071 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol sp, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 72} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,072 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol sp, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 73} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,287 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 74} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,309 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 75} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,309 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 76} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,519 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spac, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 77} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,541 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spac, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 78} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,541 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spac, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 79} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:20,907 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacht, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 80} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:21,409 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacht, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 83} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:21,451 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacht, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 84} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:22,363 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 85} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:22,396 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 86} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:22,397 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 87} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:22,770 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 88} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:22,940 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 89} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:22,941 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 90} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:23,353 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pr, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 91} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:23,865 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 94} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:23,907 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pr, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 95} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,080 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 96} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,165 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 97} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,166 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 98} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,378 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prot, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 99} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,504 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 100} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,505 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prot, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 101} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,719 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 102} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,833 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 103} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:24,834 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 104} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,047 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protec, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 105} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,076 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 106} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,076 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protec, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 107} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,412 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 108} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,497 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 109} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,498 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 110} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,712 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 111} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,901 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 112} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:25,902 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 113} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,115 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 114} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,271 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 115} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,273 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 116} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,486 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-e, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 117} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,532 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 118} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,532 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-e, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 119} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:26,989 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 120} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:27,311 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 123} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:27,355 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 124} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:27,519 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval/, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 125} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:27,543 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 126} 
+java.lang.NullPointerException: null
+2019-02-05 00:02:27,543 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval/, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 127} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:31,567 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :req, :context (ns spachat.protected-eval
+  (__prefix__))
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 141} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:31,607 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 142} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:31,607 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :req, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 143} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:31,800 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :requ, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 144} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:32,161 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 145} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:32,161 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :requ, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 146} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:32,375 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :requi, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 147} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:32,493 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 148} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:32,495 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :requi, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 149} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:32,800 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :require, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 150} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:33,840 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 151} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:33,842 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :require, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 152} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:49,470 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol pr, :context (ns spachat.protected-eval
+  (:require [__prefix__]))
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 153} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:49,528 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol pr, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 154} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:49,529 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol pr, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 155} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:49,563 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 156} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:49,770 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 157} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:49,772 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol pro, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 158} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,106 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 159} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,246 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 160} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,247 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol prote, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 161} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,462 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protec, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 162} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,589 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protec, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 163} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,591 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protec, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 164} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:50,910 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 165} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,020 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 166} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,021 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protecte, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 167} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,237 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 168} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,323 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 169} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,324 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 170} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,689 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-e, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 171} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,721 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 172} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:51,722 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-e, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 173} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:52,154 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 174} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:54,456 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 175} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:54,459 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 176} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:55,525 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :re, :context (ns spachat.protected-eval
+  (:require [protected-eval __prefix__]))
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 177} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:55,604 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 178} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:55,606 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :re, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 179} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:56,086 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :refer, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 180} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:56,276 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 181} 
+java.lang.NullPointerException: null
+2019-02-05 00:03:56,278 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol :refer, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 182} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:20,128 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol defn, :context (__prefix__)
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 185} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:20,196 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol defn, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 186} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:20,197 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol defn, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 187} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:20,863 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol se, :context (defn __prefix__)
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 188} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:21,459 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol se, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 191} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:21,499 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol se, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 192} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:21,842 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 193} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:21,879 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 194} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:21,880 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 195} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:22,091 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send-, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 196} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:22,167 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 197} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:22,168 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send-, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 198} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:22,467 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send-me, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 199} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:22,515 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 200} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:22,516 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send-me, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 201} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:23,356 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send-message, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 202} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:23,930 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 205} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:23,971 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol send-message, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 206} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:25,772 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol -im, :context (defn send-message __prefix__)
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 208} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:26,409 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 211} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:26,451 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol -im, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 212} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:26,628 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol -imp, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 213} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:26,690 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 214} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:26,692 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol -imp, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 215} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:26,907 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol -impl, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 216} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:27,260 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol , :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 219} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:27,303 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol -impl, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 220} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:56,656 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval., :context (ns spachat.protected-eval
+  (:require [__prefix__ :refer :all]))
+, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 222} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:56,711 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 223} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:56,713 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval., :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 224} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:57,093 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval.co, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 225} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:57,157 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 226} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:57,158 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval.co, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 227} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:57,463 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval.core, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 228} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:57,498 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 229} 
+java.lang.NullPointerException: null
+2019-02-05 00:04:57,501 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns spachat.protected-eval, :symbol protected-eval.core, :context :same, :session ceef88c9-6db2-4913-ac82-496b65cfb1b6, :id 230} 
+java.lang.NullPointerException: null
+2019-02-05 00:06:57,250 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op out-subscribe, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 7} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:06:57,634 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op init-debugger, :print-level 10, :print-length 10, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 9} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:07:03,097 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context nil, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 10} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:07:03,775 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 13} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:03,775 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 14} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:04,199 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 15} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:04,265 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 16} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:04,267 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 17} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,026 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.co, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 18} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,027 [clojure-agent-send-off-pool-5] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.co, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 20} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,027 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 19} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,333 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.core, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 21} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,521 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 22} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,523 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.core, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 23} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:05,728 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.core/, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 24} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:06,090 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 27} 
+java.lang.NullPointerException: null
+2019-02-05 00:07:06,131 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.core/, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 28} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,054 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spach, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 30} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,168 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spach, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 31} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,169 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spach, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 32} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,382 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 33} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,404 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 34} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,407 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 35} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:23,805 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 36} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:24,333 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 37} 
+java.lang.NullPointerException: null
+2019-02-05 00:08:24,334 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 38} 
+java.lang.NullPointerException: null
+2019-02-05 00:09:50,038 [clojure-agent-send-off-pool-9] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol #_, :context (defproject spachat "0.1.0-SNAPSHOT"
+
+  :description "FIXME: write description"
+  :url "http://example.com/FIXME"
+
+  :dependencies [[baking-soda "0.2.0" :exclusions [cljsjs/react-bootstrap]]
+                 [binaryage/oops "0.6.4"]
+                 [ch.qos.logback/logback-classic "1.2.3"]
+                 [camel-snake-kebab "0.4.0"]
+                 [clj-time "0.15.1"]
+                 [cljs-ajax "0.8.0"]
+                 [cljsjs/react-popper "0.10.4-0"]
+                 [cljsjs/react-transition-group "2.4.0-0"]
+                 [com.cognitect/transit-java "0.8.337"]
+                 [compojure "1.6.1"]
+                 [conman "0.8.3"]
+                 [cprop "0.1.13"]
+                 [funcool/struct "1.3.0"]
+                 [luminus-aleph "0.1.5"]
+                 [luminus-migrations "0.6.3"]
+                 [luminus/ring-ttl-session "0.3.2"]
+                 [markdown-clj "1.0.7"]
+                 [metosin/muuntaja "0.5.0"]
+                 [metosin/ring-http-response "0.9.1"]
+                 [mount "0.1.16"]
+                 [mysql/mysql-connector-java "8.0.14" :exclusions [com.google.protobuf/protobuf-java]]
+                 [nrepl "0.5.3"]
+                 [org.clojure/tools.nrepl "0.2.13"]
+                 [org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.10.238" :scope "provided"]
+                 [org.clojure/tools.cli "0.4.1"]
+                 [org.clojure/tools.logging "0.4.1"]
+                 [org.webjars.bower/tether "1.4.4"]
+                 [org.webjars/bootstrap "4.2.1"]
+                 [org.webjars/font-awesome "5.6.3"]
+                 [org.webjars/webjars-locator "0.35"]
+                 [re-frame "0.10.6"]
+                 [day8.re-frame/http-fx "0.1.6"]
+                 [reagent "0.8.1"]
+                 [ring-webjars "0.2.0"]
+                 [ring/ring-core "1.7.1"]
+                 [ring/ring-defaults "0.3.2"]
+                 [secretary "1.2.3"]
+                 [cljsjs/material-ui "3.9.1-0"]
+                 [cljsjs/material-ui-icons "3.0.1-0"]
+                 [digest "1.4.8"]
+                 [com.andrewmcveigh/cljs-time "0.5.2"]
+                 [selmer "1.12.5"]
+                 [protected-eval "0.1.2"]]
+  :min-lein-version "2.0.0"
+
+  :source-paths ["src/clj" "src/cljs" "src/cljc"]
+  :test-paths ["test/clj"]
+  :resource-paths ["resources" "target/cljsbuild"]
+  :target-path "target/%s/"
+  :main ^:skip-aot spachat.core
+  :clean-targets ^{:protect false}
+  [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
+  :figwheel
+  {:http-server-root "public"
+   :nrepl-port 7002
+   :css-dirs ["resources/public/css"]
+   :nrepl-middleware [cider/wrap-cljs-repl cider.piggieback/wrap-cljs-repl]}
+  :aliases {"check-all"
+            ["do"
+             ["clean-m2"]
+             ["bikeshed" "check"]
+             ["eastwood"]
+             ["cljfmt" "check"]]}
+:profiles
+  {:uberjar {:omit-source true
+             :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+             :cljsbuild
+             {:builds
+              {:min
+               {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
+                :compiler
+                {:output-dir "target/cljsbuild/public/js"
+                 :output-to "target/cljsbuild/public/js/app.js"
+                 :source-map "target/cljsbuild/public/js/app.js.map"
+                 :optimizations :advanced
+                 :infer-externs true
+                 :pretty-print false}}}}
+             :aot :all
+             :uberjar-name "spachat.jar"
+             :source-paths ["env/prod/clj"]
+             :resource-paths ["env/prod/resources"]}
+
+   :dev           [:project/dev :profiles/dev]
+   :test          [:project/dev :project/test :profiles/test]
+
+   :project/dev  {:jvm-opts ["-Dconf=dev-config.edn"]
+                  :dependencies [[binaryage/devtools "0.9.10"]
+                                 [cider/piggieback "0.3.10"]
+                                 [day8.re-frame/re-frame-10x "0.3.6"]
+                                 [doo "0.1.11"]
+                                 [expound "0.7.2"]
+                                 [figwheel-sidecar "0.5.18"]
+                                 [pjstadig/humane-test-output "0.9.0"]
+                                 [prone "1.6.1"]
+                                 [ring/ring-devel "1.7.1"]
+                                 [ring/ring-mock "0.3.2"]]
+                  :plugins      [[lein-cljsbuild "1.1.7"]
+                                 [lein-clean-m2 "0.1.2"]
+                                 [com.jakemccrary/lein-test-refresh "0.23.0"]
+                                 [lein-bikeshed "0.5.1"]
+                                 [lein-cljfmt "0.6.4"]
+                                 [lein-eftest "0.5.4"]
+                                 [jonase/eastwood "0.3.5"]
+                                 [lein-doo "0.1.10"]
+                                 [lein-figwheel "0.5.18"]]
+                  :cljsbuild
+                  {:builds
+                   {:app
+                    {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
+                     :figwheel {:on-jsload "spachat.core/mount-components"}
+                     :compiler
+                     {:main "spachat.app"
+                      :asset-path "/js/out"
+                      :output-to "target/cljsbuild/public/js/app.js"
+                      :output-dir "target/cljsbuild/public/js/out"
+                      :source-map true
+                      :optimizations :none
+                      :pretty-print true
+                      :closure-defines {"re_frame.trace.trace_enabled_QMARK_" true}
+                      :preloads [day8.re-frame-10x.preload]}}}}
+
+
+
+                  :doo {:build "test"}
+                  :source-paths ["env/dev/clj"]
+                  :resource-paths ["env/dev/resources"]
+                  :repl-options {:init-ns user
+                                 :timeout 120000
+                                 #_:nrepl-middleware __prefix__[protected-eval.core/eval-apply-remote-only-cider]}
+                  :injections [(require 'pjstadig.humane-test-output)
+                               (pjstadig.humane-test-output/activate!)]}
+   :project/test {:jvm-opts ["-Dconf=test-config.edn"]
+                  :resource-paths ["env/test/resources"]
+                  :cljsbuild
+                  {:builds
+                   {:test
+                    {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
+                     :compiler
+                     {:output-to "target/test.js"
+                      :main "spachat.doo-runner"
+                      :optimizations :whitespace
+                      :pretty-print true}}}}
+
+                  }
+   :profiles/dev {}
+   :profiles/test {}})
+, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 40} 
+java.lang.NullPointerException: null
+2019-02-05 00:09:50,389 [clojure-agent-send-off-pool-9] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol #, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 41} 
+java.lang.NullPointerException: null
+2019-02-05 00:09:50,435 [clojure-agent-send-off-pool-9] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol #_, :context :same, :session 95ec5f5c-b8fc-4026-90a0-51a9917e482d, :id 42} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:19,826 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op out-subscribe, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 7} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:17:20,210 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op init-debugger, :print-level 10, :print-length 10, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 9} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:17:41,027 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol st, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 10} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:17:41,053 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol st, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 11} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:17:41,053 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol st, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 12} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:17:51,842 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol fd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 14} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:52,390 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol fd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 16} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:52,391 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol fd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 17} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:54,860 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 18} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:55,620 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 21} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:55,660 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 22} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:56,050 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 23} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:56,167 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 24} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:56,168 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 25} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:56,380 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 26} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,303 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 29} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,343 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 30} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,514 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 31} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,663 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 32} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,663 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat., :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 33} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,877 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.p, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 34} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,921 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 35} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:58,922 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.p, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 36} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,133 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pr, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 37} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,200 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 38} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,201 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pr, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 39} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,414 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pro, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 40} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,560 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 41} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,561 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.pro, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 42} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,891 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prote, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 43} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,966 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 44} 
+java.lang.NullPointerException: null
+2019-02-05 00:17:59,966 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.prote, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 45} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:00,180 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protec, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 46} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:00,243 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 47} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:00,244 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protec, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 48} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:00,456 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protect, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 49} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:00,924 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 52} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:00,967 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protect, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 53} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:01,266 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protectte, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 54} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:01,672 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 57} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:01,715 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protectte, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 58} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:02,196 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protecte, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 59} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:02,305 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 60} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:02,306 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protecte, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 61} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:02,520 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 62} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:03,844 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 65} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:03,883 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 66} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:04,060 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 67} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:04,086 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 68} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:04,087 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 69} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:04,512 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-rep, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 70} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:04,925 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 73} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:04,967 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-rep, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 74} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:05,139 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-repl, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 75} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:05,624 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 78} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:05,667 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-repl, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 79} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:05,954 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-replfd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 80} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:06,286 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 83} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:06,327 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-replfd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 84} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:06,809 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-replfd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 85} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:07,411 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 88} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:07,451 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-replfd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 89} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:20,787 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval/, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 90} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:21,029 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 91} 
+java.lang.NullPointerException: null
+2019-02-05 00:18:21,030 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat.protected-eval/, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 92} 
+java.lang.NullPointerException: null
+2019-02-05 00:19:11,261 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol fd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 96} 
+java.lang.NullPointerException: null
+2019-02-05 00:19:12,079 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol fd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 98} 
+java.lang.NullPointerException: null
+2019-02-05 00:19:12,119 [clojure-agent-send-off-pool-4] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol fd, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 99} 
+java.lang.NullPointerException: null
+2019-02-05 00:23:30,689 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:print-right-margin 80, :ns user, :file *cider-repl github/spachat:localhost:46777(clj)*, :op eval, :column 7, :line 20, :pprint-fn cider.nrepl.middleware.pprint/fipp-pprint, :id 105, :code j, :content-type true, :pprint true, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84} 
+java.lang.IllegalArgumentException: Don't know how to create ISeq from: clojure.lang.Symbol
+	at clojure.lang.RT.seqFrom(RT.java:550)
+	at clojure.lang.RT.seq(RT.java:530)
+	at clojure.lang.RT.first(RT.java:686)
+	at clojure.core$first__5106.invokeStatic(core.clj:55)
+	at clojure.core$first__5106.invoke(core.clj:55)
+	at protected_eval.core$defnremote_QMARK_.invokeStatic(core.clj:16)
+	at protected_eval.core$defnremote_QMARK_.invoke(core.clj:15)
+	at protected_eval.core$eval_apply_remote_only_cider$fn__43857.invoke(core.clj:59)
+	at nrepl.middleware$wrap_conj_descriptor$fn__43288.invoke(middleware.clj:17)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:24:18,551 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol sp, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 110} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:18,616 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol sp, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 111} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:18,617 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol sp, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 112} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:18,830 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 113} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:20,397 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 116} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:20,439 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spa, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 117} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:20,893 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 118} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:21,033 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 119} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:21,034 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spacha, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 120} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:21,246 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 121} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:22,082 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 124} 
+java.lang.NullPointerException: null
+2019-02-05 00:24:22,123 [clojure-agent-send-off-pool-7] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op complete, :ns user, :symbol spachat, :context :same, :session 1572eb39-98f9-4bfc-b40c-97e995b80c84, :id 125} 
+java.lang.NullPointerException: null
+2019-02-05 00:34:40,241 [clojure-agent-send-off-pool-3] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:op clone, :id 1} 
+java.lang.NullPointerException: null
+	at clojure.lang.Symbol.intern(Symbol.java:59)
+	at clojure.core$symbol.invokeStatic(core.clj:579)
+	at clojure.core$symbol.invoke(core.clj:574)
+	at protected_eval.core$defnremote_dbg_QMARK_.invokeStatic(core.clj:26)
+	at protected_eval.core$defnremote_dbg_QMARK_.invoke(core.clj:24)
+	at protected_eval.core$eval_apply_remote_only_cider_dbg$fn__43858.invoke(core.clj:86)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:43:50,832 [clojure-agent-send-off-pool-0] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code (do (do (do (clojure.core/println (clojure.core/str "REPL-y " "0.3.7" ", nREPL " (:version-string clojure.tools.nrepl/version))) (clojure.core/println "Clojure" (clojure.core/clojure-version)) (clojure.core/println (java.lang.System/getProperty "java.vm.name") (java.lang.System/getProperty "java.runtime.version")) (clojure.core/use (quote [clojure.repl :only [source apropos dir]])) (clojure.core/when (clojure.core/ns-resolve (quote clojure.repl) (quote pst)) (clojure.core/refer (quote clojure.repl) :only (quote [pst doc find-doc]))) (clojure.core/use (quote [clojure.java.javadoc :only [javadoc]])) (clojure.core/use (quote [clojure.pprint :only [pp pprint]])) (clojure.core/create-ns (quote reply.exports)) (intern (quote reply.exports) (quote original-ns) *ns*) (clojure.core/in-ns (quote reply.exports)) (clojure.core/refer (quote clojure.core)) (defn intern-with-meta [ns sym value-var] (intern ns (with-meta sym (meta value-var)) (clojure.core/deref value-var))) (clojure.core/defn help [] (println "    Docs: (doc function-name-here)\n          (find-doc \"part-of-name-here\")\n  Source: (source function-name-here)\n Javadoc: (javadoc java-object-or-class-here)\n    Exit: Control+D or (exit) or (quit)\n Results: Stored in vars *1, *2, *3, an exception in *e\n")) (intern-with-meta (quote user) (quote help) (var help)) (defn unresolve "Given a var, return a sequence of all symbols that resolve to the\n  var from the current namespace *ns*." [var] (when-not (instance? clojure.lang.Var var) (throw (Exception. (format "unresolve: first arg must be Var")))) (let [home-ns (.ns var) sym-name-str (second (re-find #"/(.*)$" (str var)))] (sort-by (fn* [p1__8212#] (count (str p1__8212#))) (concat (->> (ns-map *ns*) (filter (fn [[k v]] (= var v))) (map first)) (list (symbol (str home-ns) sym-name-str)) (->> (ns-aliases *ns*) (filter (fn [[ns-alias ns]] (= ns home-ns))) (map first) (map (fn [ns-alias-symbol] (symbol (str ns-alias-symbol) sym-name-str)))))))) (defn apropos-better "Similar to clojure.repl/apropos, but provides enough context (in the form of\n  namespaces where the vars live, when necessary) to actually use the results\n  in a REPL.\n\n  Given a regular expression or stringable thing, calculate a\n  sequence of all symbols in all currently-loaded namespaces such that\n  it matches the str-or-pattern, with at most one such symbol per Var.\n  The sequence returned contains symbols that map to those Vars, and are\n  the shortest symbols that map to the Var, when qualified with the\n  namespace name or alias, if that qualification is necessary to name\n  the Var.  Note that it is possible the symbol returned does not match\n  the str-or-pattern itself, e.g. if the symbol-to-var mapping was\n  created with :rename.\n\n  Searches through all non-Java symbols in the current namespace, but\n  only public symbols of other namespaces." [str-or-pattern] (let [matches? (if (instance? java.util.regex.Pattern str-or-pattern) (fn* [p1__8216#] (re-find str-or-pattern (str p1__8216#))) (fn* [p1__8217#] (.contains (str p1__8217#) (str str-or-pattern))))] (sort (map (fn* [p1__8218#] (first ((ns-resolve (quote reply.exports) (quote unresolve)) p1__8218#))) (set (mapcat (fn [ns] (map second (filter (fn [[s v]] (matches? s)) (if (= ns *ns*) (concat (ns-interns ns) (ns-refers ns)) (ns-publics ns))))) (all-ns))))))) (intern-with-meta (quote user) (quote apropos-better) (var apropos-better)) (intern-with-meta (quote user) (quote find-name) (var apropos-better)) (def clojuredocs-available? (delay (try (println "Loading clojuredocs-client...") (require (quote [cd-client.core])) true (catch Exception e# (println "Warning: Could not load the ClojureDocs client, so" "`clojuredocs` will be unavailable") (println "  Details:" e# "\n") false)))) (defn call-with-ns-and-name [f v] (let [m (meta v) ns (str (.name (:ns m))) name (str (:name m))] (f ns name))) (defmacro handle-fns-etc [name fn] (if (special-symbol? name) (clojure.core/seq (clojure.core/concat (clojure.core/list fn) (clojure.core/list "clojure.core") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/str)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name))))))))) (let [nspace (find-ns name)] (if nspace (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/println)) (clojure.core/list "No usage examples for namespaces as a whole like") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name)))) (clojure.core/list "\nTry a particular symbol in a namespace,") (clojure.core/list "e.g. clojure.string/join"))) (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/call-with-ns-and-name)) (clojure.core/list fn) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote var)) (clojure.core/list name)))))))))) (defmacro lazy-clojuredocs "Lazily checks if the clojuredocs client is available, and uses it to\n  retrieve examples if it is." ([v] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/handle-fns-etc)) (clojure.core/list v) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))))))))) ([ns-str var-str] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))) (clojure.core/list ns-str) (clojure.core/list var-str)))))))) (intern-with-meta (quote user) (quote clojuredocs) (var lazy-clojuredocs)) (intern-with-meta (quote user) (quote cdoc) (var lazy-clojuredocs)) (try (clojure.core/require (quote [complete.core])) (def resolve-class (fn [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e)))))) (reply.exports/intern-with-meta (quote complete.core) (quote resolve-class) (var resolve-class)) (catch java.lang.Exception e__7583__auto__ (try (clojure.core/eval (quote (do (ns complete.core (:require [clojure.main]) (:import [java.util.jar JarFile] [java.io File] [java.lang.reflect Member] [java.util.jar JarEntry])) (defn namespaces "Returns a list of potential namespace completions for a given namespace" [ns] (map name (concat (map ns-name (all-ns)) (keys (ns-aliases ns))))) (defn ns-public-vars "Returns a list of potential public var name completions for a given namespace" [ns] (map name (keys (ns-publics ns)))) (defn ns-vars "Returns a list of all potential var name completions for a given namespace" [ns] (for [[sym val] (ns-map ns) :when (var? val)] (name sym))) (defn ns-classes "Returns a list of potential class name completions for a given namespace" [ns] (map name (keys (ns-imports ns)))) (def special-forms (map name (quote [def if do let quote var fn loop recur throw try monitor-enter monitor-exit dot new set!]))) (defn- static? [member] (java.lang.reflect.Modifier/isStatic (.getModifiers member))) (defn ns-java-methods "Returns a list of potential java method name completions for a given namespace" [ns] (for [class (vals (ns-imports ns)) method (.getMethods class) :when (static? method)] (str "." (.getName method)))) (defn static-members "Returns a list of potential static members for a given class" [class] (for [member (concat (.getMethods class) (.getDeclaredFields class)) :when (static? member)] (.getName member))) (defn path-files [path] (cond (.endsWith path "/*") (for [jar (.listFiles (File. path)) :when (.endsWith (.getName jar) ".jar") file (path-files (.getPath jar))] file) (.endsWith path ".jar") (try (for [entry (enumeration-seq (.entries (JarFile. path)))] (.getName entry)) (catch Exception e)) :else (for [file (file-seq (File. path))] (.replace (.getPath file) path "")))) (def classfiles (for [prop ["sun.boot.class.path" "java.ext.dirs" "java.class.path"] path (.split (System/getProperty prop) File/pathSeparator) file (path-files path) :when (and (.endsWith file ".class") (not (.contains file "__")))] file)) (defn- classname [file] (.. file (replace ".class" "") (replace File/separator "."))) (def top-level-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+\.class" file)] (classname file))))) (def nested-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+(\$[^\d]\w*)+\.class" file)] (classname file))))) (defn resolve-class [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e))))) (defmulti potential-completions (fn [prefix ns] (cond (.contains prefix "/") :scoped (.contains prefix ".") :class :else :var))) (defmethod potential-completions :scoped [prefix ns] (when-let [prefix-scope (first (.split prefix "/"))] (let [scope (symbol prefix-scope)] (map (fn* [p1__8219#] (str scope "/" p1__8219#)) (if-let [class (resolve-class scope)] (static-members class) (when-let [ns (or (find-ns scope) (scope (ns-aliases ns)))] (ns-public-vars ns))))))) (defmethod potential-completions :class [prefix ns] (concat (namespaces ns) (if (.contains prefix "$") (clojure.core/deref nested-classes) (clojure.core/deref top-level-classes)))) (defmethod potential-completions :var [_ ns] (concat special-forms (namespaces ns) (ns-vars ns) (ns-classes ns) (ns-java-methods ns))) (defn completions "Return a sequence of matching completions given a prefix string and an optional current namespace." ([prefix] (completions prefix *ns*)) ([prefix ns] (sort (for [completion (potential-completions prefix ns) :when (.startsWith completion prefix)] completion))))))) (catch java.lang.Exception f__7584__auto__ (clojure.core/intern (clojure.core/create-ns (quote complete.core)) (quote completions) (clojure.core/fn [prefix__7585__auto__ ns__7586__auto__] [])) (clojure.core/println "Unable to initialize completions."))))) (clojure.core/in-ns (clojure.core/ns-name reply.exports/original-ns)) (user/help) nil) nil nil nil)), :id cb1dcec1-909b-4e06-95d4-8b0ecb12d218, :op eval, :renderer whidbey.repl/render-str, :session 1e203ad1-3822-4e81-9f68-18f6c8a450d1} 
 java.lang.RuntimeException: No dispatch macro for: "
 	at clojure.lang.Util.runtimeException(Util.java:221)
 	at clojure.lang.EdnReader$DispatchReader.invoke(EdnReader.java:552)
@@ -27,9 +970,9 @@ java.lang.RuntimeException: No dispatch macro for: "
 	at clojure.edn$read_string.invokeStatic(edn.clj:46)
 	at clojure.edn$read_string.invokeStatic(edn.clj:37)
 	at clojure.edn$read_string.invoke(edn.clj:37)
-	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:15)
-	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:14)
-	at spachat.nrepl_protected$eval_apply_protected_only$fn__34599.invoke(nrepl_protected.clj:22)
+	at protected_eval.core$defnremote_dbg_QMARK_.invokeStatic(core.clj:26)
+	at protected_eval.core$defnremote_dbg_QMARK_.invoke(core.clj:24)
+	at protected_eval.core$eval_apply_remote_only_cider_dbg$fn__43858.invoke(core.clj:87)
 	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
 	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
 	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
@@ -39,24 +982,38 @@ java.lang.RuntimeException: No dispatch macro for: "
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
-2019-02-03 17:18:13,672 [clojure-agent-send-off-pool-1] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code (do (do (do (clojure.core/println (clojure.core/str "REPL-y " "0.3.7" ", nREPL " (:version-string clojure.tools.nrepl/version))) (clojure.core/println "Clojure" (clojure.core/clojure-version)) (clojure.core/println (java.lang.System/getProperty "java.vm.name") (java.lang.System/getProperty "java.runtime.version")) (clojure.core/use (quote [clojure.repl :only [source apropos dir]])) (clojure.core/when (clojure.core/ns-resolve (quote clojure.repl) (quote pst)) (clojure.core/refer (quote clojure.repl) :only (quote [pst doc find-doc]))) (clojure.core/use (quote [clojure.java.javadoc :only [javadoc]])) (clojure.core/use (quote [clojure.pprint :only [pp pprint]])) (clojure.core/create-ns (quote reply.exports)) (intern (quote reply.exports) (quote original-ns) *ns*) (clojure.core/in-ns (quote reply.exports)) (clojure.core/refer (quote clojure.core)) (defn intern-with-meta [ns sym value-var] (intern ns (with-meta sym (meta value-var)) (clojure.core/deref value-var))) (clojure.core/defn help [] (println "    Docs: (doc function-name-here)\n          (find-doc \"part-of-name-here\")\n  Source: (source function-name-here)\n Javadoc: (javadoc java-object-or-class-here)\n    Exit: Control+D or (exit) or (quit)\n Results: Stored in vars *1, *2, *3, an exception in *e\n")) (intern-with-meta (quote user) (quote help) (var help)) (defn unresolve "Given a var, return a sequence of all symbols that resolve to the\n  var from the current namespace *ns*." [var] (when-not (instance? clojure.lang.Var var) (throw (Exception. (format "unresolve: first arg must be Var")))) (let [home-ns (.ns var) sym-name-str (second (re-find #"/(.*)$" (str var)))] (sort-by (fn* [p1__8212#] (count (str p1__8212#))) (concat (->> (ns-map *ns*) (filter (fn [[k v]] (= var v))) (map first)) (list (symbol (str home-ns) sym-name-str)) (->> (ns-aliases *ns*) (filter (fn [[ns-alias ns]] (= ns home-ns))) (map first) (map (fn [ns-alias-symbol] (symbol (str ns-alias-symbol) sym-name-str)))))))) (defn apropos-better "Similar to clojure.repl/apropos, but provides enough context (in the form of\n  namespaces where the vars live, when necessary) to actually use the results\n  in a REPL.\n\n  Given a regular expression or stringable thing, calculate a\n  sequence of all symbols in all currently-loaded namespaces such that\n  it matches the str-or-pattern, with at most one such symbol per Var.\n  The sequence returned contains symbols that map to those Vars, and are\n  the shortest symbols that map to the Var, when qualified with the\n  namespace name or alias, if that qualification is necessary to name\n  the Var.  Note that it is possible the symbol returned does not match\n  the str-or-pattern itself, e.g. if the symbol-to-var mapping was\n  created with :rename.\n\n  Searches through all non-Java symbols in the current namespace, but\n  only public symbols of other namespaces." [str-or-pattern] (let [matches? (if (instance? java.util.regex.Pattern str-or-pattern) (fn* [p1__8216#] (re-find str-or-pattern (str p1__8216#))) (fn* [p1__8217#] (.contains (str p1__8217#) (str str-or-pattern))))] (sort (map (fn* [p1__8218#] (first ((ns-resolve (quote reply.exports) (quote unresolve)) p1__8218#))) (set (mapcat (fn [ns] (map second (filter (fn [[s v]] (matches? s)) (if (= ns *ns*) (concat (ns-interns ns) (ns-refers ns)) (ns-publics ns))))) (all-ns))))))) (intern-with-meta (quote user) (quote apropos-better) (var apropos-better)) (intern-with-meta (quote user) (quote find-name) (var apropos-better)) (def clojuredocs-available? (delay (try (println "Loading clojuredocs-client...") (require (quote [cd-client.core])) true (catch Exception e# (println "Warning: Could not load the ClojureDocs client, so" "`clojuredocs` will be unavailable") (println "  Details:" e# "\n") false)))) (defn call-with-ns-and-name [f v] (let [m (meta v) ns (str (.name (:ns m))) name (str (:name m))] (f ns name))) (defmacro handle-fns-etc [name fn] (if (special-symbol? name) (clojure.core/seq (clojure.core/concat (clojure.core/list fn) (clojure.core/list "clojure.core") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/str)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name))))))))) (let [nspace (find-ns name)] (if nspace (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/println)) (clojure.core/list "No usage examples for namespaces as a whole like") (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote quote)) (clojure.core/list name)))) (clojure.core/list "\nTry a particular symbol in a namespace,") (clojure.core/list "e.g. clojure.string/join"))) (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/call-with-ns-and-name)) (clojure.core/list fn) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote var)) (clojure.core/list name)))))))))) (defmacro lazy-clojuredocs "Lazily checks if the clojuredocs client is available, and uses it to\n  retrieve examples if it is." ([v] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote reply.exports/handle-fns-etc)) (clojure.core/list v) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))))))))) ([ns-str var-str] (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/when)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/deref)) (clojure.core/list (quote reply.exports/clojuredocs-available?))))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/ns-resolve)) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "cd-client.core")))) (clojure.core/list (clojure.core/seq (clojure.core/concat (clojure.core/list (quote clojure.core/symbol)) (clojure.core/list "pr-examples-core"))))))) (clojure.core/list ns-str) (clojure.core/list var-str)))))))) (intern-with-meta (quote user) (quote clojuredocs) (var lazy-clojuredocs)) (intern-with-meta (quote user) (quote cdoc) (var lazy-clojuredocs)) (try (clojure.core/require (quote [complete.core])) (def resolve-class (fn [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e)))))) (reply.exports/intern-with-meta (quote complete.core) (quote resolve-class) (var resolve-class)) (catch java.lang.Exception e__7583__auto__ (try (clojure.core/eval (quote (do (ns complete.core (:require [clojure.main]) (:import [java.util.jar JarFile] [java.io File] [java.lang.reflect Member] [java.util.jar JarEntry])) (defn namespaces "Returns a list of potential namespace completions for a given namespace" [ns] (map name (concat (map ns-name (all-ns)) (keys (ns-aliases ns))))) (defn ns-public-vars "Returns a list of potential public var name completions for a given namespace" [ns] (map name (keys (ns-publics ns)))) (defn ns-vars "Returns a list of all potential var name completions for a given namespace" [ns] (for [[sym val] (ns-map ns) :when (var? val)] (name sym))) (defn ns-classes "Returns a list of potential class name completions for a given namespace" [ns] (map name (keys (ns-imports ns)))) (def special-forms (map name (quote [def if do let quote var fn loop recur throw try monitor-enter monitor-exit dot new set!]))) (defn- static? [member] (java.lang.reflect.Modifier/isStatic (.getModifiers member))) (defn ns-java-methods "Returns a list of potential java method name completions for a given namespace" [ns] (for [class (vals (ns-imports ns)) method (.getMethods class) :when (static? method)] (str "." (.getName method)))) (defn static-members "Returns a list of potential static members for a given class" [class] (for [member (concat (.getMethods class) (.getDeclaredFields class)) :when (static? member)] (.getName member))) (defn path-files [path] (cond (.endsWith path "/*") (for [jar (.listFiles (File. path)) :when (.endsWith (.getName jar) ".jar") file (path-files (.getPath jar))] file) (.endsWith path ".jar") (try (for [entry (enumeration-seq (.entries (JarFile. path)))] (.getName entry)) (catch Exception e)) :else (for [file (file-seq (File. path))] (.replace (.getPath file) path "")))) (def classfiles (for [prop ["sun.boot.class.path" "java.ext.dirs" "java.class.path"] path (.split (System/getProperty prop) File/pathSeparator) file (path-files path) :when (and (.endsWith file ".class") (not (.contains file "__")))] file)) (defn- classname [file] (.. file (replace ".class" "") (replace File/separator "."))) (def top-level-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+\.class" file)] (classname file))))) (def nested-classes (future (doall (for [file classfiles :when (re-find #"^[^\$]+(\$[^\d]\w*)+\.class" file)] (classname file))))) (defn resolve-class [sym] (try (let [val (resolve sym)] (when (class? val) val)) (catch Exception e (when (not= ClassNotFoundException (class (clojure.main/repl-exception e))) (throw e))))) (defmulti potential-completions (fn [prefix ns] (cond (.contains prefix "/") :scoped (.contains prefix ".") :class :else :var))) (defmethod potential-completions :scoped [prefix ns] (when-let [prefix-scope (first (.split prefix "/"))] (let [scope (symbol prefix-scope)] (map (fn* [p1__8219#] (str scope "/" p1__8219#)) (if-let [class (resolve-class scope)] (static-members class) (when-let [ns (or (find-ns scope) (scope (ns-aliases ns)))] (ns-public-vars ns))))))) (defmethod potential-completions :class [prefix ns] (concat (namespaces ns) (if (.contains prefix "$") (clojure.core/deref nested-classes) (clojure.core/deref top-level-classes)))) (defmethod potential-completions :var [_ ns] (concat special-forms (namespaces ns) (ns-vars ns) (ns-classes ns) (ns-java-methods ns))) (defn completions "Return a sequence of matching completions given a prefix string and an optional current namespace." ([prefix] (completions prefix *ns*)) ([prefix ns] (sort (for [completion (potential-completions prefix ns) :when (.startsWith completion prefix)] completion))))))) (catch java.lang.Exception f__7584__auto__ (clojure.core/intern (clojure.core/create-ns (quote complete.core)) (quote completions) (clojure.core/fn [prefix__7585__auto__ ns__7586__auto__] [])) (clojure.core/println "Unable to initialize completions."))))) (clojure.core/in-ns (clojure.core/ns-name reply.exports/original-ns)) (user/help) nil) nil nil nil)), :id 3bcb160c-3328-4d46-8e01-ba9c879903a5, :op eval, :renderer whidbey.repl/render-str, :session ed5904f1-b10d-429e-b288-ffba667db3da} 
-java.lang.RuntimeException: No dispatch macro for: "
+2019-02-05 00:47:57,981 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:print-right-margin 80, :ns user, :file *cider-repl github/spachat:localhost:41943(clj)*, :op eval, :column 7, :line 19, :pprint-fn cider.nrepl.middleware.pprint/fipp-pprint, :id 108, :code (spachat.core), :content-type true, :pprint true, :session a182fa64-9fa9-4517-8077-0602e803d819} 
+java.lang.ClassNotFoundException: spachat.core
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:382)
+	at clojure.lang.DynamicClassLoader.findClass(DynamicClassLoader.java:69)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at clojure.lang.DynamicClassLoader.loadClass(DynamicClassLoader.java:77)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:348)
+	at clojure.lang.RT.classForName(RT.java:2204)
+	at clojure.lang.RT.classForName(RT.java:2213)
+	at clojure.lang.Compiler.maybeResolveIn(Compiler.java:7322)
+	at clojure.core$ns_resolve.invokeStatic(core.clj:4336)
+	at clojure.core$ns_resolve.invokeStatic(core.clj:4325)
+	at clojure.core$resolve.invokeStatic(core.clj:4338)
+	at clojure.core$resolve.invoke(core.clj:4338)
+	at protected_eval.core$defnremote_dbg_QMARK_.invokeStatic(core.clj:31)
+	at protected_eval.core$defnremote_dbg_QMARK_.invoke(core.clj:24)
+	at protected_eval.core$eval_apply_remote_only_cider_dbg$fn__43858.invoke(core.clj:87)
+	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
+	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
+	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
+	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-05 00:59:25,134 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:print-right-margin 80, :ns user, :file *cider-repl github/spachat:localhost:46561(clj)*, :op eval, :column 7, :line 33, :pprint-fn cider.nrepl.middleware.pprint/fipp-pprint, :id 324, :code (#'send-message-impl), :content-type true, :pprint true, :session b651fee6-9e70-4268-a834-11c04f49af6e} 
+java.lang.RuntimeException: No dispatch macro for: '
 	at clojure.lang.Util.runtimeException(Util.java:221)
 	at clojure.lang.EdnReader$DispatchReader.invoke(EdnReader.java:552)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$VectorReader.invoke(EdnReader.java:672)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
-	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
-	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
 	at clojure.lang.EdnReader.readDelimitedList(EdnReader.java:757)
 	at clojure.lang.EdnReader$ListReader.invoke(EdnReader.java:654)
 	at clojure.lang.EdnReader.read(EdnReader.java:145)
@@ -65,43 +1022,9 @@ java.lang.RuntimeException: No dispatch macro for: "
 	at clojure.edn$read_string.invokeStatic(edn.clj:46)
 	at clojure.edn$read_string.invokeStatic(edn.clj:37)
 	at clojure.edn$read_string.invoke(edn.clj:37)
-	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:17)
-	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:16)
-	at spachat.nrepl_protected$eval_apply_protected_only$fn__34604.invoke(nrepl_protected.clj:49)
-	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
-	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
-	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
-	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
-	at clojure.lang.AFn.call(AFn.java:18)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-2019-02-03 17:46:15,074 [clojure-agent-send-off-pool-6] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code , :id adf4f29d-dfeb-45cb-9718-990f7c116ed6, :op eval, :renderer whidbey.repl/render-str, :session 19b17dab-6764-436b-a6a9-5785c6a0c2b8} 
-java.lang.NullPointerException: null
-	at clojure.lang.Symbol.intern(Symbol.java:59)
-	at clojure.core$symbol.invokeStatic(core.clj:579)
-	at clojure.core$symbol.invoke(core.clj:574)
-	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:17)
-	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:16)
-	at spachat.nrepl_protected$eval_apply_protected_only$fn__34604.invoke(nrepl_protected.clj:51)
-	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
-	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
-	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)
-	at clojure.core$binding_conveyor_fn$fn__5476.invoke(core.clj:2022)
-	at clojure.lang.AFn.call(AFn.java:18)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
-	at java.lang.Thread.run(Thread.java:748)
-2019-02-03 18:05:33,760 [clojure-agent-send-off-pool-8] ERROR clojure.tools.nrepl.server - Unhandled REPL handler exception processing message {:code , :id 556697d4-7bd5-4627-8a50-ac96e4eecd01, :op eval, :renderer whidbey.repl/render-str, :session 68c86d16-7f24-4e2d-a6aa-fd98c211eff3} 
-java.lang.NullPointerException: null
-	at clojure.lang.Symbol.intern(Symbol.java:59)
-	at clojure.core$symbol.invokeStatic(core.clj:579)
-	at clojure.core$symbol.invoke(core.clj:574)
-	at spachat.nrepl_protected$defnremote_QMARK_.invokeStatic(nrepl_protected.clj:17)
-	at spachat.nrepl_protected$defnremote_QMARK_.invoke(nrepl_protected.clj:16)
-	at spachat.nrepl_protected$eval_apply_protected_only$fn__34604.invoke(nrepl_protected.clj:49)
+	at protected_eval.core$defnremote_dbg_QMARK_.invokeStatic(core.clj:26)
+	at protected_eval.core$defnremote_dbg_QMARK_.invoke(core.clj:24)
+	at protected_eval.core$eval_apply_remote_only_cider_dbg$fn__43858.invoke(core.clj:87)
 	at clojure.tools.nrepl.server$handle_STAR_.invokeStatic(server.clj:19)
 	at clojure.tools.nrepl.server$handle_STAR_.invoke(server.clj:16)
 	at clojure.tools.nrepl.server$handle$fn__34510.invoke(server.clj:28)

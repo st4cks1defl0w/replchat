@@ -45,7 +45,8 @@
                  [cljsjs/material-ui-icons "3.0.1-0"]
                  [digest "1.4.8"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]
-                 [selmer "1.12.5"]]
+                 [selmer "1.12.5"]
+                 [protected-eval "0.1.6"]]
   :min-lein-version "2.0.0"
 
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
@@ -131,7 +132,7 @@
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
                                  :timeout 120000
-                                 :nrepl-middleware [spachat.protected-eval/eval-apply-remote-only-cider]}
+                                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn"]

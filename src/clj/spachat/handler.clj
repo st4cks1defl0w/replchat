@@ -1,12 +1,12 @@
 (ns spachat.handler
-  (:require [spachat.middleware :as middleware]
-            [spachat.layout :refer [error-page]]
-            [spachat.routes.home :refer [home-routes]]
-            [compojure.core :refer [routes wrap-routes]]
-            [ring.util.http-response :as response]
+  (:require [compojure.core :refer [routes wrap-routes]]
             [compojure.route :as route]
+            [mount.core :as mount]
+            [ring.util.http-response :as response]
             [spachat.env :refer [defaults]]
-            [mount.core :as mount]))
+            [spachat.layout :refer [error-page]]
+            [spachat.middleware :as middleware]
+            [spachat.routes.home :refer [home-routes]]))
 
 (mount/defstate init-app
   :start ((or (:init defaults) identity))

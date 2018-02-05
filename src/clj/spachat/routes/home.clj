@@ -62,14 +62,17 @@
     (response/ok {:ok true
                   :okChats msgs-with-authors})))
 
+(defn put-chat-with-repl [message]
+   (db/put-chat {:text message
+                 :author 1
+                 :stamp (t/now)})
+  (response/ok {:ok true}))
+
 (defn put-chat [{:keys [params]}]
-  (println "put-chat received params:" params)
-  (let [put-cookie (get params :cookie)
-        put-user (get params :username)
-        put-message (get params :message)
-        cookie-check (db/get-cookie {:cookie put-cookie})]
-    (if (= put-user (get cookie-check :username))
-      (do (db/put-chat {:text put-message
+  (let [{:keys [cookie username message]} params
+        cookie-check (db/get-cookie {:cookie cookie})]
+    (if (= username (get cookie-check :username))
+      (do (db/put-chat {:text message
                         :author (get cookie-check :id)
                         :stamp (t/now)})
           (response/ok {:ok true}))
