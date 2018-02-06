@@ -1,8 +1,17 @@
-FROM java:8-alpine
-MAINTAINER Your Name <you@example.com>
+FROM openjdk:8-stretch
+
+MAINTAINER Ivan Volkov <1@stacksideflow.host>
 
 ADD target/uberjar/spachat.jar /spachat/app.jar
 
 EXPOSE 3000
+EXPOSE 5557
 
+RUN apt-get update \
+  && apt-get install -y mysql-server
+
+CMD mysql -u root -e "CREATE DATABASE chatsdb"
+CMD mysql -u root -e "CREATE USER 'chat'@'localhost' IDENTIFIED BY '3anoa0nony6monymo';"
+CMD mysql -u root -e "GRANT ALL PRIVILEGES ON * . * TO 'chat'@'localhost';"
+CMD export databaseurl="mysql://localhost:3306/chatsdb?user=chat&password=3anoa0nony6monymo9"
 CMD ["java", "-jar", "/spachat/app.jar"]

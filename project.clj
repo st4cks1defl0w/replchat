@@ -1,7 +1,7 @@
-(defproject spachat "0.1.0-SNAPSHOT"
+(defproject spachat "0.1.0"
 
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "SPA chat with re-frame, posting with remote REPL is available"
+  :url "https://stacksideflow.host"
 
   :dependencies [[baking-soda "0.2.0" :exclusions [cljsjs/react-bootstrap]]
                  [binaryage/oops "0.6.4"]
@@ -48,7 +48,6 @@
                  [selmer "1.12.5"]
                  [protected-eval "0.1.6"]]
   :min-lein-version "2.0.0"
-
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
@@ -70,6 +69,9 @@
 :profiles
   {:uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+             :repl-options {:init-ns user
+                            :timeout 120000
+                            :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}
              :cljsbuild
              {:builds
               {:min
@@ -88,7 +90,9 @@
 
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
-
+   :protected-eval {:repl-options {:init-ns user
+                                   :timeout 120000
+                                   :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}}
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn"]
                   :dependencies [[binaryage/devtools "0.9.10"]
                                  [cider/piggieback "0.3.10"]
@@ -131,8 +135,7 @@
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
-                                 :timeout 120000
-                                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
+                                 :timeout 120000}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn"]

@@ -4,6 +4,7 @@
             [luminus.http-server :as http]
             [luminus-migrations.core :as migrations]
             [spachat.config :refer [env]]
+            [spachat.remote :as remote]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
             [mount.core :as mount])
@@ -38,22 +39,29 @@
   (shutdown-agents))
 
 (defn start-app [args]
+  (mount/start #'spachat.config/env)
   (doseq [component (-> args
                         (parse-opts cli-options)
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
+  (migrations/init {:database-url (:databaseurl env)
+                    :init-script "init.sql"})
+  (migrations/migrate ["destroy" "2018"] {:database-url (:databaseurl env)})
+  (migrations/migrate ["migrate"] {:database-url (:databaseurl env)
+                                   :init-in-transaction? false})
+  (log/info "ran simple-setup migrations")
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]
-  (mount/start #'spachat.config/env)
-  (cond
+  (start-app args)
+  #_(cond
     (nil? (:databaseurl env))
     (do
-      (log/error "Database configuration not found, :databaseurl environment variable must be set before running")
+      (println "Database configuration not found - :databaseurl envvar")
       (System/exit 1))
-    (some #{"init"} args)
-    (do
+    #_(some #{"init"} args)
+    #_(do
       (migrations/init (select-keys env [:databaseurl :init-script]))
       (System/exit 0))
     (migrations/migration? args)

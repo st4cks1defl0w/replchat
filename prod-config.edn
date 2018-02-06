@@ -1,0 +1,4 @@
+{:dev false
+ :port 3000
+ :nrepl-port 5557
+ :databaseurl "mysql://localhost:3306/chatsdb?user=root"}
