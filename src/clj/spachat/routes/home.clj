@@ -81,13 +81,12 @@
 (defn ping
   "receives UDP-styled ping, returns whether user is up-to-date"
   [{:keys [params]}]
-  (let [{:keys [cookie lastchat]} params
+  (let [{:keys [cookie lastchat] :or {lastchat 0}} params
         now-stamp (t/now)
-        users-online (db/get-online-users)]
+        users-online (db/get-online-users)
+        last-stored-chat-id (or (:id (db/get-last-chat)) 0)]
     (db/put-ping {:cookie cookie :lastseen now-stamp})
-    (println (> (get (db/get-last-chat) :id) lastchat))
-    (if (> (:id (db/get-last-chat))
-           lastchat)
+    (if (> last-stored-chat-id lastchat)
       (response/ok {:updateneeded true :onlineUsersNow users-online})
       (response/ok {:updateneeded false :onlineUsersNow users-online}))))
 

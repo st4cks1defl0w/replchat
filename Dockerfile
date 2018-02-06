@@ -13,5 +13,6 @@ RUN apt-get update \
 CMD mysql -u root -e "CREATE DATABASE chatsdb"
 CMD mysql -u root -e "CREATE USER 'chat'@'localhost' IDENTIFIED BY '3anoa0nony6monymo';"
 CMD mysql -u root -e "GRANT ALL PRIVILEGES ON * . * TO 'chat'@'localhost';"
-CMD export databaseurl="mysql://localhost:3306/chatsdb?user=chat&password=3anoa0nony6monymo9"
+CMD export databaseurl="mysql://localhost:3306/chatsdb?user=chat&password=3anoa0nony6monymo&serverTimezone=UTC"
+CMD export NREPL_PORT=5557
 CMD ["java", "-jar", "/spachat/app.jar"]

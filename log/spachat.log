@@ -3097,3 +3097,2342 @@ username TEXT,
 2019-02-06 10:17:14,835 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
 2019-02-06 10:17:14,835 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
 2019-02-06 10:17:14,835 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 11:49:37,521 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+java.sql.SQLException: Access denied for user 'chat'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at hikari_cp.core$make_datasource.invokeStatic(core.clj:251)
+	at hikari_cp.core$make_datasource.invoke(core.clj:248)
+	at conman.core$connect_BANG_.invokeStatic(core.clj:151)
+	at conman.core$connect_BANG_.invoke(core.clj:147)
+	at spachat.db.core$fn__9469.invokeStatic(core.clj:14)
+	at spachat.db.core$fn__9469.invoke(core.clj:12)
+	at mount.core$record_BANG_.invokeStatic(core.cljc:74)
+	at mount.core$record_BANG_.invoke(core.cljc:73)
+	at mount.core$up$fn__2301.invoke(core.cljc:81)
+	at mount.core$up.invokeStatic(core.cljc:80)
+	at mount.core$up.invoke(core.cljc:78)
+	at mount.core$bring.invokeStatic(core.cljc:247)
+	at mount.core$bring.invoke(core.cljc:239)
+	at mount.core$start.invokeStatic(core.cljc:289)
+	at mount.core$start.doInvoke(core.cljc:281)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at mount.core$start_with_args.invokeStatic(core.cljc:389)
+	at mount.core$start_with_args.doInvoke(core.cljc:385)
+	at clojure.lang.RestFn.invoke(RestFn.java:410)
+	at spachat.core$start_app.invokeStatic(core.clj:43)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:57)
+	at spachat.core$_main.doInvoke(core.clj:56)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.AFn.applyToHelper(AFn.java:152)
+	at clojure.lang.RestFn.applyTo(RestFn.java:132)
+	at spachat.core.main(Unknown Source)
+2019-02-06 11:52:35,325 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+java.sql.SQLException: The server time zone value 'MSK' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:73)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:76)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at hikari_cp.core$make_datasource.invokeStatic(core.clj:251)
+	at hikari_cp.core$make_datasource.invoke(core.clj:248)
+	at conman.core$connect_BANG_.invokeStatic(core.clj:151)
+	at conman.core$connect_BANG_.invoke(core.clj:147)
+	at spachat.db.core$fn__9469.invokeStatic(core.clj:14)
+	at spachat.db.core$fn__9469.invoke(core.clj:12)
+	at mount.core$record_BANG_.invokeStatic(core.cljc:74)
+	at mount.core$record_BANG_.invoke(core.cljc:73)
+	at mount.core$up$fn__2301.invoke(core.cljc:81)
+	at mount.core$up.invokeStatic(core.cljc:80)
+	at mount.core$up.invoke(core.cljc:78)
+	at mount.core$bring.invokeStatic(core.cljc:247)
+	at mount.core$bring.invoke(core.cljc:239)
+	at mount.core$start.invokeStatic(core.cljc:289)
+	at mount.core$start.doInvoke(core.cljc:281)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at mount.core$start_with_args.invokeStatic(core.cljc:389)
+	at mount.core$start_with_args.doInvoke(core.cljc:385)
+	at clojure.lang.RestFn.invoke(RestFn.java:410)
+	at spachat.core$start_app.invokeStatic(core.clj:43)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:57)
+	at spachat.core$_main.doInvoke(core.clj:56)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.AFn.applyToHelper(AFn.java:152)
+	at clojure.lang.RestFn.applyTo(RestFn.java:132)
+	at spachat.core.main(Unknown Source)
+Caused by: com.mysql.cj.exceptions.InvalidConnectionAttributeException: The server time zone value 'MSK' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:85)
+	at com.mysql.cj.util.TimeUtil.getCanonicalTimezone(TimeUtil.java:132)
+	at com.mysql.cj.protocol.a.NativeProtocol.configureTimezone(NativeProtocol.java:2241)
+	at com.mysql.cj.protocol.a.NativeProtocol.initServerSession(NativeProtocol.java:2265)
+	at com.mysql.cj.jdbc.ConnectionImpl.initializePropsFromServer(ConnectionImpl.java:1319)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:966)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825)
+	... 37 common frames omitted
+2019-02-06 11:53:46,778 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 11:53:46,963 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 11:53:47,007 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 11:53:47,007 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 11:53:47,008 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 11:53:47,008 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 11:53:47,008 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 11:57:06,095 [manifold-pool-2-4] ERROR spachat.middleware - Exception in :get-user 
+java.lang.Exception: Exception in :get-user
+	at conman.core$try_query$fn__9377$fn__9378.invoke(core.clj:32)
+	at spachat.db.core$fn__9479$f__9405__auto____9506.invoke(core.clj:20)
+	at spachat.routes.home$signup.invokeStatic(home.clj:26)
+	at spachat.routes.home$signup.invoke(home.clj:24)
+	at spachat.routes.home$fn__9561.invokeStatic(home.clj:96)
+	at spachat.routes.home$fn__9561.invoke(home.clj:96)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'chatsdb.people' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:970)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeQuery(HikariProxyPreparedStatement.java)
+	at clojure.java.jdbc$execute_query_with_params.invokeStatic(jdbc.clj:1038)
+	at clojure.java.jdbc$execute_query_with_params.invoke(jdbc.clj:1032)
+	at clojure.java.jdbc$db_query_with_resultset_STAR_.invokeStatic(jdbc.clj:1062)
+	at clojure.java.jdbc$db_query_with_resultset_STAR_.invoke(jdbc.clj:1041)
+	at clojure.java.jdbc$query.invokeStatic(jdbc.clj:1131)
+	at clojure.java.jdbc$query.invoke(jdbc.clj:1093)
+	at clojure.java.jdbc$query.invokeStatic(jdbc.clj:1109)
+	at clojure.java.jdbc$query.invoke(jdbc.clj:1093)
+	at clojure.lang.AFn.applyToHelper(AFn.java:156)
+	at clojure.lang.AFn.applyTo(AFn.java:144)
+	at clojure.core$apply.invokeStatic(core.clj:661)
+	at clojure.core$apply.invoke(core.clj:652)
+	at hugsql.adapter.clojure_java_jdbc.HugsqlAdapterClojureJavaJdbc.query(clojure_java_jdbc.clj:15)
+	at hugsql.adapter$fn__9035$G__8959__9040.invoke(adapter.clj:3)
+	at hugsql.adapter$fn__9035$G__8958__9046.invoke(adapter.clj:3)
+	at clojure.lang.Var.invoke(Var.java:396)
+	at hugsql.core$db_fn_STAR_$y__9313.doInvoke(core.clj:457)
+	at clojure.lang.RestFn.invoke(RestFn.java:445)
+	at hugsql.core$db_fn_STAR_$y__9313.invoke(core.clj:447)
+	at conman.core$try_query$fn__9377$fn__9378.invoke(core.clj:30)
+	... 62 common frames omitted
+2019-02-06 11:57:09,550 [manifold-pool-2-4] ERROR spachat.middleware - Exception in :get-user 
+java.lang.Exception: Exception in :get-user
+	at conman.core$try_query$fn__9377$fn__9378.invoke(core.clj:32)
+	at spachat.db.core$fn__9479$f__9405__auto____9506.invoke(core.clj:20)
+	at spachat.routes.home$signup.invokeStatic(home.clj:26)
+	at spachat.routes.home$signup.invoke(home.clj:24)
+	at spachat.routes.home$fn__9561.invokeStatic(home.clj:96)
+	at spachat.routes.home$fn__9561.invoke(home.clj:96)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'chatsdb.people' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:970)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeQuery(HikariProxyPreparedStatement.java)
+	at clojure.java.jdbc$execute_query_with_params.invokeStatic(jdbc.clj:1038)
+	at clojure.java.jdbc$execute_query_with_params.invoke(jdbc.clj:1032)
+	at clojure.java.jdbc$db_query_with_resultset_STAR_.invokeStatic(jdbc.clj:1062)
+	at clojure.java.jdbc$db_query_with_resultset_STAR_.invoke(jdbc.clj:1041)
+	at clojure.java.jdbc$query.invokeStatic(jdbc.clj:1131)
+	at clojure.java.jdbc$query.invoke(jdbc.clj:1093)
+	at clojure.java.jdbc$query.invokeStatic(jdbc.clj:1109)
+	at clojure.java.jdbc$query.invoke(jdbc.clj:1093)
+	at clojure.lang.AFn.applyToHelper(AFn.java:156)
+	at clojure.lang.AFn.applyTo(AFn.java:144)
+	at clojure.core$apply.invokeStatic(core.clj:661)
+	at clojure.core$apply.invoke(core.clj:652)
+	at hugsql.adapter.clojure_java_jdbc.HugsqlAdapterClojureJavaJdbc.query(clojure_java_jdbc.clj:15)
+	at hugsql.adapter$fn__9035$G__8959__9040.invoke(adapter.clj:3)
+	at hugsql.adapter$fn__9035$G__8958__9046.invoke(adapter.clj:3)
+	at clojure.lang.Var.invoke(Var.java:396)
+	at hugsql.core$db_fn_STAR_$y__9313.doInvoke(core.clj:457)
+	at clojure.lang.RestFn.invoke(RestFn.java:445)
+	at hugsql.core$db_fn_STAR_$y__9313.invoke(core.clj:447)
+	at conman.core$try_query$fn__9377$fn__9378.invoke(core.clj:30)
+	... 62 common frames omitted
+2019-02-06 12:02:14,578 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 12:02:14,809 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:02:14,856 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:02:14,856 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:02:14,856 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:02:14,856 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:02:14,856 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:02:14,857 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:02:14,878 [main] INFO  migratus.database - creating migration table 'schema_migrations' 
+2019-02-06 12:02:15,573 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:02:15,574 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:02:15,581 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+text TEXT,
+author TEXT,
+stamp TIMESTAMP);
+
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+password TEXT,
+cookie TEXT,
+lastseen TIMESTAMP,
+signupdate DATE);
+ 
+2019-02-06 12:02:15,582 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 
+2019-02-06 12:02:15,582 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 backing out 
+2019-02-06 12:02:15,583 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+DROP TABLE IF EXISTS chats;
+
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:02:15,583 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6 
+2019-02-06 12:02:15,676 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:03:37,680 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 12:03:37,885 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:03:37,929 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:03:37,929 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:03:37,929 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:03:37,929 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:03:37,929 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:03:37,929 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:03:38,012 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:03:38,012 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:03:38,025 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+text TEXT,
+author TEXT,
+stamp TIMESTAMP);
+
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+password TEXT,
+cookie TEXT,
+lastseen TIMESTAMP,
+signupdate DATE);
+ 
+2019-02-06 12:03:38,025 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 
+2019-02-06 12:03:38,025 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 backing out 
+2019-02-06 12:03:38,027 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+DROP TABLE IF EXISTS chats;
+
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:03:38,027 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6 
+2019-02-06 12:03:38,139 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:25:08,702 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 12:25:08,920 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:25:08,960 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:25:08,960 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:25:08,960 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:25:08,960 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:25:08,960 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:25:08,960 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:25:09,057 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:25:09,057 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:25:09,075 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+text TEXT,
+author TEXT,
+stamp TIMESTAMP);
+
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+password TEXT,
+cookie TEXT,
+lastseen TIMESTAMP,
+signupdate DATE);
+ 
+2019-02-06 12:25:09,075 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 
+2019-02-06 12:25:09,076 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 backing out 
+2019-02-06 12:25:09,079 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+DROP TABLE IF EXISTS chats;
+
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:25:09,079 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6 
+2019-02-06 12:25:09,186 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:26:39,391 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 12:26:39,586 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:26:39,630 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:26:39,630 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:26:39,630 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:26:39,630 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:26:39,630 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:26:39,630 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:26:39,723 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:26:39,723 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:26:39,737 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+text TEXT,
+author TEXT,
+stamp TIMESTAMP);
+
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+password TEXT,
+cookie TEXT,
+lastseen TIMESTAMP,
+signupdate DATE);
+ 
+2019-02-06 12:26:39,737 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 
+2019-02-06 12:26:39,737 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 9 backing out 
+2019-02-06 12:26:39,738 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+DROP TABLE IF EXISTS chats;
+
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:26:39,738 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6 
+2019-02-06 12:26:39,839 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:27:55,745 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+java.sql.SQLException: Access denied for user 'chat'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at hikari_cp.core$make_datasource.invokeStatic(core.clj:251)
+	at hikari_cp.core$make_datasource.invoke(core.clj:248)
+	at conman.core$connect_BANG_.invokeStatic(core.clj:151)
+	at conman.core$connect_BANG_.invoke(core.clj:147)
+	at spachat.db.core$eval33418$fn__33419.invoke(core.clj:14)
+	at mount.core$record_BANG_.invokeStatic(core.cljc:74)
+	at mount.core$record_BANG_.invoke(core.cljc:73)
+	at mount.core$up$fn__295.invoke(core.cljc:81)
+	at mount.core$up.invokeStatic(core.cljc:80)
+	at mount.core$up.invoke(core.cljc:78)
+	at mount.core$bring.invokeStatic(core.cljc:247)
+	at mount.core$bring.invoke(core.cljc:239)
+	at mount.core$start.invokeStatic(core.cljc:289)
+	at mount.core$start.doInvoke(core.cljc:281)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at mount.core$start_with_args.invokeStatic(core.cljc:389)
+	at mount.core$start_with_args.doInvoke(core.cljc:385)
+	at clojure.lang.RestFn.invoke(RestFn.java:410)
+	at spachat.core$start_app.invokeStatic(core.clj:43)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init7487964683045416141.clj:1)
+	at user$eval43634.invoke(form-init7487964683045416141.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+2019-02-06 12:29:08,672 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+java.sql.SQLException: Access denied for user 'chat'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at hikari_cp.core$make_datasource.invokeStatic(core.clj:251)
+	at hikari_cp.core$make_datasource.invoke(core.clj:248)
+	at conman.core$connect_BANG_.invokeStatic(core.clj:151)
+	at conman.core$connect_BANG_.invoke(core.clj:147)
+	at spachat.db.core$eval33418$fn__33419.invoke(core.clj:14)
+	at mount.core$record_BANG_.invokeStatic(core.cljc:74)
+	at mount.core$record_BANG_.invoke(core.cljc:73)
+	at mount.core$up$fn__295.invoke(core.cljc:81)
+	at mount.core$up.invokeStatic(core.cljc:80)
+	at mount.core$up.invoke(core.cljc:78)
+	at mount.core$bring.invokeStatic(core.cljc:247)
+	at mount.core$bring.invoke(core.cljc:239)
+	at mount.core$start.invokeStatic(core.cljc:289)
+	at mount.core$start.doInvoke(core.cljc:281)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at mount.core$start_with_args.invokeStatic(core.cljc:389)
+	at mount.core$start_with_args.doInvoke(core.cljc:385)
+	at clojure.lang.RestFn.invoke(RestFn.java:410)
+	at spachat.core$start_app.invokeStatic(core.clj:43)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init2531906346670510034.clj:1)
+	at user$eval43634.invoke(form-init2531906346670510034.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+2019-02-06 12:33:30,888 [main] ERROR com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Exception during pool initialization. 
+java.sql.SQLException: The server time zone value 'MSK' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:89)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:63)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:73)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:76)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:835)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:455)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:240)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:199)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:119)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:369)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:198)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:467)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:541)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:115)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at hikari_cp.core$make_datasource.invokeStatic(core.clj:251)
+	at hikari_cp.core$make_datasource.invoke(core.clj:248)
+	at conman.core$connect_BANG_.invokeStatic(core.clj:151)
+	at conman.core$connect_BANG_.invoke(core.clj:147)
+	at spachat.db.core$eval33418$fn__33419.invoke(core.clj:14)
+	at mount.core$record_BANG_.invokeStatic(core.cljc:74)
+	at mount.core$record_BANG_.invoke(core.cljc:73)
+	at mount.core$up$fn__295.invoke(core.cljc:81)
+	at mount.core$up.invokeStatic(core.cljc:80)
+	at mount.core$up.invoke(core.cljc:78)
+	at mount.core$bring.invokeStatic(core.cljc:247)
+	at mount.core$bring.invoke(core.cljc:239)
+	at mount.core$start.invokeStatic(core.cljc:289)
+	at mount.core$start.doInvoke(core.cljc:281)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at mount.core$start_with_args.invokeStatic(core.cljc:389)
+	at mount.core$start_with_args.doInvoke(core.cljc:385)
+	at clojure.lang.RestFn.invoke(RestFn.java:410)
+	at spachat.core$start_app.invokeStatic(core.clj:43)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init2619872933339905672.clj:1)
+	at user$eval43634.invoke(form-init2619872933339905672.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: com.mysql.cj.exceptions.InvalidConnectionAttributeException: The server time zone value 'MSK' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the serverTimezone configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:61)
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:85)
+	at com.mysql.cj.util.TimeUtil.getCanonicalTimezone(TimeUtil.java:132)
+	at com.mysql.cj.protocol.a.NativeProtocol.configureTimezone(NativeProtocol.java:2241)
+	at com.mysql.cj.protocol.a.NativeProtocol.initServerSession(NativeProtocol.java:2265)
+	at com.mysql.cj.jdbc.ConnectionImpl.initializePropsFromServer(ConnectionImpl.java:1319)
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:966)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825)
+	... 51 common frames omitted
+2019-02-06 12:34:55,700 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:34:55,783 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:34:55,888 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:34:55,899 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:34:55,900 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:34:55,900 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:34:55,900 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:34:55,900 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:34:55,901 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:34:55,945 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x587a0835 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:34:55,950 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:34:55,950 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:34:55,962 [main] DEBUG migratus.migration.sql - found 1 up migrations 
+2019-02-06 12:34:55,978 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+text TEXT,
+author TEXT,
+stamp TIMESTAMP);
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+password TEXT,
+cookie TEXT,
+lastseen TIMESTAMP,
+signupdate DATE);
+ 
+2019-02-06 12:34:55,978 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 8 
+2019-02-06 12:34:55,978 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+username TEXT,
+' at line 8 backing out 
+2019-02-06 12:34:55,979 [main] DEBUG migratus.migration.sql - found 1 down migrations 
+2019-02-06 12:34:55,980 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+
+DROP TABLE IF EXISTS chats;
+
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:34:55,980 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6 
+2019-02-06 12:34:55,982 [main] DEBUG migratus.database - As expected, one of the statements failed in add-tables while backing out the migration 
+java.sql.BatchUpdateException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:911)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_commands$fn__31670.invoke(jdbc.clj:906)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:905)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:899)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at migratus.migration.sql$execute_command$fn__41451.invoke(sql.clj:55)
+	at migratus.migration.sql$execute_command.invokeStatic(sql.clj:54)
+	at migratus.migration.sql$execute_command.invoke(sql.clj:51)
+	at migratus.migration.sql$run_sql_STAR_.invokeStatic(sql.clj:72)
+	at migratus.migration.sql$run_sql_STAR_.invoke(sql.clj:68)
+	at migratus.migration.sql$run_sql$fn__41469.invoke(sql.clj:80)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.migration.sql$run_sql.invokeStatic(sql.clj:78)
+	at migratus.migration.sql$run_sql.invoke(sql.clj:74)
+	at migratus.migration.sql.SqlMigration.down(sql.clj:101)
+	at migratus.database$migrate_up_STAR_$fn__41692.invoke(database.clj:70)
+	at migratus.database$migrate_up_STAR_.invokeStatic(database.clj:69)
+	at migratus.database$migrate_up_STAR_.invoke(database.clj:55)
+	at migratus.database.Database$fn__41758.invoke(database.clj:246)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.database.Database.migrate_up(database.clj:245)
+	at migratus.core$up_STAR_.invokeStatic(core.clj:47)
+	at migratus.core$up_STAR_.invoke(core.clj:45)
+	at migratus.core$migrate_up_STAR_.invokeStatic(core.clj:58)
+	at migratus.core$migrate_up_STAR_.invoke(core.clj:49)
+	at migratus.core$migrate_STAR_.invokeStatic(core.clj:71)
+	at migratus.core$migrate_STAR_.invoke(core.clj:67)
+	at clojure.core$partial$fn__5561.invoke(core.clj:2617)
+	at migratus.core$run.invokeStatic(core.clj:25)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$migrate.invokeStatic(core.clj:78)
+	at migratus.core$migrate.invoke(core.clj:73)
+	at luminus_migrations.core$fn__41873.invokeStatic(core.clj:44)
+	at luminus_migrations.core$fn__41873.invoke(core.clj:41)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:51)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init5326538128888310735.clj:1)
+	at user$eval43634.invoke(form-init5326538128888310735.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 6
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeUpdateInternal(StatementImpl.java:1355)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:877)
+	... 72 common frames omitted
+2019-02-06 12:34:56,124 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:40:53,093 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:40:53,164 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:40:53,263 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:40:53,278 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:40:53,278 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:40:53,278 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:40:53,278 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:40:53,278 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:40:53,279 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:40:53,315 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x324d2a67 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:40:53,318 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:40:53,318 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:40:53,326 [main] DEBUG migratus.migration.sql - found 1 up migrations 
+2019-02-06 12:40:53,336 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, text TEXT, author TEXT, stamp TIMESTAMP);
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, password TEXT, cookie TEXT, lastseen TIMESTAMP, signupdate DATE);
+ 
+2019-02-06 12:40:53,336 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, ' at line 5 
+2019-02-06 12:40:53,336 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, ' at line 5 backing out 
+2019-02-06 12:40:53,337 [main] DEBUG migratus.migration.sql - found 1 down migrations 
+2019-02-06 12:40:53,338 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+DROP TABLE IF EXISTS chats;
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:40:53,338 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5 
+2019-02-06 12:40:53,339 [main] DEBUG migratus.database - As expected, one of the statements failed in add-tables while backing out the migration 
+java.sql.BatchUpdateException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:911)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_commands$fn__31670.invoke(jdbc.clj:906)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:905)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:899)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at migratus.migration.sql$execute_command$fn__41451.invoke(sql.clj:55)
+	at migratus.migration.sql$execute_command.invokeStatic(sql.clj:54)
+	at migratus.migration.sql$execute_command.invoke(sql.clj:51)
+	at migratus.migration.sql$run_sql_STAR_.invokeStatic(sql.clj:72)
+	at migratus.migration.sql$run_sql_STAR_.invoke(sql.clj:68)
+	at migratus.migration.sql$run_sql$fn__41469.invoke(sql.clj:80)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.migration.sql$run_sql.invokeStatic(sql.clj:78)
+	at migratus.migration.sql$run_sql.invoke(sql.clj:74)
+	at migratus.migration.sql.SqlMigration.down(sql.clj:101)
+	at migratus.database$migrate_up_STAR_$fn__41692.invoke(database.clj:70)
+	at migratus.database$migrate_up_STAR_.invokeStatic(database.clj:69)
+	at migratus.database$migrate_up_STAR_.invoke(database.clj:55)
+	at migratus.database.Database$fn__41758.invoke(database.clj:246)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.database.Database.migrate_up(database.clj:245)
+	at migratus.core$up_STAR_.invokeStatic(core.clj:47)
+	at migratus.core$up_STAR_.invoke(core.clj:45)
+	at migratus.core$migrate_up_STAR_.invokeStatic(core.clj:58)
+	at migratus.core$migrate_up_STAR_.invoke(core.clj:49)
+	at migratus.core$migrate_STAR_.invokeStatic(core.clj:71)
+	at migratus.core$migrate_STAR_.invoke(core.clj:67)
+	at clojure.core$partial$fn__5561.invoke(core.clj:2617)
+	at migratus.core$run.invokeStatic(core.clj:25)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$migrate.invokeStatic(core.clj:78)
+	at migratus.core$migrate.invoke(core.clj:73)
+	at luminus_migrations.core$fn__41873.invokeStatic(core.clj:44)
+	at luminus_migrations.core$fn__41873.invoke(core.clj:41)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:51)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init3139719344253399760.clj:1)
+	at user$eval43634.invoke(form-init3139719344253399760.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeUpdateInternal(StatementImpl.java:1355)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:877)
+	... 72 common frames omitted
+2019-02-06 12:40:53,462 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:45:22,326 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:45:22,398 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:45:22,496 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:45:22,506 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:45:22,506 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:45:22,506 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:45:22,506 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:45:22,506 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:45:22,507 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:45:22,539 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x5355a8ac /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:45:22,542 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:45:22,543 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:45:22,551 [main] DEBUG migratus.migration.sql - found 1 up migrations 
+2019-02-06 12:45:22,562 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, text TEXT, author TEXT, stamp TIMESTAMP);
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, pass TEXT, cookie TEXT, lastseen TIMESTAMP, signupdate DATE);
+ 
+2019-02-06 12:45:22,563 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, ' at line 5 
+2019-02-06 12:45:22,563 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, ' at line 5 backing out 
+2019-02-06 12:45:22,563 [main] DEBUG migratus.migration.sql - found 1 down migrations 
+2019-02-06 12:45:22,564 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+DROP TABLE IF EXISTS chats;
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:45:22,564 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5 
+2019-02-06 12:45:22,565 [main] DEBUG migratus.database - As expected, one of the statements failed in add-tables while backing out the migration 
+java.sql.BatchUpdateException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:911)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_commands$fn__31670.invoke(jdbc.clj:906)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:905)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:899)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at migratus.migration.sql$execute_command$fn__41451.invoke(sql.clj:55)
+	at migratus.migration.sql$execute_command.invokeStatic(sql.clj:54)
+	at migratus.migration.sql$execute_command.invoke(sql.clj:51)
+	at migratus.migration.sql$run_sql_STAR_.invokeStatic(sql.clj:72)
+	at migratus.migration.sql$run_sql_STAR_.invoke(sql.clj:68)
+	at migratus.migration.sql$run_sql$fn__41469.invoke(sql.clj:80)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.migration.sql$run_sql.invokeStatic(sql.clj:78)
+	at migratus.migration.sql$run_sql.invoke(sql.clj:74)
+	at migratus.migration.sql.SqlMigration.down(sql.clj:101)
+	at migratus.database$migrate_up_STAR_$fn__41692.invoke(database.clj:70)
+	at migratus.database$migrate_up_STAR_.invokeStatic(database.clj:69)
+	at migratus.database$migrate_up_STAR_.invoke(database.clj:55)
+	at migratus.database.Database$fn__41758.invoke(database.clj:246)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.database.Database.migrate_up(database.clj:245)
+	at migratus.core$up_STAR_.invokeStatic(core.clj:47)
+	at migratus.core$up_STAR_.invoke(core.clj:45)
+	at migratus.core$migrate_up_STAR_.invokeStatic(core.clj:58)
+	at migratus.core$migrate_up_STAR_.invoke(core.clj:49)
+	at migratus.core$migrate_STAR_.invokeStatic(core.clj:71)
+	at migratus.core$migrate_STAR_.invoke(core.clj:67)
+	at clojure.core$partial$fn__5561.invoke(core.clj:2617)
+	at migratus.core$run.invokeStatic(core.clj:25)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$migrate.invokeStatic(core.clj:78)
+	at migratus.core$migrate.invoke(core.clj:73)
+	at luminus_migrations.core$fn__41873.invokeStatic(core.clj:44)
+	at luminus_migrations.core$fn__41873.invoke(core.clj:41)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:51)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init4665308306606508068.clj:1)
+	at user$eval43634.invoke(form-init4665308306606508068.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeUpdateInternal(StatementImpl.java:1355)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:877)
+	... 72 common frames omitted
+2019-02-06 12:45:22,674 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:48:39,031 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:48:39,112 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:48:39,218 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:48:39,232 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:48:39,233 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:48:39,233 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:48:39,233 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:48:39,233 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:48:39,234 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:48:39,268 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x5355a8ac /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:48:39,271 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:48:39,272 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:48:39,281 [main] DEBUG migratus.migration.sql - found 1 up migrations 
+2019-02-06 12:48:39,292 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+CREATE TABLE chats (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, text TEXT, author TEXT, stamp TIMESTAMP);
+
+
+
+CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, pass TEXT, cookie TEXT, lastseen TIMESTAMP, signupdate DATE);
+ 
+2019-02-06 12:48:39,292 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, ' at line 5 
+2019-02-06 12:48:39,292 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, username TEXT, ' at line 5 backing out 
+2019-02-06 12:48:39,293 [main] DEBUG migratus.migration.sql - found 1 down migrations 
+2019-02-06 12:48:39,293 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+DROP TABLE IF EXISTS chats;
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:48:39,293 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5 
+2019-02-06 12:48:39,295 [main] DEBUG migratus.database - As expected, one of the statements failed in add-tables while backing out the migration 
+java.sql.BatchUpdateException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:911)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_commands$fn__31670.invoke(jdbc.clj:906)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:905)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:899)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at migratus.migration.sql$execute_command$fn__41451.invoke(sql.clj:55)
+	at migratus.migration.sql$execute_command.invokeStatic(sql.clj:54)
+	at migratus.migration.sql$execute_command.invoke(sql.clj:51)
+	at migratus.migration.sql$run_sql_STAR_.invokeStatic(sql.clj:72)
+	at migratus.migration.sql$run_sql_STAR_.invoke(sql.clj:68)
+	at migratus.migration.sql$run_sql$fn__41469.invoke(sql.clj:80)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.migration.sql$run_sql.invokeStatic(sql.clj:78)
+	at migratus.migration.sql$run_sql.invoke(sql.clj:74)
+	at migratus.migration.sql.SqlMigration.down(sql.clj:101)
+	at migratus.database$migrate_up_STAR_$fn__41692.invoke(database.clj:70)
+	at migratus.database$migrate_up_STAR_.invokeStatic(database.clj:69)
+	at migratus.database$migrate_up_STAR_.invoke(database.clj:55)
+	at migratus.database.Database$fn__41758.invoke(database.clj:246)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.database.Database.migrate_up(database.clj:245)
+	at migratus.core$up_STAR_.invokeStatic(core.clj:47)
+	at migratus.core$up_STAR_.invoke(core.clj:45)
+	at migratus.core$migrate_up_STAR_.invokeStatic(core.clj:58)
+	at migratus.core$migrate_up_STAR_.invoke(core.clj:49)
+	at migratus.core$migrate_STAR_.invokeStatic(core.clj:71)
+	at migratus.core$migrate_STAR_.invoke(core.clj:67)
+	at clojure.core$partial$fn__5561.invoke(core.clj:2617)
+	at migratus.core$run.invokeStatic(core.clj:25)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$migrate.invokeStatic(core.clj:78)
+	at migratus.core$migrate.invoke(core.clj:73)
+	at luminus_migrations.core$fn__41873.invokeStatic(core.clj:44)
+	at luminus_migrations.core$fn__41873.invoke(core.clj:41)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:51)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init6526960476514471928.clj:1)
+	at user$eval43634.invoke(form-init6526960476514471928.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeUpdateInternal(StatementImpl.java:1355)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:877)
+	... 72 common frames omitted
+2019-02-06 12:48:39,417 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:54:04,084 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:54:04,154 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:54:04,249 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:54:04,260 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:54:04,260 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:54:04,260 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:54:04,260 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:54:04,260 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:54:04,261 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:54:04,290 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x587a0835 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:54:04,293 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:54:04,293 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:54:04,301 [main] DEBUG migratus.migration.sql - found 1 up migrations 
+2019-02-06 12:54:04,311 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+CREATE TABLE chats (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, author TEXT, stamp TIMESTAMP);
+
+
+
+CREATE TABLE people (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username TEXT, password TEXT, cookie TEXT, lastseen TIMESTAMP, signupdate DATE);
+
+
+
+
+
+
+
+
+ 
+2019-02-06 12:54:04,311 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username TEXT, ' at line 5 
+2019-02-06 12:54:04,311 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREATE TABLE people (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username TEXT, ' at line 5 backing out 
+2019-02-06 12:54:04,312 [main] DEBUG migratus.migration.sql - found 1 down migrations 
+2019-02-06 12:54:04,312 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+DROP TABLE IF EXISTS chats;
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:54:04,312 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5 
+2019-02-06 12:54:04,314 [main] DEBUG migratus.database - As expected, one of the statements failed in add-tables while backing out the migration 
+java.sql.BatchUpdateException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:911)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_commands$fn__31670.invoke(jdbc.clj:906)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:905)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:899)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at migratus.migration.sql$execute_command$fn__41451.invoke(sql.clj:55)
+	at migratus.migration.sql$execute_command.invokeStatic(sql.clj:54)
+	at migratus.migration.sql$execute_command.invoke(sql.clj:51)
+	at migratus.migration.sql$run_sql_STAR_.invokeStatic(sql.clj:72)
+	at migratus.migration.sql$run_sql_STAR_.invoke(sql.clj:68)
+	at migratus.migration.sql$run_sql$fn__41469.invoke(sql.clj:80)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.migration.sql$run_sql.invokeStatic(sql.clj:78)
+	at migratus.migration.sql$run_sql.invoke(sql.clj:74)
+	at migratus.migration.sql.SqlMigration.down(sql.clj:101)
+	at migratus.database$migrate_up_STAR_$fn__41692.invoke(database.clj:70)
+	at migratus.database$migrate_up_STAR_.invokeStatic(database.clj:69)
+	at migratus.database$migrate_up_STAR_.invoke(database.clj:55)
+	at migratus.database.Database$fn__41758.invoke(database.clj:246)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.database.Database.migrate_up(database.clj:245)
+	at migratus.core$up_STAR_.invokeStatic(core.clj:47)
+	at migratus.core$up_STAR_.invoke(core.clj:45)
+	at migratus.core$migrate_up_STAR_.invokeStatic(core.clj:58)
+	at migratus.core$migrate_up_STAR_.invoke(core.clj:49)
+	at migratus.core$migrate_STAR_.invokeStatic(core.clj:71)
+	at migratus.core$migrate_STAR_.invoke(core.clj:67)
+	at clojure.core$partial$fn__5561.invoke(core.clj:2617)
+	at migratus.core$run.invokeStatic(core.clj:25)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$migrate.invokeStatic(core.clj:78)
+	at migratus.core$migrate.invoke(core.clj:73)
+	at luminus_migrations.core$fn__41873.invokeStatic(core.clj:44)
+	at luminus_migrations.core$fn__41873.invoke(core.clj:41)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:51)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init2838248005320339507.clj:1)
+	at user$eval43634.invoke(form-init2838248005320339507.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeUpdateInternal(StatementImpl.java:1355)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:877)
+	... 72 common frames omitted
+2019-02-06 12:54:04,473 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:55:47,150 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:55:47,223 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:55:47,321 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:55:47,332 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:55:47,332 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:55:47,332 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:55:47,332 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:55:47,332 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:55:47,333 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:55:47,364 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x5355a8ac /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:55:47,367 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:55:47,368 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:55:47,377 [main] DEBUG migratus.migration.sql - found 1 up migrations 
+2019-02-06 12:55:47,388 [main] ERROR migratus.migration.sql - failed to execute command:
+ CREATE TABLE chats (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, author TEXT, stamp TIMESTAMP);
+-;;
+CREATE TABLE people (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username TEXT, password TEXT, cookie TEXT, lastseen TIMESTAMP, signupdate DATE);
+ 
+2019-02-06 12:55:47,388 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-;;
+CREATE TABLE people (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username TE' at line 2 
+2019-02-06 12:55:47,388 [main] ERROR migratus.database - Migration add-tables failed because You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-;;
+CREATE TABLE people (id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, username TE' at line 2 backing out 
+2019-02-06 12:55:47,389 [main] DEBUG migratus.migration.sql - found 1 down migrations 
+2019-02-06 12:55:47,390 [main] ERROR migratus.migration.sql - failed to execute command:
+ 
+
+DROP TABLE IF EXISTS chats;
+
+
+
+DROP TABLE IF EXISTS people;
+ 
+2019-02-06 12:55:47,390 [main] ERROR migratus.migration.sql - You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5 
+2019-02-06 12:55:47,391 [main] DEBUG migratus.database - As expected, one of the statements failed in add-tables while backing out the migration 
+java.sql.BatchUpdateException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:911)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_commands$fn__31670.invoke(jdbc.clj:906)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:905)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at clojure.java.jdbc$db_do_commands.invokeStatic(jdbc.clj:899)
+	at clojure.java.jdbc$db_do_commands.invoke(jdbc.clj:890)
+	at migratus.migration.sql$execute_command$fn__41451.invoke(sql.clj:55)
+	at migratus.migration.sql$execute_command.invokeStatic(sql.clj:54)
+	at migratus.migration.sql$execute_command.invoke(sql.clj:51)
+	at migratus.migration.sql$run_sql_STAR_.invokeStatic(sql.clj:72)
+	at migratus.migration.sql$run_sql_STAR_.invoke(sql.clj:68)
+	at migratus.migration.sql$run_sql$fn__41469.invoke(sql.clj:80)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:814)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.migration.sql$run_sql.invokeStatic(sql.clj:78)
+	at migratus.migration.sql$run_sql.invoke(sql.clj:74)
+	at migratus.migration.sql.SqlMigration.down(sql.clj:101)
+	at migratus.database$migrate_up_STAR_$fn__41692.invoke(database.clj:70)
+	at migratus.database$migrate_up_STAR_.invokeStatic(database.clj:69)
+	at migratus.database$migrate_up_STAR_.invoke(database.clj:55)
+	at migratus.database.Database$fn__41758.invoke(database.clj:246)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at migratus.database.Database.migrate_up(database.clj:245)
+	at migratus.core$up_STAR_.invokeStatic(core.clj:47)
+	at migratus.core$up_STAR_.invoke(core.clj:45)
+	at migratus.core$migrate_up_STAR_.invokeStatic(core.clj:58)
+	at migratus.core$migrate_up_STAR_.invoke(core.clj:49)
+	at migratus.core$migrate_STAR_.invokeStatic(core.clj:71)
+	at migratus.core$migrate_STAR_.invoke(core.clj:67)
+	at clojure.core$partial$fn__5561.invoke(core.clj:2617)
+	at migratus.core$run.invokeStatic(core.clj:25)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$migrate.invokeStatic(core.clj:78)
+	at migratus.core$migrate.invoke(core.clj:73)
+	at luminus_migrations.core$fn__41873.invokeStatic(core.clj:44)
+	at luminus_migrations.core$fn__41873.invoke(core.clj:41)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:51)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:56)
+	at spachat.core$_main.doInvoke(core.clj:55)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.Var.invoke(Var.java:377)
+	at user$eval43634.invokeStatic(form-init2875234191284898931.clj:1)
+	at user$eval43634.invoke(form-init2875234191284898931.clj:1)
+	at clojure.lang.Compiler.eval(Compiler.java:7062)
+	at clojure.lang.Compiler.eval(Compiler.java:7052)
+	at clojure.lang.Compiler.load(Compiler.java:7514)
+	at clojure.lang.Compiler.loadFile(Compiler.java:7452)
+	at clojure.main$load_script.invokeStatic(main.clj:278)
+	at clojure.main$init_opt.invokeStatic(main.clj:280)
+	at clojure.main$init_opt.invoke(main.clj:280)
+	at clojure.main$initialize.invokeStatic(main.clj:311)
+	at clojure.main$null_opt.invokeStatic(main.clj:345)
+	at clojure.main$null_opt.invoke(main.clj:342)
+	at clojure.main$main.invokeStatic(main.clj:424)
+	at clojure.main$main.doInvoke(main.clj:387)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at clojure.lang.Var.applyTo(Var.java:702)
+	at clojure.main.main(main.java:37)
+Caused by: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP TABLE IF EXISTS people' at line 5
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeUpdateInternal(StatementImpl.java:1355)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatchInternal(StatementImpl.java:877)
+	... 72 common frames omitted
+2019-02-06 12:55:47,545 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:57:37,331 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 12:57:37,404 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 12:57:37,507 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 12:57:37,518 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 12:57:37,518 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 12:57:37,518 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 12:57:37,518 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 12:57:37,518 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 12:57:37,519 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 12:57:37,552 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x7d92e9e2 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 12:57:37,555 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 12:57:37,555 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 12:57:37,563 [main] DEBUG migratus.migration.sql - found 2 up migrations 
+2019-02-06 12:57:38,135 [main] DEBUG migratus.database - marking 2018 complete 
+2019-02-06 12:57:38,209 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 12:57:54,161 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 12:57:54,186 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 12:57:54,188 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 12:57:54,204 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 12:57:54,204 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 12:57:54,205 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 12:57:54,205 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 13:00:08,079 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 13:00:08,272 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 13:00:08,317 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 13:00:08,317 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 13:00:08,317 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 13:00:08,317 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 13:00:08,317 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 13:00:08,317 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:00:08,417 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:01:09,546 [manifold-wait-5] ERROR manifold.stream.graph - error in manifold.utils/future-with 
+java.io.IOException: Stream closed
+	at java.util.zip.InflaterInputStream.ensureOpen(InflaterInputStream.java:67)
+	at java.util.zip.InflaterInputStream.read(InflaterInputStream.java:142)
+	at java.io.FilterInputStream.read(FilterInputStream.java:133)
+	at java.nio.channels.Channels$ReadableByteChannelImpl.read(Channels.java:385)
+	at byte_streams$fn__14059.invokeStatic(byte_streams.clj:701)
+	at byte_streams$fn__14059.invoke(byte_streams.clj:676)
+	at byte_streams.protocols$fn__13000$G__12995__13009.invoke(protocols.clj:9)
+	at byte_streams$fn__13879$f__13682__auto____13881$fn__13883.invoke(byte_streams.clj:452)
+	at clojure.lang.LazySeq.sval(LazySeq.java:40)
+	at clojure.lang.LazySeq.seq(LazySeq.java:49)
+	at clojure.lang.RT.seq(RT.java:528)
+	at clojure.core$seq__5124.invokeStatic(core.clj:137)
+	at clojure.core$map$fn__5587.invoke(core.clj:2738)
+	at clojure.lang.LazySeq.sval(LazySeq.java:40)
+	at clojure.lang.LazySeq.seq(LazySeq.java:49)
+	at clojure.lang.RT.seq(RT.java:528)
+	at clojure.core$seq__5124.invokeStatic(core.clj:137)
+	at clojure.core$empty_QMARK_.invokeStatic(core.clj:6126)
+	at clojure.core$empty_QMARK_.invoke(core.clj:6126)
+	at manifold.stream.seq.SeqSource.take(seq.clj:41)
+	at manifold.stream.graph$sync_connect$f__10673__auto____12118.invoke(graph.clj:255)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$3.run(Executor.java:308)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-06 13:01:14,130 [manifold-pool-2-5] ERROR spachat.middleware - nil 
+java.lang.NullPointerException: null
+	at clojure.lang.Numbers.ops(Numbers.java:1018)
+	at clojure.lang.Numbers.gt(Numbers.java:234)
+	at spachat.routes.home$ping.invokeStatic(home.clj:88)
+	at spachat.routes.home$ping.invoke(home.clj:81)
+	at spachat.routes.home$fn__9565.invokeStatic(home.clj:98)
+	at spachat.routes.home$fn__9565.invoke(home.clj:98)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-06 13:01:26,301 [manifold-pool-2-5] ERROR spachat.middleware - nil 
+java.lang.NullPointerException: null
+	at clojure.lang.Numbers.ops(Numbers.java:1018)
+	at clojure.lang.Numbers.gt(Numbers.java:234)
+	at spachat.routes.home$ping.invokeStatic(home.clj:88)
+	at spachat.routes.home$ping.invoke(home.clj:81)
+	at spachat.routes.home$fn__9565.invokeStatic(home.clj:98)
+	at spachat.routes.home$fn__9565.invoke(home.clj:98)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-06 13:01:26,512 [manifold-pool-2-5] ERROR spachat.middleware - nil 
+java.lang.NullPointerException: null
+	at clojure.lang.Numbers.ops(Numbers.java:1018)
+	at clojure.lang.Numbers.gt(Numbers.java:234)
+	at spachat.routes.home$ping.invokeStatic(home.clj:88)
+	at spachat.routes.home$ping.invoke(home.clj:81)
+	at spachat.routes.home$fn__9565.invokeStatic(home.clj:98)
+	at spachat.routes.home$fn__9565.invoke(home.clj:98)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-06 13:01:27,138 [manifold-pool-2-6] ERROR spachat.middleware - nil 
+java.lang.NullPointerException: null
+	at clojure.lang.Numbers.ops(Numbers.java:1018)
+	at clojure.lang.Numbers.gt(Numbers.java:234)
+	at spachat.routes.home$ping.invokeStatic(home.clj:88)
+	at spachat.routes.home$ping.invoke(home.clj:81)
+	at spachat.routes.home$fn__9565.invokeStatic(home.clj:98)
+	at spachat.routes.home$fn__9565.invoke(home.clj:98)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-06 13:01:27,828 [manifold-pool-2-4] ERROR spachat.middleware - Exception in :put-chat 
+java.lang.Exception: Exception in :put-chat
+	at conman.core$try_query$fn__9377$fn__9378.invoke(core.clj:32)
+	at spachat.db.core$fn__9479$f__9405__auto____9506.invoke(core.clj:20)
+	at spachat.routes.home$put_chat.invokeStatic(home.clj:75)
+	at spachat.routes.home$put_chat.invoke(home.clj:71)
+	at spachat.routes.home$fn__9563.invokeStatic(home.clj:97)
+	at spachat.routes.home$fn__9563.invoke(home.clj:97)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.sql.BatchUpdateException: Unknown column 'text' in 'field list'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.cj.util.Util.handleNewInstance(Util.java:191)
+	at com.mysql.cj.util.Util.getInstance(Util.java:166)
+	at com.mysql.cj.util.Util.getInstance(Util.java:173)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createBatchUpdateException(SQLError.java:224)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchSerially(ClientPreparedStatement.java:870)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchInternal(ClientPreparedStatement.java:452)
+	at com.mysql.cj.jdbc.StatementImpl.executeBatch(StatementImpl.java:814)
+	at com.zaxxer.hikari.pool.ProxyStatement.executeBatch(ProxyStatement.java:128)
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeBatch(HikariProxyPreparedStatement.java)
+	at clojure.java.jdbc$execute_batch.invokeStatic(jdbc.clj:563)
+	at clojure.java.jdbc$execute_batch.invoke(jdbc.clj:556)
+	at clojure.java.jdbc$db_do_execute_prepared_statement$fn__8098.invoke(jdbc.clj:1005)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:771)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_transaction_STAR_.invokeStatic(jdbc.clj:754)
+	at clojure.java.jdbc$db_transaction_STAR_.invoke(jdbc.clj:741)
+	at clojure.java.jdbc$db_do_execute_prepared_statement.invokeStatic(jdbc.clj:1004)
+	at clojure.java.jdbc$db_do_execute_prepared_statement.invoke(jdbc.clj:990)
+	at clojure.java.jdbc$db_do_prepared.invokeStatic(jdbc.clj:1028)
+	at clojure.java.jdbc$db_do_prepared.invoke(jdbc.clj:1008)
+	at clojure.java.jdbc$execute_BANG_$execute_helper__8166.invoke(jdbc.clj:1413)
+	at clojure.java.jdbc$execute_BANG_.invokeStatic(jdbc.clj:1417)
+	at clojure.java.jdbc$execute_BANG_.invoke(jdbc.clj:1384)
+	at clojure.java.jdbc$execute_BANG_.invokeStatic(jdbc.clj:1405)
+	at clojure.java.jdbc$execute_BANG_.invoke(jdbc.clj:1384)
+	at clojure.lang.AFn.applyToHelper(AFn.java:156)
+	at clojure.lang.AFn.applyTo(AFn.java:144)
+	at clojure.core$apply.invokeStatic(core.clj:661)
+	at clojure.core$apply.invoke(core.clj:652)
+	at hugsql.adapter.clojure_java_jdbc.HugsqlAdapterClojureJavaJdbc.execute(clojure_java_jdbc.clj:12)
+	at hugsql.adapter$fn__8973$G__8957__8978.invoke(adapter.clj:3)
+	at hugsql.adapter$fn__8973$G__8956__8984.invoke(adapter.clj:3)
+	at clojure.lang.Var.invoke(Var.java:396)
+	at hugsql.core$db_fn_STAR_$y__9313.doInvoke(core.clj:457)
+	at clojure.lang.RestFn.invoke(RestFn.java:445)
+	at hugsql.core$db_fn_STAR_$y__9313.invoke(core.clj:447)
+	at conman.core$try_query$fn__9377$fn__9378.invoke(core.clj:30)
+	... 62 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'text' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:120)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:97)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:970)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1109)
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeBatchSerially(ClientPreparedStatement.java:849)
+	... 94 common frames omitted
+2019-02-06 13:01:27,870 [manifold-pool-2-1] ERROR spachat.middleware - nil 
+java.lang.NullPointerException: null
+	at clojure.lang.Numbers.ops(Numbers.java:1018)
+	at clojure.lang.Numbers.gt(Numbers.java:234)
+	at spachat.routes.home$ping.invokeStatic(home.clj:88)
+	at spachat.routes.home$ping.invoke(home.clj:81)
+	at spachat.routes.home$fn__9565.invokeStatic(home.clj:98)
+	at spachat.routes.home$fn__9565.invoke(home.clj:98)
+	at compojure.core$wrap_response$fn__2139.invoke(core.clj:158)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at ring.middleware.anti_forgery$wrap_anti_forgery$fn__5169.invoke(anti_forgery.clj:94)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$pre_init$fn__2190.invoke(core.clj:328)
+	at muuntaja.middleware$wrap_params$fn__6015.invoke(middleware.clj:51)
+	at muuntaja.middleware$wrap_format$fn__6019.invoke(middleware.clj:72)
+	at spachat.middleware$wrap_formats$fn__7638.invoke(middleware.clj:69)
+	at compojure.core$pre_init$fn__2192$fn__2195.invoke(core.clj:335)
+	at compojure.core$wrap_route_middleware$fn__2123.invoke(core.clj:127)
+	at compojure.core$wrap_route_info$fn__2128.invoke(core.clj:137)
+	at compojure.core$wrap_route_matches$fn__2132.invoke(core.clj:146)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$wrap_routes$fn__2202.invoke(core.clj:348)
+	at compojure.core$routing$fn__2147.invoke(core.clj:185)
+	at clojure.core$some.invokeStatic(core.clj:2693)
+	at clojure.core$some.invoke(core.clj:2684)
+	at compojure.core$routing.invokeStatic(core.clj:185)
+	at compojure.core$routing.doInvoke(core.clj:182)
+	at clojure.lang.RestFn.applyTo(RestFn.java:139)
+	at clojure.core$apply.invokeStatic(core.clj:659)
+	at clojure.core$apply.invoke(core.clj:652)
+	at compojure.core$routes$fn__2151.invoke(core.clj:192)
+	at ring.middleware.webjars$wrap_webjars$fn__5364.invoke(webjars.clj:41)
+	at ring.middleware.flash$wrap_flash$fn__6353.invoke(flash.clj:39)
+	at ring.middleware.session$wrap_session$fn__7288.invoke(session.clj:108)
+	at ring.middleware.keyword_params$wrap_keyword_params$fn__7326.invoke(keyword_params.clj:53)
+	at ring.middleware.nested_params$wrap_nested_params$fn__7376.invoke(nested_params.clj:89)
+	at ring.middleware.multipart_params$wrap_multipart_params$fn__7450.invoke(multipart_params.clj:173)
+	at ring.middleware.params$wrap_params$fn__7466.invoke(params.clj:67)
+	at ring.middleware.cookies$wrap_cookies$fn__7251.invoke(cookies.clj:175)
+	at ring.middleware.absolute_redirects$wrap_absolute_redirects$fn__7569.invoke(absolute_redirects.clj:47)
+	at ring.middleware.resource$wrap_resource_prefer_resources$fn__7474.invoke(resource.clj:25)
+	at ring.middleware.content_type$wrap_content_type$fn__7533.invoke(content_type.clj:34)
+	at ring.middleware.default_charset$wrap_default_charset$fn__7549.invoke(default_charset.clj:31)
+	at ring.middleware.not_modified$wrap_not_modified$fn__7522.invoke(not_modified.clj:61)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at ring.middleware.x_headers$wrap_x_header$fn__6324.invoke(x_headers.clj:22)
+	at spachat.middleware$wrap_internal_error$fn__7623.invoke(middleware.clj:22)
+	at clojure.lang.Var.invoke(Var.java:381)
+	at aleph.http.server$handle_request$fn__14715$f__10673__auto____14716.invoke(server.clj:156)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at io.aleph.dirigiste.Executor$Worker$1.run(Executor.java:62)
+	at manifold.executor$thread_factory$reify__10565$f__10566.invoke(executor.clj:44)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.lang.Thread.run(Thread.java:748)
+2019-02-06 13:01:43,923 [Thread-1] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 13:01:43,924 [Thread-1] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 13:01:43,929 [Thread-1] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 13:01:43,930 [Thread-1] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 13:01:43,930 [Thread-1] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 13:01:43,930 [Thread-1] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 13:02:41,127 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 13:02:41,193 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 13:02:41,273 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 13:02:41,283 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 13:02:41,283 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 13:02:41,283 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 13:02:41,283 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 13:02:41,283 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 13:02:41,284 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:02:41,320 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x2fbdcf1a /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:02:41,323 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:10:42,307 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 13:10:42,319 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 13:10:42,321 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 13:10:42,338 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 13:10:42,338 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 13:10:42,338 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 13:10:42,338 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 13:11:29,385 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 13:11:29,465 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 13:11:29,552 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 13:11:29,561 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 13:11:29,562 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 13:11:29,562 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 13:11:29,562 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 13:11:29,562 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 13:11:29,563 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:11:29,598 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x2fbdcf1a /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:11:29,601 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:31:42,300 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 13:31:42,310 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 13:31:42,311 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 13:31:42,316 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 13:31:42,316 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 13:31:42,316 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 13:31:42,316 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 13:34:46,180 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 13:34:46,263 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 13:34:46,370 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 13:34:46,385 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 13:34:46,385 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 13:34:46,385 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 13:34:46,386 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 13:34:46,386 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 13:34:46,387 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:34:46,427 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x2aadd1f4 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:34:46,430 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 13:34:46,430 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 13:34:46,438 [main] DEBUG migratus.migration.sql - found 2 down migrations 
+2019-02-06 13:34:46,852 [main] DEBUG migratus.database - marking 2018 not complete 
+2019-02-06 13:34:46,886 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:34:46,888 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:34:46,894 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x6c694f1d /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:34:46,895 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 13:34:46,896 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 13:34:46,898 [main] DEBUG migratus.migration.sql - found 2 up migrations 
+2019-02-06 13:34:47,457 [main] DEBUG migratus.database - marking 2018 complete 
+2019-02-06 13:34:47,489 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:34:47,491 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:34:47,510 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x28ddc879 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:34:47,512 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:40:26,983 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 13:40:26,997 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 13:40:26,999 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 13:40:27,018 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 13:40:27,018 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 13:40:27,018 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 13:40:27,019 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 13:41:17,495 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 13:41:17,575 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 13:41:17,664 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 13:41:17,675 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 13:41:17,675 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 13:41:17,675 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 13:41:17,675 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 13:41:17,675 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 13:41:17,676 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:41:17,725 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x2a47fa3e /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:41:17,728 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 13:41:17,728 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 13:41:17,737 [main] DEBUG migratus.migration.sql - found 2 down migrations 
+2019-02-06 13:41:18,073 [main] DEBUG migratus.database - marking 2018 not complete 
+2019-02-06 13:41:18,140 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:41:18,142 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:41:18,177 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x41899423 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:41:18,178 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 13:41:18,178 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 13:41:18,180 [main] DEBUG migratus.migration.sql - found 2 up migrations 
+2019-02-06 13:41:18,786 [main] DEBUG migratus.database - marking 2018 complete 
+2019-02-06 13:41:18,826 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:41:18,829 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:41:18,851 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x7a67795d /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:41:18,852 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:53:27,136 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 13:53:27,150 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 13:53:27,152 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 13:53:27,175 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 13:53:27,175 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 13:53:27,176 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 13:53:27,176 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 13:54:15,745 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 13:54:15,812 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 13:54:15,904 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 13:54:15,914 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 13:54:15,915 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 13:54:15,915 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 13:54:15,915 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 13:54:15,915 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 13:54:15,916 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:54:15,951 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x288b93a1 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:54:15,954 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 13:54:15,954 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 13:54:15,962 [main] DEBUG migratus.migration.sql - found 2 down migrations 
+2019-02-06 13:54:16,282 [main] DEBUG migratus.database - marking 2018 not complete 
+2019-02-06 13:54:16,349 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:54:16,351 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:54:16,355 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x2939ef03 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:54:16,356 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 13:54:16,356 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 13:54:16,358 [main] DEBUG migratus.migration.sql - found 2 up migrations 
+2019-02-06 13:54:17,329 [main] DEBUG migratus.database - marking 2018 complete 
+2019-02-06 13:54:17,369 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 13:54:17,370 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 13:54:17,378 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x59c02a71 /home/volkov/personal/spachat/resources/migrations] 
+2019-02-06 13:54:17,379 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 14:03:05,955 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 14:03:05,965 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 14:03:05,966 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 14:03:05,983 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 14:03:05,983 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 14:03:05,983 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 14:03:05,984 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 14:07:30,385 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 14:07:30,589 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 14:07:30,632 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 14:07:30,632 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 14:07:30,632 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 14:07:30,632 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 14:07:30,632 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 14:07:30,633 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 14:07:30,727 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 14:07:30,727 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 14:07:31,087 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 14:07:31,089 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 14:07:31,162 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 14:07:31,162 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 14:07:31,774 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 14:07:31,775 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 14:07:31,828 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 15:33:40,948 [Thread-1] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 15:33:40,948 [Thread-1] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 15:33:40,953 [Thread-1] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 15:33:40,953 [Thread-1] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 15:33:40,953 [Thread-1] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 15:33:40,953 [Thread-1] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 17:07:57,774 [main] WARN  spachat.db.core - database connection URL was not found, please set :databaseurl in your config, e.g: dev-config.edn 
+2019-02-06 17:07:57,775 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 17:07:57,969 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 17:07:58,015 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 17:07:58,024 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 17:07:58,024 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 17:07:58,024 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 17:07:58,024 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 17:07:58,024 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 17:07:58,024 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:07:58,025 [main] ERROR migratus.database - Error creating DB connection for  
+java.lang.IllegalArgumentException: db-spec null is missing a required parameter
+	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:409)
+	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
+	at clojure.java.jdbc$get_connection.invokeStatic(jdbc.clj:298)
+	at clojure.java.jdbc$get_connection.invoke(jdbc.clj:229)
+	at migratus.database$connect_STAR_$fn__15922.invoke(database.clj:116)
+	at migratus.database$connect_STAR_.invokeStatic(database.clj:115)
+	at migratus.database$connect_STAR_.invoke(database.clj:113)
+	at migratus.database.Database.connect(database.clj:254)
+	at migratus.core$run.invokeStatic(core.clj:24)
+	at migratus.core$run.invoke(core.clj:21)
+	at migratus.core$reset.invokeStatic(core.clj:131)
+	at migratus.core$reset.invoke(core.clj:127)
+	at luminus_migrations.core$fn__16074.invokeStatic(core.clj:28)
+	at luminus_migrations.core$fn__16074.invoke(core.clj:27)
+	at luminus_migrations.core$migrate.invokeStatic(core.clj:97)
+	at luminus_migrations.core$migrate.invoke(core.clj:83)
+	at spachat.core$start_app.invokeStatic(core.clj:48)
+	at spachat.core$start_app.invoke(core.clj:41)
+	at spachat.core$_main.invokeStatic(core.clj:54)
+	at spachat.core$_main.doInvoke(core.clj:53)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.AFn.applyToHelper(AFn.java:152)
+	at clojure.lang.RestFn.applyTo(RestFn.java:132)
+	at spachat.core.main(Unknown Source)
+2019-02-06 17:07:58,025 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:12:43,078 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 17:12:43,274 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 17:12:43,321 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 17:12:43,329 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 17:12:43,329 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 17:12:43,329 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 17:12:43,330 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 17:12:43,330 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 17:12:43,330 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:12:43,430 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 17:12:43,430 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 17:12:43,833 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:12:43,834 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:12:43,874 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 17:12:43,874 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 17:12:44,511 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:12:44,513 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:12:44,555 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:16:51,344 [Thread-2] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 17:16:51,354 [Thread-2] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 17:16:51,354 [Thread-2] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 17:16:51,357 [Thread-2] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 17:16:51,357 [Thread-2] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 17:16:51,357 [Thread-2] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 17:16:51,357 [Thread-2] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 17:16:56,018 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 17:16:56,241 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 17:16:56,287 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 17:16:56,295 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 17:16:56,295 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 17:16:56,295 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 17:16:56,295 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 17:16:56,295 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 17:16:56,295 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:16:56,417 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 17:16:56,417 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 17:16:57,006 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:16:57,008 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:16:57,046 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 17:16:57,046 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 17:16:57,700 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:16:57,701 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:16:57,744 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:27:54,104 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 17:27:54,321 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 17:27:54,380 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 17:27:54,391 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 17:27:54,391 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 17:27:54,391 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 17:27:54,391 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 17:27:54,391 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 17:27:54,391 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:27:54,502 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 17:27:54,502 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 17:27:54,891 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:27:54,893 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:27:54,952 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 17:27:54,952 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 17:27:55,586 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:27:55,588 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:27:55,658 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:34:14,036 [Thread-2] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 17:34:14,055 [Thread-2] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 17:34:14,056 [Thread-2] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 17:34:14,068 [Thread-2] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 17:34:14,068 [Thread-2] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 17:34:14,069 [Thread-2] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 17:34:14,069 [Thread-2] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 17:40:48,744 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 17:40:48,970 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 17:40:49,012 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 17:40:49,020 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 17:40:49,020 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 17:40:49,020 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 17:40:49,020 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 17:40:49,020 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 17:40:49,021 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:40:49,106 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 17:40:49,106 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 17:40:49,434 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:40:49,436 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:40:49,476 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 17:40:49,476 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 17:40:50,062 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:40:50,064 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 17:40:50,136 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 17:41:16,848 [Thread-2] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 17:41:16,858 [Thread-2] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 17:41:16,858 [Thread-2] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 17:41:16,861 [Thread-2] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 17:41:16,862 [Thread-2] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 17:41:16,862 [Thread-2] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 17:41:16,862 [Thread-2] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 18:01:48,602 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 18:01:48,804 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 18:01:48,846 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 18:01:48,854 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 18:01:48,854 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 18:01:48,854 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 18:01:48,854 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 18:01:48,854 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 18:01:48,854 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 18:01:48,946 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 18:01:48,946 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 18:01:49,378 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 18:01:49,380 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 18:01:49,429 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 18:01:49,429 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 18:01:50,081 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 18:01:50,083 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 18:01:50,160 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 18:03:59,658 [Thread-2] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 18:03:59,674 [Thread-2] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 18:03:59,674 [Thread-2] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 18:03:59,689 [Thread-2] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 18:03:59,690 [Thread-2] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 18:03:59,690 [Thread-2] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 18:03:59,690 [Thread-2] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 18:05:31,126 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-06 18:05:31,325 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-06 18:05:31,367 [main] INFO  spachat.nrepl-server - starting nREPL server on port 7000 
+2019-02-06 18:05:31,375 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-06 18:05:31,375 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-06 18:05:31,375 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-06 18:05:31,375 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-06 18:05:31,375 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-06 18:05:31,375 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 18:05:31,457 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-06 18:05:31,457 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-06 18:05:31,748 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 18:05:31,750 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 18:05:31,805 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-06 18:05:31,805 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-06 18:05:32,359 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 18:05:32,361 [main] INFO  migratus.core - Starting migrations 
+2019-02-06 18:05:32,434 [main] INFO  migratus.core - Ending migrations 
+2019-02-06 18:16:09,986 [Thread-2] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-06 18:16:09,991 [Thread-2] INFO  luminus.http-server - HTTP server stopped 
+2019-02-06 18:16:09,991 [Thread-2] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-06 18:16:09,995 [Thread-2] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-06 18:16:09,995 [Thread-2] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-06 18:16:09,995 [Thread-2] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-06 18:16:09,995 [Thread-2] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-06 18:21:09,695 [nREPL-worker-0] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-06 18:21:09,780 [nREPL-worker-0] INFO  luminus.http-server - starting HTTP server on port 3000 

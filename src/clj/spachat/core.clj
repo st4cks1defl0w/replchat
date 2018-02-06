@@ -45,12 +45,9 @@
                         mount/start-with-args
                         :started)]
     (log/info component "started"))
-  (migrations/init {:database-url (:databaseurl env)
-                    :init-script "init.sql"})
-  (migrations/migrate ["destroy" "2018"] {:database-url (:databaseurl env)})
-  (migrations/migrate ["migrate"] {:database-url (:databaseurl env)
-                                   :init-in-transaction? false})
-  (log/info "ran simple-setup migrations")
+  (migrations/migrate ["reset"] {:database-url (:databaseurl env)})
+  (migrations/migrate ["migrate"] {:database-url (:databaseurl env)})
+  (println "ran simple-setup migrations")
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]

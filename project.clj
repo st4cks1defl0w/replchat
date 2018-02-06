@@ -69,9 +69,6 @@
 :profiles
   {:uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
-             :repl-options {:init-ns user
-                            :timeout 120000
-                            :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}
              :cljsbuild
              {:builds
               {:min
@@ -90,9 +87,9 @@
 
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
-   :protected-eval {:repl-options {:init-ns user
-                                   :timeout 120000
-                                   :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}}
+   ;; :protected-eval {:repl-options {:init-ns user
+   ;;                                 :timeout 120000
+   ;;                                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}}
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn"]
                   :dependencies [[binaryage/devtools "0.9.10"]
                                  [cider/piggieback "0.3.10"]
@@ -135,7 +132,8 @@
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
-                                 :timeout 120000}
+                                 :timeout 120000
+                                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn"]
