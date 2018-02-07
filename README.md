@@ -1,14 +1,21 @@
 # Single-page REPLchat with re-frame+reagent
 
- One instance running at [https://replchat.stacksideflow.host](https://replchat.stacksideflow.host)
+ Running at [replchat.stacksideflow.host](https://replchat.stacksideflow.host)
 
-####  [protected-eval](github.com/stacksideflow/protected-eval)-based remote chat posting with  REPL
+  *Restricted remote nREPL chat posting with [protected-eval](github.com/stacksideflow/protected-eval)*
+
+## Post a message with an Emacs REPL:
+
+- Connect to `https://replchat.stacksideflow.host` port `5557`
+- While in clj REPL buffer: `(spachat.remote/post-message-with-repl  "Your message")`
+
+Check out your message at [replchat.stacksideflow.host](https://replchat.stacksideflow.host)
 
 ## Quick rundown
 
-- Simple merged sign in/sign up, passwords saved/compared in md5, basic cookie is issued for submitting chats and udp'ing user online status to the server
+- Simple merged sign in/sign up, passwords are hashed, basic cookie is issued for submitting chats and udp'ing user online status to the server
 - MaterialUI-powered
-- .cljc password speccing for ClojureScript and Clojure based on common spec s/def
+- `.cljc` password speccing for ClojureScript and Clojure based on common `s/def`
 - Backend built on Aleph + MySQL CRUD, migrations are run on each launch by default, wiping app state
 
 ## Start app (:development)
@@ -46,6 +53,6 @@ Then (assuming you've lifted the jar file from build dir)
 `java -jar spachat.jar`
 
 
-The app will run on `localhost:3000`.
+The app will run on `localhost:3000`
 
-A protected nREPL you can connect to and post messages to the chat listen on `localhost:5557`
+A protected nREPL you can connect to and post messages to the chat will be listening on `localhost:5557`
