@@ -2086,3 +2086,11 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'chatsdb.chats' doesn't exist
 2019-02-07 10:08:29,267 [main] INFO  migratus.core - Ending migrations 
 2019-02-07 10:08:29,268 [main] INFO  migratus.core - Starting migrations 
 2019-02-07 10:08:29,345 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:15:54,259 [Thread-2] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-07 10:15:54,264 [Thread-2] INFO  luminus.http-server - HTTP server stopped 
+2019-02-07 10:15:54,265 [Thread-2] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-07 10:15:54,272 [Thread-2] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-07 10:15:54,273 [Thread-2] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-07 10:15:54,273 [Thread-2] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-07 10:15:54,273 [Thread-2] INFO  spachat.core - #'spachat.db.core/*db* stopped 

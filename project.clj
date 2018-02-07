@@ -46,7 +46,7 @@
                  [digest "1.4.8"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]
-                 [protected-eval "0.1.6"]]
+                 [protected-eval "0.1.7"]]
   :repl-options {:init-ns user
                  :timeout 120000
                  :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
