@@ -4,7 +4,7 @@ This page will help guide you through the first steps of building your site.
 
 #### Why are you seeing this page?
 
-The `home-routes` handler in the `spachat.routes.home` namespace
+The `home-routes` handler in the `replchat.routes.home` namespace
 defines the route that invokes the `home-page` function whenever an HTTP
 request is made to the `/` URI using the `GET` method.
 
@@ -17,7 +17,7 @@ request is made to the `/` URI using the `GET` method.
            (response/header "Content-Type" "text/plain; charset=utf-8"))))
 ```
 
-The `home-page` function will in turn call the `spachat.layout/render` function
+The `home-page` function will in turn call the `replchat.layout/render` function
 to render the HTML content:
 
 ```
@@ -31,13 +31,13 @@ The page contains a link to the compiled ClojureScript found in the `target/cljs
 {% script "/js/app.js" %}
 ```
 
-The rest of this page is rendered by ClojureScript found in the `src/cljs/spachat/core.cljs` file.
+The rest of this page is rendered by ClojureScript found in the `src/cljs/replchat/core.cljs` file.
 
 
 
 #### Organizing the routes
 
-The routes are aggregated and wrapped with middleware in the `spachat.handler` namespace:
+The routes are aggregated and wrapped with middleware in the `replchat.handler` namespace:
 
 ```
 (defstate app
@@ -63,12 +63,12 @@ The second takes care of serializing and deserializing various encoding formats,
 
 #### Managing your middleware
 
-Request middleware functions are located under the `spachat.middleware` namespace.
+Request middleware functions are located under the `replchat.middleware` namespace.
 
 This namespace is reserved for any custom middleware for the application. Some default middleware is
 already defined here. The middleware is assembled in the `wrap-base` function.
 
-Middleware used for development is placed in the `spachat.dev-middleware` namespace found in
+Middleware used for development is placed in the `replchat.dev-middleware` namespace found in
 the `env/dev/clj/` source path.
 
 <a class="btn btn-primary" href="http://www.luminusweb.net/docs/middleware.md">learn more about middleware »</a>
@@ -82,7 +82,7 @@ If you haven't already, then please follow the steps below to configure your dat
 * Create the database for your application.
 * Update the connection URL in the `dev-config.edn` and `test-config.edn` files with your database name and login credentials.
 * Run `lein run migrate` in the root of the project to create the tables.
-* Let `mount` know to start the database connection by `require`-ing `spachat.db.core` in some other namespace.
+* Let `mount` know to start the database connection by `require`-ing `replchat.db.core` in some other namespace.
 * Restart the application.
 
 <a class="btn btn-primary" href="http://www.luminusweb.net/docs/database.md">learn more about database access »</a>

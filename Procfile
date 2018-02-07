@@ -1,1 +1,1 @@
-web: java -cp target/uberjar/spachat.jar clojure.main -m spachat.core
+web: java -cp target/uberjar/replchat.jar clojure.main -m replchat.core

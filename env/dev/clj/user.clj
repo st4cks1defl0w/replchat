@@ -1,32 +1,32 @@
 (ns user
-  (:require [spachat.config :refer [env]]
+  (:require [replchat.config :refer [env]]
             [clojure.spec.alpha :as s]
             [expound.alpha :as expound]
             [mount.core :as mount]
-            [spachat.figwheel :refer [start-fw stop-fw cljs]]
+            [replchat.figwheel :refer [start-fw stop-fw cljs]]
             [figwheel-sidecar.repl-api :as fw]
-            [spachat.core :refer [start-app]]
-            [spachat.db.core]
+            [replchat.core :refer [start-app]]
+            [replchat.db.core]
             [conman.core :as conman]
             [luminus-migrations.core :as migrations]))
 
 (alter-var-root #'s/*explain-out* (constantly expound/printer))
 
 (defn start []
-  (mount/start-without #'spachat.core/repl-server))
+  (mount/start-without #'replchat.core/repl-server))
 
 (defn stop []
-  (mount/stop-except #'spachat.core/repl-server))
+  (mount/stop-except #'replchat.core/repl-server))
 
 (defn restart []
   (stop)
   (start))
 
 (defn restart-db []
-  (mount/stop #'spachat.db.core/*db*)
-  (mount/start #'spachat.db.core/*db*)
-  (binding [*ns* 'spachat.db.core]
-    (conman/bind-connection spachat.db.core/*db* "sql/queries.sql")))
+  (mount/stop #'replchat.db.core/*db*)
+  (mount/start #'replchat.db.core/*db*)
+  (binding [*ns* 'replchat.db.core]
+    (conman/bind-connection replchat.db.core/*db* "sql/queries.sql")))
 
 (defn reset-db []
   (migrations/migrate ["reset"] (select-keys env [:databaseurl])))

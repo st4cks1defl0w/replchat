@@ -7,7 +7,7 @@
 ## Post a message with an Emacs REPL:
 
 - Connect to `https://replchat.stacksideflow.host` port `5557`
-- While in clj REPL buffer: `(spachat.remote/post-message-with-repl  "Your message")`
+- While in clj REPL buffer: `(replchat.remote/post-message-with-repl  "Your message")`
 
 Check out your message at [replchat.stacksideflow.host](https://replchat.stacksideflow.host)
 
@@ -50,7 +50,7 @@ After compiling with `lein uberjar`, supply environment variables
 
 Then (assuming you've lifted the jar file from build dir)
 
-`java -jar spachat.jar`
+`java -jar replchat.jar`
 
 
 The app will run on `localhost:3000`

@@ -2,7 +2,7 @@ FROM openjdk:8-stretch
 
 MAINTAINER Ivan Volkov <1@stacksideflow.host>
 
-ADD target/uberjar/spachat.jar /spachat/app.jar
+ADD target/uberjar/replchat.jar /replchat/app.jar
 
 EXPOSE 3000
 EXPOSE 5557
@@ -15,4 +15,4 @@ CMD mysql -u root -e "CREATE USER 'chat'@'localhost' IDENTIFIED BY '3anoa0nony6m
 CMD mysql -u root -e "GRANT ALL PRIVILEGES ON * . * TO 'chat'@'localhost';"
 CMD export databaseurl="mysql://localhost:3306/chatsdb?user=chat&password=3anoa0nony6monymo&serverTimezone=UTC"
 CMD export NREPL_PORT=5557
-CMD ["java", "-jar", "/spachat/app.jar"]
+CMD ["java", "-jar", "/replchat/app.jar"]

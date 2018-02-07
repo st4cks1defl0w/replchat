@@ -4,5 +4,5 @@
 
 {:port 3000
  ; set your test database connection URL here
- ; :databaseurl "mysql://localhost:3306/spachat_test?user=db_user_name_here&password=db_user_password_here"
+ ; :databaseurl "mysql://localhost:3306/replchat_test?user=db_user_name_here&password=db_user_password_here"
 }

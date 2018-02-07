@@ -1,6 +1,6 @@
-(defproject spachat "0.1.0"
+(defproject replchat "0.1.0"
 
-  :description "SPA chat with re-frame, posting with remote REPL is available"
+  :description "Single-page re-frame chat you can post to remotely with your REPL"
   :url "https://stacksideflow.host"
 
   :dependencies [[baking-soda "0.2.0" :exclusions [cljsjs/react-bootstrap]]
@@ -52,7 +52,7 @@
   :test-paths ["test/clj"]
   :resource-paths ["resources" "target/cljsbuild"]
   :target-path "target/%s/"
-  :main ^:skip-aot spachat.core
+  :main ^:skip-aot replchat.core
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
   :figwheel
@@ -87,7 +87,7 @@
                  :infer-externs true
                  :pretty-print false}}}}
              :aot :all
-             :uberjar-name "spachat.jar"
+             :uberjar-name "replchat.jar"
              :source-paths ["env/prod/clj"]
              :resource-paths ["env/prod/resources"]}
 
@@ -117,9 +117,9 @@
                   {:builds
                    {:app
                     {:source-paths ["src/cljs" "src/cljc" "env/dev/cljs"]
-                     :figwheel {:on-jsload "spachat.core/mount-components"}
+                     :figwheel {:on-jsload "replchat.core/mount-components"}
                      :compiler
-                     {:main "spachat.app"
+                     {:main "replchat.app"
                       :asset-path "/js/out"
                       :output-to "target/cljsbuild/public/js/app.js"
                       :output-dir "target/cljsbuild/public/js/out"
@@ -146,7 +146,7 @@
                     {:source-paths ["src/cljc" "src/cljs" "test/cljs"]
                      :compiler
                      {:output-to "target/test.js"
-                      :main "spachat.doo-runner"
+                      :main "replchat.doo-runner"
                       :optimizations :whitespace
                       :pretty-print true}}}}
 
