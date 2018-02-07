@@ -47,9 +47,6 @@
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]
                  [protected-eval "0.1.7"]]
-  :repl-options {:init-ns user
-                 :timeout 120000
-                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
