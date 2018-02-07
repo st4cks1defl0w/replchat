@@ -1,5 +1,4 @@
-# Single-page REPLchat with re-frame+reagent
-
+# re-frame REPLchat
  Running at [replchat.stacksideflow.host](https://replchat.stacksideflow.host)
 
   *Restricted remote nREPL chat posting with [protected-eval](github.com/stacksideflow/protected-eval)*
