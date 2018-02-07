@@ -28,8 +28,7 @@
   :start
   (when (env :nrepl-port)
     (nrepl/start {:bind (env :nrepl-bind)
-                  :port (env :nrepl-port)
-                  :handler }))
+                  :port (env :nrepl-port)}))
   :stop
   (when repl-server
     (nrepl/stop repl-server)))
@@ -52,19 +51,4 @@
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]
-  (start-app args)
-  #_(cond
-    (nil? (:databaseurl env))
-    (do
-      (println "Database configuration not found - :databaseurl envvar")
-      (System/exit 1))
-    #_(some #{"init"} args)
-    #_(do
-      (migrations/init (select-keys env [:databaseurl :init-script]))
-      (System/exit 0))
-    (migrations/migration? args)
-    (do
-      (migrations/migrate args (select-keys env [:databaseurl]))
-      (System/exit 0))
-    :else
-    (start-app args)))
+  (start-app args))

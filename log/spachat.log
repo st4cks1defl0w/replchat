@@ -1994,3 +1994,95 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'chatsdb.chats' doesn't exist
 2019-02-07 09:51:06,406 [main] INFO  migratus.core - Up 2018-add-tables 
 2019-02-07 09:51:06,408 [main] INFO  migratus.core - Migration reserved by another instance. Ignoring. 
 2019-02-07 09:51:06,409 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 09:53:33,529 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-07 09:53:33,537 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-07 09:53:33,538 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-07 09:53:33,552 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-07 09:53:33,553 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-07 09:53:33,553 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-07 09:53:33,553 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-07 10:05:00,404 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-07 10:05:00,550 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-07 10:05:00,687 [main] INFO  spachat.nrepl-server - starting nREPL server on port 5557 
+2019-02-07 10:05:00,727 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-07 10:05:00,732 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-07 10:05:00,732 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-07 10:05:00,733 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-07 10:05:00,733 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-07 10:05:00,735 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:05:00,790 [main] INFO  migratus.database - creating migration table 'schema_migrations' 
+2019-02-07 10:05:01,150 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x4ff8c15b /home/v/github/spachat/resources/migrations] 
+2019-02-07 10:05:01,154 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:05:01,155 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:05:01,164 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x5b13c761 /home/v/github/spachat/resources/migrations] 
+2019-02-07 10:05:01,165 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-07 10:05:01,166 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-07 10:05:01,179 [main] DEBUG migratus.migration.sql - found 2 up migrations 
+2019-02-07 10:05:01,930 [main] DEBUG migratus.database - marking 2018 complete 
+2019-02-07 10:05:02,020 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:05:02,021 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:05:02,076 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x20e3f17a /home/v/github/spachat/resources/migrations] 
+2019-02-07 10:05:02,076 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:05:24,681 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-07 10:05:24,688 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-07 10:05:24,689 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-07 10:05:24,707 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-07 10:05:24,708 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-07 10:05:24,708 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-07 10:05:24,708 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-07 10:06:48,077 [main] INFO  spachat.env - 
+-=[spachat started successfully using the development profile]=- 
+2019-02-07 10:06:48,290 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-07 10:06:48,431 [main] INFO  spachat.nrepl-server - starting nREPL server on port 5557 
+2019-02-07 10:06:48,453 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-07 10:06:48,455 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-07 10:06:48,456 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-07 10:06:48,456 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-07 10:06:48,456 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-07 10:06:48,458 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:06:48,559 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x67e10cdb /home/v/github/spachat/resources/migrations] 
+2019-02-07 10:06:48,563 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-07 10:06:48,563 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-07 10:06:48,579 [main] DEBUG migratus.migration.sql - found 2 down migrations 
+2019-02-07 10:06:49,048 [main] DEBUG migratus.database - marking 2018 not complete 
+2019-02-07 10:06:49,090 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:06:49,092 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:06:49,101 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x5dec13ae /home/v/github/spachat/resources/migrations] 
+2019-02-07 10:06:49,103 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-07 10:06:49,103 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-07 10:06:49,108 [main] DEBUG migratus.migration.sql - found 2 up migrations 
+2019-02-07 10:06:49,802 [main] DEBUG migratus.database - marking 2018 complete 
+2019-02-07 10:06:49,859 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:06:49,860 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:06:49,874 [main] DEBUG migratus.migrations - Looking for migrations in #object[java.io.File 0x791917c6 /home/v/github/spachat/resources/migrations] 
+2019-02-07 10:06:49,875 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:07:50,793 [Thread-3] INFO  spachat.nrepl-server - nREPL server stopped 
+2019-02-07 10:07:50,801 [Thread-3] INFO  luminus.http-server - HTTP server stopped 
+2019-02-07 10:07:50,802 [Thread-3] INFO  spachat.env - 
+-=[spachat has shut down successfully]=- 
+2019-02-07 10:07:50,820 [Thread-3] INFO  spachat.core - #'spachat.core/repl-server stopped 
+2019-02-07 10:07:50,821 [Thread-3] INFO  spachat.core - #'spachat.core/http-server stopped 
+2019-02-07 10:07:50,821 [Thread-3] INFO  spachat.core - #'spachat.handler/init-app stopped 
+2019-02-07 10:07:50,821 [Thread-3] INFO  spachat.core - #'spachat.db.core/*db* stopped 
+2019-02-07 10:08:26,972 [main] INFO  spachat.env - 
+-=[spachat started successfully]=- 
+2019-02-07 10:08:27,417 [main] INFO  luminus.http-server - starting HTTP server on port 3000 
+2019-02-07 10:08:27,491 [main] INFO  spachat.nrepl-server - starting nREPL server on port 5557 
+2019-02-07 10:08:27,505 [main] INFO  spachat.core - #'spachat.db.core/*db* started 
+2019-02-07 10:08:27,506 [main] INFO  spachat.core - #'spachat.handler/init-app started 
+2019-02-07 10:08:27,506 [main] INFO  spachat.core - #'spachat.handler/app started 
+2019-02-07 10:08:27,506 [main] INFO  spachat.core - #'spachat.core/http-server started 
+2019-02-07 10:08:27,506 [main] INFO  spachat.core - #'spachat.core/repl-server started 
+2019-02-07 10:08:27,507 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:08:27,711 [main] INFO  migratus.core - Running down for [2018] 
+2019-02-07 10:08:27,711 [main] INFO  migratus.core - Down 2018-add-tables 
+2019-02-07 10:08:28,196 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:08:28,198 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:08:28,318 [main] INFO  migratus.core - Running up for [2018] 
+2019-02-07 10:08:28,318 [main] INFO  migratus.core - Up 2018-add-tables 
+2019-02-07 10:08:29,267 [main] INFO  migratus.core - Ending migrations 
+2019-02-07 10:08:29,268 [main] INFO  migratus.core - Starting migrations 
+2019-02-07 10:08:29,345 [main] INFO  migratus.core - Ending migrations 
