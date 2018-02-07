@@ -47,6 +47,9 @@
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]
                  [protected-eval "0.1.6"]]
+  :repl-options {:init-ns user
+                 :timeout 120000
+                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
@@ -67,8 +70,14 @@
              ["eastwood"]
              ["cljfmt" "check"]]}
 :profiles
-  {:uberjar {:omit-source true
+  {:protected-eval {:repl-options {:init-ns user
+                                   :timeout 120000
+                                   :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}}
+   :uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+             :repl-options {:init-ns user
+                            :timeout 120000
+                            :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}
              :cljsbuild
              {:builds
               {:min
@@ -87,9 +96,6 @@
 
    :dev           [:project/dev :profiles/dev]
    :test          [:project/dev :project/test :profiles/test]
-   ;; :protected-eval {:repl-options {:init-ns user
-   ;;                                 :timeout 120000
-   ;;                                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}}
    :project/dev  {:jvm-opts ["-Dconf=dev-config.edn"]
                   :dependencies [[binaryage/devtools "0.9.10"]
                                  [cider/piggieback "0.3.10"]
@@ -132,8 +138,7 @@
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user
-                                 :timeout 120000
-                                 :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
+                                 :timeout 120000}
                   :injections [(require 'pjstadig.humane-test-output)
                                (pjstadig.humane-test-output/activate!)]}
    :project/test {:jvm-opts ["-Dconf=test-config.edn"]
