@@ -5,6 +5,7 @@
             [luminus-migrations.core :as migrations]
             [replchat.config :refer [env]]
             [replchat.remote :as remote]
+            [replchat.routes.home :as home-routes]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
             [mount.core :as mount])
@@ -48,6 +49,8 @@
   (migrations/migrate ["reset"] {:database-url (:databaseurl env)})
   (migrations/migrate ["migrate"] {:database-url (:databaseurl env)})
   (println "ran simple-setup migrations")
+  (home-routes/create-repl-user!)
+  (println "created shared REPL user")
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]

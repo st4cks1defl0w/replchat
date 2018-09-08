@@ -15,7 +15,7 @@
 
 (def time-format (time.format/formatters :mysql))
 
-(defonce app-state (atom {:text "SPACHAT"}))
+(defonce app-state (atom {:text "REPLchat running"}))
 
 (defn navbar
   "Appwide navbar"
@@ -23,7 +23,13 @@
   [mui/app-bar {:position "static"}
    [mui/toolbar
     [mui/typography {:variant "h6"}
-     [icons/chat {:style {:margin-right "10px"}}] "SPACHAT"]]])
+     [icons/chat {:style {:margin-right "10px"}}] "REPLchat"]]])
+
+(defn repl-message-view []
+  [mui/grid {:container true}
+   [mui/typography {:variant :caption
+                    :style {:font-size "0.8em" :opacity 0.5 :color :bold}}
+    [icons/cast-connected] " Sent with REPL"]])
 
 (defn message-view-styles [own-message?]
   (let [justify (if own-message?
@@ -43,17 +49,20 @@
 
 (defn message-view [{:keys [username text stamp]} msg-component]
   (let [own-message? (= username @(rf/subscribe [:signup-user]))
+        repl-message? (= username "repl-user")
         {:keys [container-style message-box-style]} (message-view-styles own-message?)]
     [mui/grid container-style
      [mui/paper message-box-style
       [mui/grid {:container true}
-       [mui/typography {:variant :body2} text]]
+       [mui/typography {:variant :subtitle2} text]]
       [mui/grid {:container true}
        [mui/typography {:variant :caption
                         :style {:font-size "0.8em"
                                 :opacity 0.5}}
         (str "- by " (if own-message? "You" username) " at ")
-        [:b (timestamp->formatted-time stamp)]]]]]))
+        [:b (timestamp->formatted-time stamp)]]]
+      (when repl-message?
+        [repl-message-view])]]))
 
 (defn chats [msgs]
   [mui/grid {:container true}
@@ -62,50 +71,50 @@
      [message-view message])])
 
 (defn chat-page []
-  (let [_on-load! (rf/dispatch [:pinging-chat-user])]
-    [:div {:style {:padding-top "40px"
-                   :width "50%"
-                   :max-width "500px"
-                   :margin "0 auto"}}
-     [mui/paper {:elevation 1 :style {}}
-      [mui/grid {:style {:padding "1em"}}
-       [mui/typography
-        {:variant "body1" :style {:font-family "monospace"}}
-        [icons/account-circle {:style {:margin-right "10px"}}]
-        "hi, " @(rf/subscribe [:signup-user]) "!"]]
-      [mui/card {:id "chats-container"
-                 :elevation 1
-                 :style {:overflow-y "scroll"
-                         :padding "5px"
-                         :height "40vh"}}
-       [chats @(rf/subscribe [:chats])]]
-      [mui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
-       [mui/form-control {:style {:width "60%"}}
-        [mui/input-label {:htmlFor "send-message"} "Send Message"]
-        [mui/input {:value @(rf/subscribe [:send-message])
-                    :id "send-message"
-                    :multiline true
-                    :rows 3
-                    :on-change
-                    #(rf/dispatch [:send-message (-> % .-target .-value)])}]]
-       [mui/form-control {:style {:width "40%"}}
-        [mui/button {:on-click  #(rf/dispatch [:send-message-go])
-                     :variant "contained"
-                     :color "primary"
-                     :id "send-message-go"
-                     :style {:float "right"
-                             :width "50px"
-                             :margin-left "auto"}} "Send"]]]]
-     [mui/grid {:container true
-                :style {:padding-top "1em"}}
-      [mui/typography {:variant :subtitle1
-                       :paragraph true
-                       :style {:padding-right "0.5em"}}
-       "Users online now: "]
-      (for [online-user @(rf/subscribe [:online-now])]
-        ^{:key online-user}
-        [mui/chip {:label (:username online-user)
-                   :style {:opacity 0.6}}])]]))
+  [mui/grid {:style {:padding-top "40px"
+                 :width "50%"
+                 :max-width "500px"
+                 :margin "0 auto"}}
+   [mui/paper {:elevation 1 :style {}}
+    [mui/grid {:style {:padding "1em"}}
+     [mui/typography
+      {:variant "body1" :style {:font-family "monospace"}}
+      [icons/account-circle {:style {:margin-right "10px"}}]
+      "hi, " @(rf/subscribe [:signup-user]) "!"]]
+    [mui/card {:id "chats-container"
+               :elevation 1
+               :style {:overflow-y "scroll"
+                       :padding "5px"
+                       :height "40vh"}}
+     [chats @(rf/subscribe [:chats])]]
+    [mui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
+     [mui/form-control {:style {:width "60%"}}
+      [mui/input-label {:htmlFor "send-message"} "Send Message"]
+      [mui/input {:value @(rf/subscribe [:send-message])
+                  :id "send-message"
+                  :multiline true
+                  :rows 3
+                  :on-change
+                  #(rf/dispatch [:send-message (-> % .-target .-value)])}]]
+     [mui/form-control {:style {:width "40%"}}
+      [mui/button {:on-click  #(rf/dispatch [:send-message-go])
+                   :variant "contained"
+                   :color "primary"
+                   :id "send-message-go"
+                   :style {:float "right"
+                           :width "50px"
+                           :margin-left "auto"}} "Send"]]]]
+   [mui/grid {:container true
+              :style {:padding-top "1em"}}
+    [mui/typography {:variant :subtitle1
+                     :paragraph true
+                     :style {:padding-right "0.5em"
+                             :opacity "0.6"}}
+     "Users online now: "]
+    (for [online-user @(rf/subscribe [:online-now])]
+      ^{:key online-user}
+      [mui/chip {:label (:username online-user)
+                 :style {:opacity 0.6}}])]])
 
 (defn home-page []
   [mui/grid {:justify :center :container true :style {:padding "2em"}}
@@ -184,11 +193,6 @@
        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
 
-(defn ping-with-interval! []
-  (let [cookie @(rf/subscribe [:spaCookie])]
-    (js/setInterval #(when (some? cookie)
-                       (rf/dispatch [:pinging-chat-user])) 10000)))
-
 (defn mount-components []
   (rf/clear-subscription-cache!)
   (reagent/render [#'page] (.getElementById js/document "app")))
@@ -197,5 +201,4 @@
   (rf/dispatch-sync [:navigate :home])
   (ajax/load-interceptors!)
   (hook-browser-navigation!)
-  (mount-components)
-  (ping-with-interval!))
+  (mount-components))

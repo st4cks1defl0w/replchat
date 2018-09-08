@@ -52,8 +52,7 @@
 
 (rf/reg-event-fx
  :signup-check-pass
- (fn
-   [{:keys [db]} _]
+ (fn [{:keys [db]} _]
    (let [{:keys [signup-password] :as signup-args} db]
      (if (s/valid? :replchat.spec/password signup-password)
        {:db db :dispatch [:signup-submit signup-args]}
@@ -61,8 +60,7 @@
 
 (rf/reg-event-fx
  :signup-submit
- (fn
-   [{:keys [db]} _]
+ (fn [{:keys [db]} _]
    (let [{:keys [signup-user signup-password]} db]
      {:db db
       :http-xhrio {:method :post
@@ -74,31 +72,47 @@
                    :on-success [:signup-submit-success]
                    :on-failure [:signup-submit-failure]}})))
 
-(rf/reg-event-db
+(rf/reg-event-fx
  :signup-submit-success
  trim-v
- (fn
-   [db [{:keys [okCookie]}]]
-   (assoc db
-          :lastchat 0
-          :page :chat
-          :spaCookie okCookie)))
+ (fn [{:keys [db]} [{:keys [okCookie]}]]
+   {:db (assoc db
+               :lastchat 0
+               :page :chat
+               :spaCookie okCookie)
+    :dispatch [:poll-chat-user]
+    :poll-with-interval  {:action :start
+                          :id :chat-page
+                          :frequency 5000}}))
 
 (rf/reg-event-fx
  :signup-submit-failure
  trim-v
- (fn
-   [{:keys [db]} [{:keys [response]}]]
+ (fn [{:keys [db]} [{:keys [response]}]]
    (let [{:keys [errorText] :or {errorText "Unknown error"}} response]
      {:db (assoc db :noserver true :signup-password "")
       :dispatch [:snackbar-home errorText]})))
 
 (rf/reg-fx
+ :poll-with-interval
+ (let [live-intervals (atom {})]
+   (fn [{:keys [action id frequency]}]
+     (if (= action :start)
+       (swap! live-intervals
+              assoc
+              id
+              (js/setInterval #(rf/dispatch [:poll-chat-user])
+                              frequency))
+     (do (js/clearInterval (get @live-intervals id))
+         (swap! live-intervals dissoc id))))))
+
+(rf/reg-fx
  :get-chats-visuals!
  (fn []
+   (println "gettin chat visuals.....sidefx")
    (when-let [chat-container (.getElementById js/document "chats-container")]
      (js/setTimeout #(set! (.-scrollTop chat-container)
-                           (.-scrollHeight chat-container)) 50))))
+                           (.-scrollHeight chat-container)) 100))))
 
 (rf/reg-event-fx
  :get-chats
@@ -153,23 +167,29 @@
    (assoc db :noserver true)))
 
 (rf/reg-event-fx
- :pinging-chat-user
+ :poll-chat-user
  (fn [{:keys [db]} _]
    (let [{:keys [spaCookie lastchat]} db]
      {:db db
       :http-xhrio {:method :post
-                   :uri "/API/ping"
+                   :uri "/API/poll"
                    :params {:lastchat lastchat
                             :cookie spaCookie}
                    :format request-format
                    :response-format response-format
-                   :on-success [:api-ping-chat-user-process]
-                   :on-failure [:pingingGotResponse]}})))
+                   :on-success [:poll-chat-user-success]
+                   :on-failure [:poll-chat-user-failure]}})))
 
 (rf/reg-event-fx
- :api-ping-chat-user-process
+ :poll-chat-user-success
  trim-v
  (fn
    [{:keys [db]} [{:keys [updateneeded onlineUsersNow]}]]
    {:db (assoc db :onlineUsersNow onlineUsersNow)
     :dispatch-n (list (when updateneeded [:get-chats]))}))
+
+(rf/reg-event-db
+ :poll-chat-user-failure
+ (fn
+   [db _]
+   (assoc db :noserver true)))

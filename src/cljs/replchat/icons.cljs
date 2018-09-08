@@ -5,4 +5,6 @@
 
 (def account-circle (r/adapt-react-class (oops/oget+ js/MaterialUIIcons "AccountCircle")))
 
+(def cast-connected (r/adapt-react-class (oops/oget+ js/MaterialUIIcons "CastConnected")))
+
 (def chat (r/adapt-react-class (oops/oget+ js/MaterialUIIcons "Chat")))

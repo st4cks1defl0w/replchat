@@ -10,7 +10,7 @@ UPDATE people
 SET cookie = :cookie
 WHERE username = :username
 
--- :name put-ping :! :n
+-- :name put-poll :! :n
 -- :doc updates an existing user record
 UPDATE people
 SET lastseen = :lastseen

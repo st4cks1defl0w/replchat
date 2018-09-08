@@ -1,19 +1,25 @@
 (ns user
-  (:require [replchat.config :refer [env]]
-            [clojure.spec.alpha :as s]
-            [expound.alpha :as expound]
-            [mount.core :as mount]
-            [replchat.figwheel :refer [start-fw stop-fw cljs]]
-            [figwheel-sidecar.repl-api :as fw]
-            [replchat.core :refer [start-app]]
-            [replchat.db.core]
+  (:require [clojure.spec.alpha :as s]
             [conman.core :as conman]
-            [luminus-migrations.core :as migrations]))
+            [expound.alpha :as expound]
+            [figwheel-sidecar.repl-api :as fw]
+            [mount.core :as mount]
+            [luminus-migrations.core :as migrations]
+            [replchat.db.core]
+            [replchat.config :refer [env]]
+            [replchat.core :refer [start-app]]
+            [replchat.figwheel :refer [start-fw stop-fw cljs]]
+            [replchat.routes.home :as home-routes]))
 
 (alter-var-root #'s/*explain-out* (constantly expound/printer))
 
 (defn start []
-  (mount/start-without #'replchat.core/repl-server))
+  (mount/start-without #'replchat.core/repl-server)
+  (migrations/migrate ["reset"] {:database-url (:databaseurl env)})
+  (migrations/migrate ["migrate"] {:database-url (:databaseurl env)})
+  (println "ran simple-setup migrations")
+  (home-routes/create-repl-user!)
+  (println "created shared REPL user"))
 
 (defn stop []
   (mount/stop-except #'replchat.core/repl-server))

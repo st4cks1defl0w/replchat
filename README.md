@@ -1,7 +1,7 @@
 # re-frame REPLchat
  Running at [replchat.stacksideflow.host](https://replchat.stacksideflow.host)
 
-  *Restricted remote nREPL chat posting with [protected-eval](github.com/stacksideflow/protected-eval)*
+  *Restricted remote nREPL chat posting with [protected-eval](https://github.com/stacksideflow/protected-eval)*
 
 ## Post a message with an Emacs REPL:
 
@@ -19,25 +19,27 @@ Check out your message at [replchat.stacksideflow.host](https://replchat.stacksi
 
 ## Start app (:development)
 
-Launch an nREPL instance, e.g. with Leiningen
+Launch an nREPL instance, in this case with Leiningen
 
 `lein repl :headless`
 
-After connecting to the nREPL, (e.g. with Emacs+CIDER), launch the server
+After connecting to the nREPL (e.g. with Emacs+CIDER), launch the server with
 
 `(start)`
 
-After server startup, compile the backend and convert to cljs REPL with
+After server startup, build cljs, launch Figwheel and convert to cljs REPL with
 
 `(fw-repl!)`
 
 ## Start app (:development) +protected-eval
 
-Switch to a non-headless (+cider) middleware in the `project.clj`, see [protected-eval](github.com/stacksideflow/protected-eval)
+Note a non-headless (+cider) middleware in the `project.clj` `:protected-eval` profile,
+necessary for rolling with `lein repl` instead of `lein repl :headless`, like the name implies.
+See [protected-eval](https://github.com/stacksideflow/protected-eval) for full documentation.
 
 `lein with-profile +protected-eval repl`
 
-All the functions except for the `defnremote`d ones will be now firewalled on your nREPL server, so you'll have to launch the server and compile cljs with your terminal REPL instead of a remote nREPL. Aside from this, startup steps are the same as in normal (:development).
+All the functions except for the `defnremote`d ones will now be firewalled on your nREPL server, so you'll have to launch the backend and compile cljs with your terminal REPL instead of a remote nREPL. Aside from this, startup steps are the same as in normal (:development) mode.
 
 ## Start app (:uberjar) +protected-eval
 

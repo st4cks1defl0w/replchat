@@ -69,7 +69,7 @@
 :profiles
   {:protected-eval {:repl-options {:init-ns user
                                    :timeout 120000
-                                   :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}}
+                                   :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}}
    :uberjar {:omit-source true
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
              :repl-options {:init-ns user

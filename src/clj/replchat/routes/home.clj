@@ -21,6 +21,12 @@
   "render the page hosting js app" []
   (layout/render "home.html"))
 
+(defn create-repl-user! []
+  (db/put-cookie-and-user {:username "repl-user"
+                           :password (hashlib/md5 (rnd-str 12))
+                           :cookie (rnd-str 64)
+                           :signupdate (t/now)}))
+
 (defn signup [{:keys [params]}]
   (let [{:keys [username password]} params
         full-info (db/get-user {:username username})
@@ -39,7 +45,7 @@
       (and (= username existing-username)
            (= existing-password (hashlib/md5 password)))
       (let [new-cookie (rnd-str 64)]
-        (println "successfull login form" existing-username)
+        (println "successful login form" existing-username)
         (db/put-cookie {:cookie new-cookie :username username})
         (response/ok {:okCookie new-cookie}))
      ;;a vacant username entered
@@ -78,14 +84,15 @@
           (response/ok {:ok true}))
       (response/ok {:ok false}))))
 
-(defn ping
-  "receives UDP-styled ping, returns whether user is up-to-date"
+(defn poll
+  "receives UDP-styled poll, returns whether user is up-to-date
+  and a list of online users"
   [{:keys [params]}]
   (let [{:keys [cookie lastchat] :or {lastchat 0}} params
         now-stamp (t/now)
         users-online (db/get-online-users)
         last-stored-chat-id (or (:id (db/get-last-chat)) 0)]
-    (db/put-ping {:cookie cookie :lastseen now-stamp})
+    (db/put-poll {:cookie cookie :lastseen now-stamp})
     (if (> last-stored-chat-id lastchat)
       (response/ok {:updateneeded true :onlineUsersNow users-online})
       (response/ok {:updateneeded false :onlineUsersNow users-online}))))
@@ -94,5 +101,5 @@
   (GET "/" [] (home-page))
   (POST "/API/signupGo" request (signup request))
   (POST "/API/putChat" request (put-chat request))
-  (POST "/API/ping" request (ping request))
+  (POST "/API/poll" request (poll request))
   (POST "/API/getChat" request (get-chat request)))
