@@ -20,7 +20,8 @@
   (http/start
    (-> env
        (assoc  :handler #'handler/app)
-       (update :io-threads #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
+       (update :io-threads
+               #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
        (update :port #(or (-> env :options :port) %))))
   :stop
   (http/stop http-server))

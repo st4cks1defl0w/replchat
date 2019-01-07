@@ -36,18 +36,23 @@
       (or (empty? username)
           (and (not (empty? existing-username))
                (not= existing-password (hashlib/md5 password))))
-      (response/bad-request {:errorText "Incorrect password for existing user"})
+      (response/bad-request {:error-text
+                             "Incorrect password for existing user"})
+
     ;;double-check specced pass
       (not (s/valid? :replchat.spec/password password))
-      (response/bad-request {:errorText (str "Congrats! You sneaked past our "
-                                             "cljs.spec, but not clj.spec though!")})
+      (response/bad-request {:error-text
+                             (str "Congrats! You sneaked past our "
+                                  "cljs.spec, but not clj.spec though!")})
+
      ;;user exists, pass is OK
       (and (= username existing-username)
            (= existing-password (hashlib/md5 password)))
       (let [new-cookie (rnd-str 64)]
-        (println "successful login form" existing-username)
+        (println "successful login from" existing-username)
         (db/put-cookie {:cookie new-cookie :username username})
-        (response/ok {:okCookie new-cookie}))
+        (response/ok {:ok-cookie new-cookie}))
+
      ;;a vacant username entered
       (empty? existing-username)
       (let [new-cookie (rnd-str 64)]
@@ -56,7 +61,7 @@
                                  :password (hashlib/md5 password)
                                  :cookie new-cookie
                                  :signupdate (t/now)})
-        (response/ok {:okCookie new-cookie})))))
+        (response/ok {:ok-cookie new-cookie})))))
 
 (defn- get-msgs-author-data
   "supplementary fn to get-chat to assoc author data"
@@ -66,12 +71,12 @@
 (defn get-chat [_]
   (let [msgs-with-authors (map get-msgs-author-data (db/get-chat))]
     (response/ok {:ok true
-                  :okChats msgs-with-authors})))
+                  :ok-chats msgs-with-authors})))
 
 (defn put-chat-with-repl [message]
-   (db/put-chat {:text message
-                 :author 1
-                 :stamp (t/now)})
+  (db/put-chat {:text message
+                :author 1
+                :stamp (t/now)})
   (response/ok {:ok true}))
 
 (defn put-chat [{:keys [params]}]
@@ -94,12 +99,12 @@
         last-stored-chat-id (or (:id (db/get-last-chat)) 0)]
     (db/put-poll {:cookie cookie :lastseen now-stamp})
     (if (> last-stored-chat-id lastchat)
-      (response/ok {:updateneeded true :onlineUsersNow users-online})
-      (response/ok {:updateneeded false :onlineUsersNow users-online}))))
+      (response/ok {:update-due? true :users-online users-online})
+      (response/ok {:update-due? false :users-online users-online}))))
 
 (defroutes home-routes
   (GET "/" [] (home-page))
-  (POST "/API/signupGo" request (signup request))
-  (POST "/API/putChat" request (put-chat request))
-  (POST "/API/poll" request (poll request))
-  (POST "/API/getChat" request (get-chat request)))
+  (POST "/api/auth" request (signup request))
+  (POST "/api/put-chat" request (put-chat request))
+  (POST "/api/poll" request (poll request))
+  (POST "/api/get-chat" request (get-chat request)))

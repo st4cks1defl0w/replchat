@@ -22,9 +22,10 @@
       (handler req)
       (catch Throwable t
         (log/error t (.getMessage t))
-        (error-page {:status 500
-                     :title "Something very bad has happened!"
-                     :message "We've dispatched a team of highly trained gnomes to take care of the problem."})))))
+        (error-page
+         {:status 500
+          :title "Server Error"
+          :message "Whoa"})))))
 
 (defn wrap-csrf [handler]
   (wrap-anti-forgery
@@ -32,7 +33,7 @@
    {:error-response
     (error-page
      {:status 403
-      :title "Invalid anti-forgery token"})}))
+      :title "Invalid anti-forgery token where it's due"})}))
 
 (def joda-time-writer
   (transit/write-handler

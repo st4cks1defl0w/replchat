@@ -72,9 +72,9 @@
 
 (defn chat-page []
   [mui/grid {:style {:padding-top "40px"
-                 :width "50%"
-                 :max-width "500px"
-                 :margin "0 auto"}}
+                     :width "50%"
+                     :max-width "500px"
+                     :margin "0 auto"}}
    [mui/paper {:elevation 1 :style {}}
     [mui/grid {:style {:padding "1em"}}
      [mui/typography

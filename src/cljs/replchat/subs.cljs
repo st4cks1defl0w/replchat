@@ -13,9 +13,9 @@
    (:sign-in-error db)))
 
 (rf/reg-sub
- :spaCookie
+ :supplied-cookie
  (fn [db _]
-   (:spaCookie db)))
+   (:supplied-cookie db)))
 
 (rf/reg-sub
  :chats
@@ -50,4 +50,4 @@
 (rf/reg-sub
  :online-now
  (fn [db _]
-   (:onlineUsersNow db)))
+   (:users-online db)))

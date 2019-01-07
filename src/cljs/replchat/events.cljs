@@ -2,8 +2,8 @@
   (:require [ajax.core :as ajax]
             [cljs.spec.alpha :as s]
             [day8.re-frame.http-fx]
-            replchat.spec
-            [re-frame.core :as rf :refer [trim-v]]))
+            [re-frame.core :as rf :refer [trim-v]]
+            [replchat.spec]))
 
 (def request-format (ajax/json-request-format))
 
@@ -56,7 +56,8 @@
    (let [{:keys [signup-password] :as signup-args} db]
      (if (s/valid? :replchat.spec/password signup-password)
        {:db db :dispatch [:signup-submit signup-args]}
-       {:db db :dispatch [:snackbar-home "Password must include 6 chars or more"]}))))
+       {:db db :dispatch
+        [:snackbar-home "Password must include 6 chars or more"]}))))
 
 (rf/reg-event-fx
  :signup-submit
@@ -64,7 +65,7 @@
    (let [{:keys [signup-user signup-password]} db]
      {:db db
       :http-xhrio {:method :post
-                   :uri "/API/signupGo"
+                   :uri "/api/auth"
                    :params {:username signup-user
                             :password signup-password}
                    :format request-format
@@ -75,11 +76,11 @@
 (rf/reg-event-fx
  :signup-submit-success
  trim-v
- (fn [{:keys [db]} [{:keys [okCookie]}]]
+ (fn [{:keys [db]} [{:keys [ok-cookie]}]]
    {:db (assoc db
                :lastchat 0
                :page :chat
-               :spaCookie okCookie)
+               :supplied-cookie ok-cookie)
     :dispatch [:poll-chat-user]
     :poll-with-interval  {:action :start
                           :id :chat-page
@@ -89,9 +90,9 @@
  :signup-submit-failure
  trim-v
  (fn [{:keys [db]} [{:keys [response]}]]
-   (let [{:keys [errorText] :or {errorText "Unknown error"}} response]
+   (let [{:keys [error-text] :or {error-text "Unknown error"}} response]
      {:db (assoc db :noserver true :signup-password "")
-      :dispatch [:snackbar-home errorText]})))
+      :dispatch [:snackbar-home error-text]})))
 
 (rf/reg-fx
  :poll-with-interval
@@ -103,25 +104,23 @@
               id
               (js/setInterval #(rf/dispatch [:poll-chat-user])
                               frequency))
-     (do (js/clearInterval (get @live-intervals id))
-         (swap! live-intervals dissoc id))))))
+       (do (js/clearInterval (get @live-intervals id))
+           (swap! live-intervals dissoc id))))))
 
 (rf/reg-fx
  :get-chats-visuals!
  (fn []
-   (println "gettin chat visuals.....sidefx")
    (when-let [chat-container (.getElementById js/document "chats-container")]
      (js/setTimeout #(set! (.-scrollTop chat-container)
                            (.-scrollHeight chat-container)) 100))))
 
 (rf/reg-event-fx
  :get-chats
- (fn
-   [{:keys [db]} _]
+ (fn [{:keys [db]} _]
    {:db db
     :get-chats-visuals! nil
     :http-xhrio {:method :post
-                 :uri "/API/getChat"
+                 :uri "/api/get-chat"
                  :format request-format
                  :response-format response-format
                  :on-success [:get-chats-process]
@@ -130,23 +129,21 @@
 (rf/reg-event-db
  :get-chats-process
  trim-v
- (fn
-   [db [{:keys [okChats]}]]
+ (fn [db [{:keys [ok-chats]}]]
    (assoc db
-          :lastchat (:id (last okChats))
-          :chats okChats)))
+          :lastchat (:id (last ok-chats))
+          :chats ok-chats)))
 
 (rf/reg-event-fx
  :send-message-go
- (fn
-   [{:keys [db]} _]
-   (let [{:keys [send-message signup-user spaCookie]} db]
+ (fn [{:keys [db]} _]
+   (let [{:keys [send-message signup-user supplied-cookie]} db]
      {:db (assoc db :send-message "")
       :http-xhrio {:method :post
-                   :uri "/API/putChat"
+                   :uri "/api/put-chat"
                    :params {:message send-message
                             :username signup-user
-                            :cookie spaCookie}
+                            :cookie supplied-cookie}
                    :format request-format
                    :response-format response-format
                    :on-success [:api-send-message-success]
@@ -155,26 +152,24 @@
 (rf/reg-event-fx
  :api-send-message-success
  trim-v
- (fn
-   [{:keys [db]} _]
+ (fn [{:keys [db]} _]
    {:db db
     :dispatch-n (list [:snackbar-home "Message sent"] [:get-chats])}))
 
 (rf/reg-event-db
  :api-send-message-failure
- (fn
-   [db _]
+ (fn [db _]
    (assoc db :noserver true)))
 
 (rf/reg-event-fx
  :poll-chat-user
  (fn [{:keys [db]} _]
-   (let [{:keys [spaCookie lastchat]} db]
+   (let [{:keys [supplied-cookie lastchat]} db]
      {:db db
       :http-xhrio {:method :post
-                   :uri "/API/poll"
+                   :uri "/api/poll"
                    :params {:lastchat lastchat
-                            :cookie spaCookie}
+                            :cookie supplied-cookie}
                    :format request-format
                    :response-format response-format
                    :on-success [:poll-chat-user-success]
@@ -183,13 +178,11 @@
 (rf/reg-event-fx
  :poll-chat-user-success
  trim-v
- (fn
-   [{:keys [db]} [{:keys [updateneeded onlineUsersNow]}]]
-   {:db (assoc db :onlineUsersNow onlineUsersNow)
-    :dispatch-n (list (when updateneeded [:get-chats]))}))
+ (fn [{:keys [db]} [{:keys [update-due? users-online]}]]
+   {:db (assoc db :users-online users-online)
+    :dispatch-n (list (when update-due? [:get-chats]))}))
 
 (rf/reg-event-db
  :poll-chat-user-failure
- (fn
-   [db _]
+ (fn [db _]
    (assoc db :noserver true)))
