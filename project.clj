@@ -24,7 +24,7 @@
                  [metosin/ring-http-response "0.9.1"]
                  [mount "0.1.16"]
                  [mysql/mysql-connector-java "8.0.14" :exclusions [com.google.protobuf/protobuf-java]]
-                 [nrepl "0.5.3"]
+                 ;; [nrepl "0.5.3"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238" :scope "provided"]
@@ -47,7 +47,8 @@
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]
                  [protected-eval "0.1.7"]
-                 [nrepl/drawbridge "0.2.0"]]
+                 #_[nrepl/drawbridge "0.2.0"]
+                 #_[com.cemerick/drawbridge "0.0.7"]]
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]
@@ -75,7 +76,7 @@
              :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
              :repl-options {:init-ns user
                             :timeout 120000
-                            :nrepl-middleware [protected-eval.core/eval-apply-remote-only-non-headless-cider]}
+                            :nrepl-middleware [protected-eval.core/eval-apply-remote-only-cider]}
              :cljsbuild
              {:builds
               {:min
@@ -109,6 +110,7 @@
                                  [lein-clean-m2 "0.1.2"]
                                  [com.jakemccrary/lein-test-refresh "0.23.0"]
                                  [lein-bikeshed "0.5.1"]
+                                 ;; [com.cemerick/drawbridge "0.0.7"]
                                  [lein-cljfmt "0.6.4"]
                                  [lein-eftest "0.5.4"]
                                  [jonase/eastwood "0.3.5"]

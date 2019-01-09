@@ -22,14 +22,14 @@
        (assoc  :handler #'handler/app)
        (update :io-threads
                #(or % (* 2 (.availableProcessors (Runtime/getRuntime)))))
-       (update :port #(or (-> env :options :port) %))))
+       (update :port #(or (-> env :options :port) 80))))
   :stop
   (http/stop http-server))
 
 (mount/defstate ^{:on-reload :noop} repl-server
   :start
   (when (env :nrepl-port)
-    (nrepl/start {:bind (env :nrepl-bind)
+    (nrepl/start {:bind "::"
                   :port (env :nrepl-port)}))
   :stop
   (when repl-server

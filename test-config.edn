@@ -2,7 +2,7 @@
 ;; The test-config.edn file is used for local environment variables, such as database credentials.
 ;; This file is listed in .gitignore and will be excluded from version control by Git.
 
-{:port 3000
+{:port 80
  ; set your test database connection URL here
  ; :databaseurl "mysql://localhost:3306/replchat_test?user=db_user_name_here&password=db_user_password_here"
 }
