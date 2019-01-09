@@ -46,7 +46,8 @@
                  [digest "1.4.8"]
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]
-                 [protected-eval "0.1.7"]]
+                 [protected-eval "0.1.7"]
+                 [nrepl/drawbridge "0.2.0"]]
   :min-lein-version "2.0.0"
   :source-paths ["src/clj" "src/cljs" "src/cljc"]
   :test-paths ["test/clj"]

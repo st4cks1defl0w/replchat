@@ -4,6 +4,7 @@
             [clojure.spec.alpha :as s]
             [compojure.core :refer [defroutes GET POST]]
             [digest :as hashlib]
+            [drawbridge.core]
             [ring.util.http-response :as response]
             [replchat.db.core :as db]
             [replchat.layout :as layout]
@@ -103,6 +104,7 @@
       (response/ok {:update-due? false :users-online users-online}))))
 
 (defroutes home-routes
+  (ANY "/repl" request  ((drawbridge.core/ring-handler) request))
   (GET "/" [] (home-page))
   (POST "/api/auth" request (signup request))
   (POST "/api/put-chat" request (put-chat request))
