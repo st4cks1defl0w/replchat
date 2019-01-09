@@ -2,7 +2,7 @@
   (:require [clj-time.core :as t]
             [clojure.java.io :as io]
             [clojure.spec.alpha :as s]
-            [compojure.core :refer [defroutes GET POST]]
+            [compojure.core :refer [defroutes GET POST ANY]]
             [digest :as hashlib]
             [drawbridge.core]
             [ring.util.http-response :as response]
