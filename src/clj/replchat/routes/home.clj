@@ -66,7 +66,8 @@
 (defn- get-msgs-author-data
   "supplementary fn to get-chat to assoc author data"
   [msg]
-  (merge msg (db/get-user-with-id {:id (:author msg)})))
+  (merge msg (dissoc (db/get-public-user-with-id
+                      {:id (:author msg)}) :id)))
 
 (defn get-chat [_]
   (let [msgs-with-authors (map get-msgs-author-data (db/get-chat))]

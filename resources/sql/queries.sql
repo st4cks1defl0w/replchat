@@ -31,6 +31,12 @@ WHERE username = :username
 SELECT * FROM people
 WHERE id = :id
 
+-- :name get-public-user-with-id :? :1
+-- :doc retrieves a public user record given the id
+SELECT username, lastseen, signupdate FROM people
+WHERE id = :id
+
+
 -- :name get-cookie :? :1
 -- :doc retrieves a user record given the id
 SELECT username, id FROM people
@@ -43,7 +49,7 @@ INSERT INTO chats
 VALUES (:text, :author, :stamp)
 
 -- :name get-chat :? :*
--- :doc retrieves a user record given the id
+-- :doc retrieves all chat messages
 SELECT * FROM chats
 
 
