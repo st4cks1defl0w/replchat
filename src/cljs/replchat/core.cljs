@@ -71,54 +71,52 @@
      [message-view message])])
 
 (defn chat-page []
-  [mui/grid {:style {:padding-top "40px"
-                     :width "50%"
-                     :max-width "500px"
-                     :margin "0 auto"}}
-   [mui/paper {:elevation 1 :style {}}
-    [mui/grid {:style {:padding "1em"}}
-     [mui/typography
-      {:variant "body1" :style {:font-family "monospace"}}
-      [icons/account-circle {:style {:margin-right "10px"}}]
-      "hi, " @(rf/subscribe [:signup-user]) "!"]]
-    [mui/card {:id "chats-container"
-               :elevation 1
-               :style {:overflow-y "scroll"
-                       :padding "5px"
-                       :height "40vh"}}
-     [chats @(rf/subscribe [:chats])]]
-    [mui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
-     [mui/form-control {:style {:width "60%"}}
-      [mui/input-label {:htmlFor "send-message"} "Send Message"]
-      [mui/input {:value @(rf/subscribe [:send-message])
-                  :id "send-message"
-                  :multiline true
-                  :rows 3
-                  :on-change
-                  #(rf/dispatch [:send-message (-> % .-target .-value)])}]]
-     [mui/form-control {:style {:width "40%"}}
-      [mui/button {:on-click  #(rf/dispatch [:send-message-go])
-                   :variant "contained"
-                   :color "primary"
-                   :id "send-message-go"
-                   :style {:float "right"
-                           :width "50px"
-                           :margin-left "auto"}} "Send"]]]]
-   [mui/grid {:container true
-              :style {:padding-top "1em"}}
-    [mui/typography {:variant :subtitle1
-                     :paragraph true
-                     :style {:padding-right "0.5em"
-                             :opacity "0.6"}}
-     "Users online now: "]
-    (for [online-user @(rf/subscribe [:online-now])]
-      ^{:key online-user}
-      [mui/chip {:label (:username online-user)
-                 :style {:opacity 0.6}}])]])
+  [mui/grid {:justify :center :container true :style {:padding "2em"}}
+   [mui/grid {:xs 12 :md 6 :item true}
+    [mui/paper {:elevation 1 :style {}}
+     [mui/grid {:style {:padding "1em"}}
+      [mui/typography
+       {:variant "body1" :style {:font-family "monospace"}}
+       [icons/account-circle {:style {:margin-right "10px"}}]
+       "hi, " @(rf/subscribe [:signup-user]) "!"]]
+     [mui/card {:id "chats-container"
+                :elevation 1
+                :style {:overflow-y "scroll"
+                        :padding "5px"
+                        :height "40vh"}}
+      [chats @(rf/subscribe [:chats])]]
+     [mui/card {:elevation 1 :style {:padding "10px" :height "100px"}}
+      [mui/form-control {:style {:width "60%"}}
+       [mui/input-label {:htmlFor "send-message"} "Send Message"]
+       [mui/input {:value @(rf/subscribe [:send-message])
+                   :id "send-message"
+                   :multiline true
+                   :rows 3
+                   :on-change
+                   #(rf/dispatch [:send-message (-> % .-target .-value)])}]]
+      [mui/form-control {:style {:width "40%"}}
+       [mui/button {:on-click  #(rf/dispatch [:send-message-go])
+                    :variant "contained"
+                    :color "primary"
+                    :id "send-message-go"
+                    :style {:float "right"
+                            :width "50px"
+                            :margin-left "auto"}} "Send"]]]]
+    [mui/grid {:container true
+               :style {:padding-top "1em"}}
+     [mui/typography {:variant :subtitle1
+                      :paragraph true
+                      :style {:padding-right "0.5em"
+                              :opacity "0.6"}}
+      "Users online now: "]
+     (for [online-user @(rf/subscribe [:online-now])]
+       ^{:key online-user}
+       [mui/chip {:label (:username online-user)
+                  :style {:opacity 0.6}}])]]])
 
 (defn home-page []
   [mui/grid {:justify :center :container true :style {:padding "2em"}}
-   [mui/grid {:xs 6 :md 3 :item true}
+   [mui/grid {:xs 12 :md 3 :item true}
     [mui/paper {:elevation 1 :style {:padding "20px"}}
      [mui/typography
       {:variant "h5"}

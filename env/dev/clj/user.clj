@@ -43,8 +43,8 @@
 (defn rollback []
   (migrations/migrate ["rollback"] (select-keys env [:databaseurl])))
 
-(defn create-migration [name]
-  (migrations/create name (select-keys env [:databaseurl])))
+(defn create-migration [migration-name]
+  (migrations/create migration-name (select-keys env [:databaseurl])))
 
 (defn fw-repl! []
   (fw/start-figwheel!)
