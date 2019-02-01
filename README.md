@@ -5,10 +5,10 @@
 
 ## Post a message with an Emacs REPL:
 
-- Connect to `https://replchat.stacksideflow.host` port `5557`
+- Connect to REPL instance at `35.243.168.244` port `5557`
 - While in clj REPL buffer: `(replchat.remote/post-message-with-repl  "Your message")`
 
-Check out your message at [replchat.stacksideflow.host](https://replchat.stacksideflow.host)
+Check out your message at [https://replchat.stacksideflow.host](https://replchat.stacksideflow.host)
 
 ## Quick rundown
 
