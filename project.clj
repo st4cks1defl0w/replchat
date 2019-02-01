@@ -47,6 +47,7 @@
                  [com.andrewmcveigh/cljs-time "0.5.2"]
                  [selmer "1.12.5"]
                  [protected-eval "0.1.7"]
+                 [ring/ring-ssl "0.3.0"]
                  #_[nrepl/drawbridge "0.2.0"]
                  #_[com.cemerick/drawbridge "0.0.7"]]
   :min-lein-version "2.0.0"
