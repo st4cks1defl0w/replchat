@@ -5,7 +5,9 @@
             [clojure.tools.logging :as log]
             [replchat.layout :refer [error-page]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [ring.middleware.ssl :refer [wrap-hsts wrap-ssl-redirect]]
+            [ring.middleware.ssl :refer [wrap-hsts
+                                         wrap-ssl-redirect
+                                         wrap-forwarded-scheme]]
             [ring.middleware.webjars :refer [wrap-webjars]]
             [muuntaja.core :as muuntaja]
             [muuntaja.format.json :refer [json-format]]
@@ -77,5 +79,7 @@
        (-> site-defaults
            (assoc-in [:security :anti-forgery] false)
            (assoc-in  [:session :store] (ttl-memory-store (* 60 30)))))
+      wrap-ssl-redirect
+      wrap-forwarded-scheme
       wrap-hsts
       wrap-internal-error))
